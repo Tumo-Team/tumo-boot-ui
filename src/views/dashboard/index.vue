@@ -4,7 +4,7 @@
       <a-collapse v-model="activeKey" :bordered="false">
         <a-collapse-panel key="0" header="项目介绍">
           <a href="https://github.com/Tumo-Team/Tumo-Boot" target="_blank">Tumo-Boot</a>
-          是基于SpringBoot、Uni-App、Ant Design Vue开发的一套博客系统，
+          是基于SpringBoot、Spring Security、Ant Design Vue开发的一套简洁、规范、开箱即用的权限系统，前后端分离结构。
         </a-collapse-panel>
         <a-collapse-panel key="1" header="项目源码">
           <p>
@@ -27,7 +27,7 @@
           </p>
           <p>
             QQ Group:
-            <a href="#">671017003</a>
+            <a href="#">866685601</a>
           </p>
         </a-collapse-panel>
       </a-collapse>
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Dashboard',
@@ -45,22 +44,12 @@ export default {
     return {
       activeKey: ['0', '1', '2']
     }
-  },
-  computed: {
-    ...mapGetters([
-      'roles'
-    ])
-  },
-  created() {
-    // if (!this.roles.includes('admin')) {
-    //   this.currentRole = 'editorDashboard'
-    // }
   }
 }
 </script>
 
 <style lang="less" scoped>
-  a {
-    color: #1890ff;
-  }
+a {
+  color: #1890ff;
+}
 </style>
