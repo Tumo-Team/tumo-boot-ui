@@ -39,41 +39,6 @@ const tumoBootRouter = [
     ]
   },
   {
-    path: '/blog',
-    component: Layout,
-    name: '博客模块',
-    meta: {
-      title: '博客模块',
-      icon: 'alert'
-    },
-    children: [
-      {
-        path: 'article',
-        name: '文章管理',
-        component: () => import('@/views/modules/blog/article/index'),
-        meta: { title: '文章管理', icon: 'read' }
-      },
-      {
-        path: 'tag',
-        name: '标签管理',
-        component: () => import('@/views/modules/blog/tag/index'),
-        meta: { title: '标签管理', icon: 'tags' }
-      },
-      {
-        path: 'category',
-        name: '分类管理',
-        component: () => import('@/views/modules/blog/category/index'),
-        meta: { title: '分类管理', icon: 'switcher' }
-      },
-      {
-        path: 'comment',
-        name: '评论管理',
-        component: () => import('@/views/modules/blog/comment/index'),
-        meta: { title: '评论管理', icon: 'message' }
-      }
-    ]
-  },
-  {
     path: '/setting',
     component: Layout,
     name: '系统模块',
