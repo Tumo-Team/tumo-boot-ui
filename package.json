@@ -8,8 +8,7 @@
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "preview": "node build/index.js --preview",
-    "lint": "eslint --ext .js,.vue src",
-    "build:docker": "vue-cli-service build --dest='./docker/dist/'"
+    "lint": "eslint --ext .js,.vue src"
   },
   "husky": {
     "hooks": {
