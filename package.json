@@ -22,7 +22,7 @@
     ]
   },
   "dependencies": {
-    "ant-design-vue": "^1.6.4",
+    "ant-design-vue": "^1.7.2",
     "axios": "0.18.1",
     "core-js": "2.6.9",
     "js-cookie": "2.2.0",
