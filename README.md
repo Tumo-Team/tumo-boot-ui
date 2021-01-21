@@ -17,10 +17,10 @@
 
 ```bash
 # clone the project
-git clone https://github.com/Tumo-Team/Tumo-Boot.git
+git clone https://github.com/Tumo-Team/Tumo-Boot-UI.git
 
 # enter the project directory
-cd Tumo-Boot/tumo-boot-admin
+cd Tumo-Boot-UI
 
 # install dependency
 npm install
