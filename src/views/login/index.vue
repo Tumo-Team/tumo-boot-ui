@@ -33,6 +33,17 @@
                 <a-icon slot="prefix" type="lock" />
               </a-input-password>
             </a-form-model-item>
+            <a-form-model-item prop="captcha">
+              <a-input v-model="form.captcha" placeholder="Captcha" style="display: inline-block;width: 50%;padding-right: 20px;">
+                <a-icon slot="prefix" type="security-scan" />
+              </a-input>
+              <a-tooltip placement="bottom">
+                <template slot="title">
+                  <span>点击更换验证码</span>
+                </template>
+                <img :src="'data:image/png;base64,' + captchaUrl" @click="handleCaptcha">
+              </a-tooltip>
+            </a-form-model-item>
 
             <a-form-model-item>
               <a-button
@@ -51,6 +62,8 @@
 </template>
 
 <script>
+import { getCaptcha } from '@/api/auth'
+
 export default {
   name: 'Login',
   data() {
@@ -81,9 +94,8 @@ export default {
           { required: true, trigger: 'blur', validator: validatePassword }
         ]
       },
-      capsTooltip: false,
+      captchaUrl: null,
       loading: false,
-      showDialog: false,
       redirect: undefined,
       otherQuery: {}
     }
@@ -107,10 +119,15 @@ export default {
       this.$refs.password.focus()
     }
   },
+  created() {
+    this.handleCaptcha()
+  },
   methods: {
-    checkCapslock(e) {
-      const { key } = e
-      this.capsTooltip = key && key.length === 1 && key >= 'A' && key <= 'Z'
+    handleCaptcha() {
+      getCaptcha().then(res => {
+        this.captchaUrl = res.data.image
+        this.form.captcha_key = res.data.key
+      })
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {

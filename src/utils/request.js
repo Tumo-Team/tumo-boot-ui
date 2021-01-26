@@ -98,7 +98,7 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error) // for debug
     message.error(
-      error.message,
+      error.response.data.message,
       4
     )
     return Promise.reject(error)

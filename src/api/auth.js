@@ -3,18 +3,27 @@ import request from '@/utils/request'
 /**
  * OAuth2身份认证接口
  */
-export function login(username, password) {
+export function login(username, password, captcha, captcha_key) {
   return request({
     url: '/auth/oauth/token',
     method: 'post',
     headers: {
-      'Authorization': 'Basic Y2xpZW50OnNlY3JldA=='
+      'Authorization': 'Basic Y2xpZW50OnNlY3JldA==',
+      'Captcha-Key': captcha_key
     },
     params: {
       username,
       password,
-      grant_type: 'password'
+      grant_type: 'password',
+      captcha
     }
+  })
+}
+
+export function getCaptcha() {
+  return request({
+    url: '/auth/captcha',
+    method: 'get'
   })
 }
 
