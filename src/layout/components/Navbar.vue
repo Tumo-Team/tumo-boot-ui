@@ -12,8 +12,8 @@
     <div class="right-menu">
       <a-dropdown v-if="name" placement="bottomRight">
         <span class="avatar-wrapper">
-          <a-avatar size="small" :src="avatar" class="user-avatar" />
-          <span>{{ name }}</span>
+          <a-avatar size="small" :src="avatar ? avatar : '/avatar/default.png'" class="avatar-img" />
+          <span class="avatar-name">{{ name }}</span>
         </span>
         <template v-slot:overlay>
           <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
@@ -46,7 +46,7 @@
           </a-menu>
         </template>
       </a-dropdown>
-      <a href="https://github.com/TyCoding/ant-design-vue-pro" target="_blank">
+      <a class="right-menu-github" href="https://github.com/TyCoding/ant-design-vue-pro" target="_blank">
         <a-dropdown v-if="name">
           <span class="avatar-wrapper">
             <a-icon type="github" :style="{ fontSize: '20px'}" />
@@ -177,6 +177,19 @@ export default {
         &:hover {
           background: rgba(0, 0, 0, .025);
         }
+
+        .avatar-img {
+          margin: 12px 8px 12px 0;
+        }
+
+        .avatar-name {
+          font-size: 16px !important;
+          vertical-align: -.125em;
+        }
+      }
+
+      .right-menu-github {
+        margin-right: 12px;
       }
     }
   }

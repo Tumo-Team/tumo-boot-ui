@@ -91,7 +91,7 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error) // for debug
     message.error(
-      error.response.data.message,
+      error.response.data.message ? error.response.data.message : '服务器异常',
       4
     )
     return Promise.reject(error)
