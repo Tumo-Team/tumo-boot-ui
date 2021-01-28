@@ -10,6 +10,7 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
+      <Screenfull />
       <a-dropdown v-if="name" placement="bottomRight">
         <span class="avatar-wrapper">
           <a-avatar size="small" :src="avatar ? avatar : '/avatar/default.png'" class="avatar-img" />
@@ -62,11 +63,13 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import Screenfull from '@/components/Screenfull'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    Screenfull
   },
   computed: {
     ...mapGetters([
