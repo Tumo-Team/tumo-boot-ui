@@ -119,3 +119,14 @@ export function delRole(id) {
     method: 'delete'
   })
 }
+
+/**
+ * 导出Excel
+ */
+export function exportRole() {
+  return request({
+    url: API_PREFIX + `/role/export`,
+    method: 'get',
+    responseType: 'blob'
+  })
+}

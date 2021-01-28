@@ -355,3 +355,17 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ')
   }
 }
+
+/**
+ * 下载文件
+ * @param url 下载地址
+ * @param name 文件名称
+ */
+export function downFile(url, name) {
+  var link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
+  link.href = url
+  link.download = name
+  var event = document.createEvent('MouseEvents')
+  event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+  link.dispatchEvent(event)
+}

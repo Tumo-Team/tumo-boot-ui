@@ -67,20 +67,6 @@ import { getCaptcha } from '@/api/auth'
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Please input username'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Please input password'))
-      } else {
-        callback()
-      }
-    }
     return {
       form: {
         username: 'admin',
@@ -88,10 +74,13 @@ export default {
       },
       rules: {
         username: [
-          { required: true, trigger: 'blur', validator: validateUsername }
+          { required: true, trigger: 'blur', message: '请输入用户名' }
         ],
         password: [
-          { required: true, trigger: 'blur', validator: validatePassword }
+          { required: true, trigger: 'blur', message: '请输入密码' }
+        ],
+        captcha: [
+          { required: true, trigger: 'blur', message: '请输入验证码' }
         ]
       },
       captchaUrl: null,
@@ -147,6 +136,8 @@ export default {
               this.loading = false
             })
             .catch(() => {
+              this.handleCaptcha()
+              this.form.captcha = ''
               this.loading = false
             })
         } else {
@@ -267,17 +258,6 @@ img {
   float: left;
 }
 
-.login-border, .login-left {
-  padding: 20px 0 40px 0;
-  position: relative;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
 .login-main {
   margin: 0 auto;
 }
@@ -288,10 +268,6 @@ img {
   box-sizing: border-box;
 }
 
-.login-form {
-  margin: 10px 0;
-}
-
 .login-title {
   color: #333;
   margin-bottom: 30px;
@@ -299,24 +275,6 @@ img {
   font-size: 22px;
   text-align: center;
   letter-spacing: 4px;
-}
-
-.login-form .el-form-item {
-  margin-bottom: 12px;
-}
-
-.login-form .el-form-item__content {
-  width: 100%;
-}
-
-.login-form .el-input input {
-  padding-bottom: 10px;
-  text-indent: 15px;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  color: #333;
-  border-bottom: 1px solid #ebedf2;
 }
 
 .login-submit {

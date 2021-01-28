@@ -55,16 +55,9 @@ service.interceptors.response.use(
     const res = response.data
 
     /**
-     * 因为使用了Security-oAuth2，需要单独处理OAuth2的请求响应
-     * oAuth获取token的响应格式为：
-     * {
-     *    "access_token": "zQcz-j4uj2ZNOUJJDxPc9Erfch8",
-     *    "token_type": "bearer",
-     *    "expires_in": 43199,
-     *    "scope": "app"
-     * }
+     * 对特殊响应格式的处理，比如OAuth响应或者流文件响应
      */
-    if (res.code === undefined && res.access_token != null) {
+    if (!(res instanceof Object) || res.code === undefined) {
       return res
     }
 
@@ -75,7 +68,7 @@ service.interceptors.response.use(
         title: 'Confirm logout',
         content: 'Token已失效，请重新登录',
         okText: 'Re-Login',
-        cancelText: 'Cancle',
+        cancelText: 'Cancel',
         onOk: () => {
           store.dispatch('user/resetToken').then(() => {
             location.reload()

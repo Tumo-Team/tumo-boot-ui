@@ -1,22 +1,37 @@
 <template>
   <div class="app-container">
+    <!-- 搜索条件部分 - Begin -->
+    <div class="tumo-table-search">
+      <a-input
+        v-model="query.name"
+        placeholder="请输入名称查询"
+        style="width: 200px"
+      />
+      <a-button type="primary" icon="search" @click="fetchData">
+        查询
+      </a-button>
+    </div>
+    <!-- 搜索条件部分 - End -->
+
     <a-card>
-      <!-- 搜索条件部分 - Begin -->
-      <a-row>
-        <a-input-search
-          v-model="query.name"
-          placeholder="请输入名称查询"
-          style="width: 200px"
-          @search="fetchData()"
-        />
-        <a-popover content="新增">
-          <a-button type="dashed" icon="plus" @click="$refs.model.init()" />
-        </a-popover>
-        <a-popover content="刷新">
-          <a-button type="dashed" icon="redo" @click="fetchData()" />
-        </a-popover>
-      </a-row>
-      <!-- 搜索条件部分 - End -->
+      <!-- 工具栏 - Begin -->
+      <div class="tumo-table-toolbar">
+        <div class="tumo-table-toolbar-container">
+          <div class="tumo-table-toolbar-left" />
+          <div class="tumo-table-toolbar-right">
+            <a-popover content="新增">
+              <a-button type="link" icon="plus" @click="$refs.editForm.init()" />
+            </a-popover>
+            <a-popover content="刷新">
+              <a-button type="link" icon="redo" @click="fetchData" />
+            </a-popover>
+            <a-popover content="导出Excel">
+              <a-button type="link" icon="download" @click="handleExport" />
+            </a-popover>
+          </div>
+        </div>
+      </div>
+      <!-- 工具栏 - End -->
 
       <!-- Table表列表部分 - Begin -->
       <a-table
@@ -73,7 +88,8 @@
 
 <script>
 import EditForm from './components/EditForm'
-import { delMenu, menuTree } from '@/api/modules/system/menu'
+import { delMenu, menuTree, exportMenu } from '@/api/modules/system/menu'
+import { downFile } from '@/utils'
 
 export default {
   name: 'Index',
@@ -105,6 +121,12 @@ export default {
       menuTree(this.query).then(res => {
         this.list = res.data
         this.loading = false
+      })
+    },
+    handleExport() {
+      exportMenu().then(res => {
+        const url = window.URL.createObjectURL(new Blob([res]))
+        downFile(url, '菜单数据.xlsx')
       })
     },
     handleDel(id) {

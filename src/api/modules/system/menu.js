@@ -88,3 +88,14 @@ export function delMenu(id) {
     method: 'delete'
   })
 }
+
+/**
+ * 导出Excel
+ */
+export function exportMenu() {
+  return request({
+    url: API_PREFIX + `/menu/export`,
+    method: 'get',
+    responseType: 'blob'
+  })
+}

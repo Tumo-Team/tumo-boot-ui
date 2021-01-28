@@ -111,3 +111,14 @@ export function resetPass(data) {
     data
   })
 }
+
+/**
+ * 导出Excel
+ */
+export function exportUser() {
+  return request({
+    url: API_PREFIX + `/user/export`,
+    method: 'get',
+    responseType: 'blob'
+  })
+}

@@ -1,22 +1,37 @@
 <template>
   <div class="app-container">
+    <!-- 搜索条件部分 - Begin -->
+    <div class="tumo-table-search">
+      <a-input
+        v-model="query.username"
+        placeholder="请输入名称查询"
+        style="width: 200px"
+      />
+      <a-button type="primary" icon="search" @click="fetchData(pageConf)">
+        查询
+      </a-button>
+    </div>
+    <!-- 搜索条件部分 - End -->
+
     <a-card>
-      <!-- 搜索条件部分 - Begin -->
-      <a-row>
-        <a-input-search
-          v-model="query.username"
-          placeholder="请输入名称查询"
-          style="width: 200px"
-          @search="fetchData(pageConf)"
-        />
-        <a-popover content="新增">
-          <a-button type="dashed" icon="plus" @click="$refs.editForm.init()" />
-        </a-popover>
-        <a-popover content="刷新">
-          <a-button type="dashed" icon="redo" @click="fetchData(pageConf)" />
-        </a-popover>
-      </a-row>
-      <!-- 搜索条件部分 - End -->
+      <!-- 工具栏 - Begin -->
+      <div class="tumo-table-toolbar">
+        <div class="tumo-table-toolbar-container">
+          <div class="tumo-table-toolbar-left" />
+          <div class="tumo-table-toolbar-right">
+            <a-popover content="新增">
+              <a-button type="link" icon="plus" @click="$refs.editForm.init()" />
+            </a-popover>
+            <a-popover content="刷新">
+              <a-button type="link" icon="redo" @click="fetchData(pageConf)" />
+            </a-popover>
+            <a-popover content="导出Excel">
+              <a-button type="link" icon="download" @click="handleExport" />
+            </a-popover>
+          </div>
+        </div>
+      </div>
+      <!-- 工具栏 - End -->
 
       <!-- Table表列表部分 - Begin -->
       <a-table
@@ -101,7 +116,8 @@ import DetailModel from './components/DetailModel'
 import EditForm from './components/EditForm'
 import RoleModel from './components/RoleModel'
 import PassModel from './components/PassModel'
-import { userList, delUser } from '@/api/modules/system/user'
+import { userList, delUser, exportUser } from '@/api/modules/system/user'
+import { downFile } from '@/utils'
 
 export default {
   name: 'Index',
@@ -143,6 +159,12 @@ export default {
         this.loading = false
       })
     },
+    handleExport() {
+      exportUser().then(res => {
+        const url = window.URL.createObjectURL(new Blob([res]))
+        downFile(url, '用户数据.xlsx')
+      })
+    },
     handleDel(id) {
       const _this = this
       this.$confirm({
@@ -167,7 +189,8 @@ export default {
 </script>
 
 <style scoped>
-.ant-row {
+.tool-bar {
+  float: right;
   margin-bottom: 10px;
 }
 </style>

@@ -88,3 +88,14 @@ export function delDept(id) {
     method: 'delete'
   })
 }
+
+/**
+ * 导出Excel
+ */
+export function exportDept() {
+  return request({
+    url: API_PREFIX + `/dept/export`,
+    method: 'get',
+    responseType: 'blob'
+  })
+}
