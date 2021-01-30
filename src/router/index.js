@@ -42,13 +42,11 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    meta: { title: 'Dashboard', icon: 'home', affix: true },
     children: [
       {
         path: '/dashboard',
+        name: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
         meta: { title: 'Dashboard', icon: 'home', affix: true }
       }
     ]
@@ -128,6 +126,19 @@ export const asyncRoutes = [
       {
         path: 'https://github.com/Tumo-Team/Tumo-Boot',
         meta: { title: 'External Link', icon: 'link' }
+      }
+    ]
+  },
+
+  {
+    path: '/',
+    component: Layout,
+    children: [
+      {
+        path: '/test',
+        name: 'Test',
+        component: () => import('@/views/modules/test/index'),
+        meta: { title: 'Test', icon: 'radar-chart' }
       }
     ]
   },

@@ -61,7 +61,7 @@
           <a-input v-model="form.perms" />
         </a-form-model-item>
         <a-form-model-item v-if="form.type === 'menu'" prop="icon" label="菜单图标">
-          <a-input v-model="form.icon">
+          <a-input v-model="form.icon" disabled>
             <a-icon slot="prefix" type="search" @click="$refs.iconPanel.init()" />
             <a-tooltip slot="suffix" title="点击前面的搜索按钮选择图标">
               <a-icon type="info-circle" style="color: rgba(0,0,0,.45)" />
@@ -175,7 +175,7 @@ export default {
     },
 
     handleSelectIcon(icon) {
-      this.form.icon = icon
+      this.$set(this.form, 'icon', icon)
     },
 
     handleSubmit() {

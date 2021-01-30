@@ -1,6 +1,31 @@
 /**
- * Created by PanJiaChen on 16/11/18.
+ * 结算时间间隔
+ * @param start 开始时间
+ * @param end 结束时间
  */
+export const calcDate = (start, end) => {
+  const date3 = end - start
+
+  const days = Math.floor(date3 / (24 * 3600 * 1000))
+
+  const leave1 = date3 % (24 * 3600 * 1000) // 计算天数后剩余的毫秒数
+  const hours = Math.floor(leave1 / (3600 * 1000))
+
+  const leave2 = leave1 % (3600 * 1000) // 计算小时数后剩余的毫秒数
+  const minutes = Math.floor(leave2 / (60 * 1000))
+
+  const leave3 = leave2 % (60 * 1000) // 计算分钟数后剩余的毫秒数
+  const seconds = Math.round(date3 / 1000)
+  return {
+    leave1,
+    leave2,
+    leave3,
+    days: days,
+    hours: hours,
+    minutes: minutes,
+    seconds: seconds
+  }
+}
 
 /**
  * Parse the time to string
@@ -45,7 +70,9 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -122,8 +149,9 @@ export function byteLength(str) {
   let s = str.length
   for (var i = str.length - 1; i >= 0; i--) {
     const code = str.charCodeAt(i)
-    if (code > 0x7f && code <= 0x7ff) s++
-    else if (code > 0x7ff && code <= 0xffff) s += 2
+    if (code > 0x7f && code <= 0x7ff) {
+      s++
+    } else if (code > 0x7ff && code <= 0xffff) s += 2
     if (code >= 0xDC00 && code <= 0xDFFF) i--
   }
   return s
