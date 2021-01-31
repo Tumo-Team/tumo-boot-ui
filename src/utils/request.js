@@ -49,9 +49,6 @@ service.interceptors.response.use(
    *  如果response format不是上述，请自行修改下方：`res.code`、`res.data`、`res.msg`
    */
   response => {
-    /**
-     * 这里注意明确axios响应结果格式，`res`要先从`response.data`中拿到后端真正响应的JSON数据
-     */
     const res = response.data
 
     /**
@@ -70,7 +67,7 @@ service.interceptors.response.use(
         okText: 'Re-Login',
         cancelText: 'Cancel',
         onOk: () => {
-          store.dispatch('user/resetToken').then(() => {
+          store.dispatch('user/logout').then(() => {
             location.reload()
           })
         }
@@ -89,11 +86,14 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
-    message.error(
-      error.response.data.message ? error.response.data.message : '服务器异常',
-      4
-    )
+    let res = error.response
+    console.log(res) // for debug
+    message.error(res.data.msg ? res.data.msg : res.data.message, 4)
+    if (res.status === 401 || res.status === 403) {
+      store.dispatch('user/logout').then(() => {
+        location.reload()
+      })
+    }
     return Promise.reject(error)
   }
 )

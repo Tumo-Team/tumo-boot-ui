@@ -59,31 +59,24 @@
           </a-popover>
         </span>
         <span slot="action" slot-scope="text, record">
-          <a-popover content="分配角色">
-            <a-button type="dashed" size="small" @click="$refs.model.init(record.id)">
-              <a-icon type="idcard" theme="twoTone" two-tone-color="#2db7f5" />
-            </a-button>
-          </a-popover>
-          <a-popover content="详细">
-            <a-button type="dashed" size="small" @click="$refs.detailModel.init(record.id)">
-              <a-icon type="eye" theme="twoTone" two-tone-color="#1890ff" />
-            </a-button>
-          </a-popover>
-          <a-popover content="修改">
-            <a-button type="dashed" size="small" @click="$refs.editForm.init(record.id)">
-              <a-icon type="edit" theme="twoTone" two-tone-color="#52c41a" />
-            </a-button>
-          </a-popover>
-          <a-popover content="删除">
-            <a-button type="dashed" size="small" @click="handleDel(record.id)">
-              <a-icon type="delete" theme="twoTone" two-tone-color="#f5222d" />
-            </a-button>
-          </a-popover>
-          <a-popover content="重置密码">
-            <a-button type="dashed" size="small" @click="$refs.passModel.init(record.id)">
-              <a-icon type="tool" theme="twoTone" two-tone-color="#f5222d" />
-            </a-button>
-          </a-popover>
+          <a-button type="link" @click="$refs.detailModel.init(record.id)">详情</a-button>
+          <a-button type="link" class="primary" @click="$refs.editForm.init(record.id)">修改</a-button>
+          <a-dropdown>
+            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+              更多 <a-icon type="down" />
+            </a>
+            <a-menu slot="overlay">
+              <a-menu-item @click="$refs.model.init(record.id)">
+                <a-button type="link" class="primary">分配角色</a-button>
+              </a-menu-item>
+              <a-menu-item @click="$refs.passModel.init(record.id)">
+                <a-button type="link" class="success">重置密码</a-button>
+              </a-menu-item>
+              <a-menu-item @click="handleDel(record.id)">
+                <a-button type="link" class="danger">删除</a-button>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
         </span>
       </a-table>
       <pagination
@@ -132,9 +125,23 @@ export default {
         { title: '邮箱', dataIndex: 'email', key: 'email', width: 180 },
         { title: '角色', dataIndex: 'roles', key: 'roles', scopedSlots: { customRender: 'roles' }},
         { title: '部门', dataIndex: 'deptName', key: 'deptName', width: 120 },
-        { title: '状态', dataIndex: 'status', key: 'status', width: 60, align: 'center', scopedSlots: { customRender: 'status' }},
+        {
+          title: '状态',
+          dataIndex: 'status',
+          key: 'status',
+          width: 60,
+          align: 'center',
+          scopedSlots: { customRender: 'status' }
+        },
         { title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center', width: 150 },
-        { title: '操作', key: 'action', scopedSlots: { customRender: 'action' }, fixed: 'right', align: 'center', width: 188 }
+        {
+          title: '操作',
+          key: 'action',
+          scopedSlots: { customRender: 'action' },
+          fixed: 'right',
+          align: 'center',
+          width: 160
+        }
       ],
       query: {},
       pageConf: {
