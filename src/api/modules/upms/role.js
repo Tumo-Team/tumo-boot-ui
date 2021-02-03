@@ -1,16 +1,12 @@
 import request from '@/utils/request'
-
-/**
- * API 接口前缀
- */
-export const API_PREFIX = '/system'
+import { UPMS_API_PREFIX } from '@/utils/constants'
 
 /**
  * 条件查询
  */
 export function roleFilterList(data) {
   return request({
-    url: API_PREFIX + `/role/filter/list`,
+    url: UPMS_API_PREFIX + `/role/filter/list`,
     method: 'post',
     data
   })
@@ -21,7 +17,7 @@ export function roleFilterList(data) {
  */
 export function roleTree() {
   return request({
-    url: API_PREFIX + `/role/tree`,
+    url: UPMS_API_PREFIX + `/role/tree`,
     method: 'get'
   })
 }
@@ -31,7 +27,7 @@ export function roleTree() {
  */
 export function roleBaseTree() {
   return request({
-    url: API_PREFIX + `/role/base/tree`,
+    url: UPMS_API_PREFIX + `/role/base/tree`,
     method: 'get'
   })
 }
@@ -41,7 +37,7 @@ export function roleBaseTree() {
  */
 export function rolePermissionList(id) {
   return request({
-    url: API_PREFIX + `/role/permission/list/${id}`,
+    url: UPMS_API_PREFIX + `/role/menu/list/${id}`,
     method: 'get'
   })
 }
@@ -51,7 +47,7 @@ export function rolePermissionList(id) {
  */
 export function roleAddPermission(data, id) {
   return request({
-    url: API_PREFIX + `/role/permission/add/${id}`,
+    url: UPMS_API_PREFIX + `/role/permission/add/${id}`,
     method: 'post',
     data
   })
@@ -62,7 +58,7 @@ export function roleAddPermission(data, id) {
  */
 export function roleUserList(id) {
   return request({
-    url: API_PREFIX + `/role/${id}/user/list`,
+    url: UPMS_API_PREFIX + `/role/${id}/user/list`,
     method: 'get'
   })
 }
@@ -72,7 +68,7 @@ export function roleUserList(id) {
  */
 export function checkRoleName(data) {
   return request({
-    url: API_PREFIX + `/role/checkName`,
+    url: UPMS_API_PREFIX + `/role/checkName`,
     method: 'post',
     data
   })
@@ -83,7 +79,7 @@ export function checkRoleName(data) {
  */
 export function findByRoleId(id) {
   return request({
-    url: API_PREFIX + `/role/${id}`,
+    url: UPMS_API_PREFIX + `/role/${id}`,
     method: 'get'
   })
 }
@@ -93,7 +89,7 @@ export function findByRoleId(id) {
  */
 export function addRole(data) {
   return request({
-    url: API_PREFIX + `/role`,
+    url: UPMS_API_PREFIX + `/role`,
     method: 'post',
     data
   })
@@ -104,7 +100,7 @@ export function addRole(data) {
  */
 export function updateRole(data) {
   return request({
-    url: API_PREFIX + `/role`,
+    url: UPMS_API_PREFIX + `/role`,
     method: 'put',
     data
   })
@@ -115,7 +111,7 @@ export function updateRole(data) {
  */
 export function delRole(id) {
   return request({
-    url: API_PREFIX + `/role/${id}`,
+    url: UPMS_API_PREFIX + `/role/${id}`,
     method: 'delete'
   })
 }
@@ -125,7 +121,7 @@ export function delRole(id) {
  */
 export function exportRole() {
   return request({
-    url: API_PREFIX + `/role/export`,
+    url: UPMS_API_PREFIX + `/role/export`,
     method: 'get',
     responseType: 'blob'
   })

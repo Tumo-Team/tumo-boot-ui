@@ -15,25 +15,25 @@ const tumoBootRouter = [
       {
         path: 'user',
         name: '用户管理',
-        component: () => import('@/views/modules/system/user/index'),
+        component: () => import('@/views/modules/upms/user/index'),
         meta: { title: '用户管理', icon: 'user' }
       },
       {
         path: 'role',
         name: '角色管理',
-        component: () => import('@/views/modules/system/user/index'),
+        component: () => import('@/views/modules/upms/user/index'),
         meta: { title: '角色管理', icon: 'audit' }
       },
       {
         path: 'dept',
         name: '部门管理',
-        component: () => import('@/views/modules/system/user/index'),
+        component: () => import('@/views/modules/upms/user/index'),
         meta: { title: '部门管理', icon: 'apartment' }
       },
       {
         path: 'menu',
         name: '菜单管理',
-        component: () => import('@/views/modules/system/user/index'),
+        component: () => import('@/views/modules/upms/user/index'),
         meta: { title: '菜单管理', icon: 'cluster' }
       }
     ]
@@ -50,13 +50,13 @@ const tumoBootRouter = [
       {
         path: 'doc',
         name: 'Api文档',
-        component: () => import('@/views/modules/system/user/index'),
+        component: () => import('@/views/modules/upms/user/index'),
         meta: { title: 'Api文档', icon: 'file-search' }
       },
       {
         path: 'log',
         name: '日志管理',
-        component: () => import('@/views/modules/system/user/index'),
+        component: () => import('@/views/modules/upms/user/index'),
         meta: { title: '日志管理', icon: 'exception' }
       }
     ]

@@ -86,8 +86,8 @@
 </template>
 
 <script>
-import { findByUserId, addUser, updateUser, checkUserName } from '@/api/modules/system/user'
-import { deptTree } from '@/api/modules/system/dept'
+import { findByUserId, addUser, updateUser, checkUserName } from '@/api/modules/upms/user'
+import { deptTree } from '@/api/modules/upms/dept'
 
 export default {
   name: 'EditForm',

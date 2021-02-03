@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { findByUserId } from '@/api/modules/system/user'
+import { findByUserId } from '@/api/modules/upms/user'
 
 export default {
   name: 'PassModel',

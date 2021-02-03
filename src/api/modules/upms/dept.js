@@ -1,16 +1,12 @@
 import request from '@/utils/request'
-
-/**
- * API 接口前缀
- */
-export const API_PREFIX = '/system'
+import { UPMS_API_PREFIX } from '@/utils/constants'
 
 /**
  * 条件查询
  */
 export function deptFilterList(data) {
   return request({
-    url: API_PREFIX + `/dept/filter/list`,
+    url: UPMS_API_PREFIX + `/dept/filter/list`,
     method: 'post',
     data
   })
@@ -21,7 +17,7 @@ export function deptFilterList(data) {
  */
 export function deptTree() {
   return request({
-    url: API_PREFIX + `/dept/tree`,
+    url: UPMS_API_PREFIX + `/dept/tree`,
     method: 'get'
   })
 }
@@ -31,7 +27,7 @@ export function deptTree() {
  */
 export function deptUserList(id) {
   return request({
-    url: API_PREFIX + `/dept/${id}/user/list`,
+    url: UPMS_API_PREFIX + `/dept/${id}/user/list`,
     method: 'get'
   })
 }
@@ -41,7 +37,7 @@ export function deptUserList(id) {
  */
 export function checkDeptName(data) {
   return request({
-    url: API_PREFIX + `/dept/checkName`,
+    url: UPMS_API_PREFIX + `/dept/checkName`,
     method: 'post',
     data
   })
@@ -52,7 +48,7 @@ export function checkDeptName(data) {
  */
 export function findByDeptId(id) {
   return request({
-    url: API_PREFIX + `/dept/${id}`,
+    url: UPMS_API_PREFIX + `/dept/${id}`,
     method: 'get'
   })
 }
@@ -62,7 +58,7 @@ export function findByDeptId(id) {
  */
 export function addDept(data) {
   return request({
-    url: API_PREFIX + `/dept`,
+    url: UPMS_API_PREFIX + `/dept`,
     method: 'post',
     data
   })
@@ -73,7 +69,7 @@ export function addDept(data) {
  */
 export function updateDept(data) {
   return request({
-    url: API_PREFIX + `/dept`,
+    url: UPMS_API_PREFIX + `/dept`,
     method: 'put',
     data
   })
@@ -84,7 +80,7 @@ export function updateDept(data) {
  */
 export function delDept(id) {
   return request({
-    url: API_PREFIX + `/dept/${id}`,
+    url: UPMS_API_PREFIX + `/dept/${id}`,
     method: 'delete'
   })
 }
@@ -94,7 +90,7 @@ export function delDept(id) {
  */
 export function exportDept() {
   return request({
-    url: API_PREFIX + `/dept/export`,
+    url: UPMS_API_PREFIX + `/dept/export`,
     method: 'get',
     responseType: 'blob'
   })

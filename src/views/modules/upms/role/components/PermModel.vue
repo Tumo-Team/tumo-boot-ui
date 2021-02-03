@@ -61,8 +61,8 @@
 </template>
 
 <script>
-import { rolePermissionList, roleAddPermission } from '@/api/modules/system/role'
-import { menuBaseTree } from '@/api/modules/system/menu'
+import { rolePermissionList, roleAddPermission } from '@/api/modules/upms/role'
+import { menuBaseTree } from '@/api/modules/upms/menu'
 
 export default {
   name: 'PermModel',

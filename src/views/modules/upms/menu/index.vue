@@ -44,11 +44,11 @@
         :scroll="{ x: 'calc(700px + 50%)'}"
         bordered
       >
-        <span slot="type" slot-scope="type">
-          <a-tag color="blue">{{ type }}</a-tag>
+        <span slot="type" slot-scope="type, record">
+          <a-tag color="blue">{{ record.meta.title }}</a-tag>
         </span>
-        <span slot="icon" slot-scope="icon">
-          <a-icon v-if="icon !== null && icon !== null" :type="icon" />
+        <span slot="icon" slot-scope="icon, record">
+          <a-icon v-if="record.meta.icon !== null" :type="record.meta.icon" />
         </span>
         <span slot="hidden" slot-scope="hidden">
           <a-popover :content="hidden ? '隐藏' : '显示'">
@@ -61,21 +61,18 @@
           </a-popover>
         </span>
         <span slot="action" slot-scope="text, record">
-          <a-popover content="新增子级节点">
-            <a-button type="dashed" size="small" @click="$refs.editForm.init(record.id, 'child')">
-              <a-icon type="plus" />
-            </a-button>
-          </a-popover>
-          <a-popover content="修改">
-            <a-button type="dashed" size="small" @click="$refs.editForm.init(record.id)">
-              <a-icon type="edit" theme="twoTone" two-tone-color="#52c41a" />
-            </a-button>
-          </a-popover>
-          <a-popover content="删除">
-            <a-button type="dashed" size="small" @click="handleDel(record.id)">
-              <a-icon type="delete" theme="twoTone" two-tone-color="#f5222d" />
-            </a-button>
-          </a-popover>
+          <a-button type="link" @click="$refs.editForm.init(record.id, 'child')">新增子节点</a-button>
+          <a-button type="link" class="primary" @click="$refs.editForm.init(record.id)">修改</a-button>
+          <a-dropdown>
+            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+              更多 <a-icon type="down" />
+            </a>
+            <a-menu slot="overlay">
+              <a-menu-item @click="handleDel(record.id)">
+                <a-button type="link" class="danger">删除</a-button>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
         </span>
       </a-table>
       <!-- Table列表部分 - End -->
@@ -88,7 +85,7 @@
 
 <script>
 import EditForm from './components/EditForm'
-import { delMenu, menuTree, exportMenu } from '@/api/modules/system/menu'
+import { delMenu, menuTree, exportMenu } from '@/api/modules/upms/menu'
 import { downFile } from '@/utils'
 
 export default {
@@ -106,7 +103,7 @@ export default {
         { title: '组件路径', dataIndex: 'component', key: 'component' },
         { title: '是否隐藏', dataIndex: 'hidden', key: 'hidden', scopedSlots: { customRender: 'hidden' }, width: 80, align: 'center' },
         { title: '是否外链', dataIndex: 'frame', key: 'frame', scopedSlots: { customRender: 'frame' }, width: 80, align: 'center' },
-        { title: '操作', key: 'action', scopedSlots: { customRender: 'action' }, fixed: 'right', width: 148 }
+        { title: '操作', key: 'action', scopedSlots: { customRender: 'action' }, fixed: 'right', width: 200, align: 'center' }
       ],
       query: {},
       loading: true

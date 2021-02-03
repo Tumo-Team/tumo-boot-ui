@@ -44,31 +44,24 @@
         bordered
       >
         <span slot="action" slot-scope="text, record">
-          <a-popover content="新增子级节点">
-            <a-button type="dashed" size="small" @click="$refs.editForm.init(record.id, 'child')">
-              <a-icon type="plus" />
-            </a-button>
-          </a-popover>
-          <a-popover content="用户">
-            <a-button type="dashed" size="small" @click="$refs.userModel.init(record.id)">
-              <a-icon type="contacts" theme="twoTone" two-tone-color="#1890ff" />
-            </a-button>
-          </a-popover>
-          <a-popover content="权限">
-            <a-button type="dashed" size="small" @click="$refs.permModel.init(record.id)">
-              <a-icon type="security-scan" theme="twoTone" two-tone-color="#1890ff" />
-            </a-button>
-          </a-popover>
-          <a-popover content="修改">
-            <a-button type="dashed" size="small" @click="$refs.editForm.init(record.id)">
-              <a-icon type="edit" theme="twoTone" two-tone-color="#52c41a" />
-            </a-button>
-          </a-popover>
-          <a-popover content="删除">
-            <a-button type="dashed" size="small" @click="handleDel(record.id)">
-              <a-icon type="delete" theme="twoTone" two-tone-color="#f5222d" />
-            </a-button>
-          </a-popover>
+          <a-button type="link" @click="$refs.editForm.init(record.id, 'child')">新增子节点</a-button>
+          <a-button type="link" class="primary" @click="$refs.editForm.init(record.id)">修改</a-button>
+          <a-dropdown>
+            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+              更多 <a-icon type="down" />
+            </a>
+            <a-menu slot="overlay">
+              <a-menu-item @click="$refs.permModel.init(record.id)">
+                <a-button type="link" class="primary">分配权限</a-button>
+              </a-menu-item>
+              <a-menu-item @click="$refs.userModel.init(record.id)">
+                <a-button type="link" class="success">用户列表</a-button>
+              </a-menu-item>
+              <a-menu-item @click="handleDel(record.id)">
+                <a-button type="link" class="danger">删除</a-button>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
         </span>
       </a-table>
       <!-- Table列表部分 - End -->
@@ -89,7 +82,7 @@
 import EditForm from './components/EditForm'
 import PermModel from './components/PermModel'
 import UserModel from './components/UserModel'
-import { delRole, roleTree, exportRole } from '@/api/modules/system/role'
+import { delRole, roleTree, exportRole } from '@/api/modules/upms/role'
 import { downFile } from '@/utils'
 
 export default {
@@ -103,7 +96,7 @@ export default {
         { title: '角色别名', dataIndex: 'alias', key: 'alias' },
         { title: '描述', dataIndex: 'des', key: 'des' },
         { title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center', width: 150 },
-        { title: '操作', key: 'action', scopedSlots: { customRender: 'action' }, fixed: 'right', align: 'center', width: 187 }
+        { title: '操作', key: 'action', scopedSlots: { customRender: 'action' }, fixed: 'right', align: 'center', width: 200 }
       ],
       query: {},
       loading: true

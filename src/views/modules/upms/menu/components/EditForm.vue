@@ -114,7 +114,7 @@
 
 <script>
 import IconPanel from '@/components/IconPanel'
-import { menuTree, addMenu, checkMenuName, findByMenuId, updateMenu } from '@/api/modules/system/menu'
+import { menuTree, addMenu, checkMenuName, findByMenuId, updateMenu } from '@/api/modules/upms/menu'
 
 export default {
   name: 'EditForm',

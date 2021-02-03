@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { resetPass } from '@/api/modules/system/user'
+import { resetPass } from '@/api/modules/upms/user'
 
 export default {
   name: 'PassModel',

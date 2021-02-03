@@ -1,16 +1,12 @@
 import request from '@/utils/request'
-
-/**
- * API 接口前缀
- */
-export const API_PREFIX = '/system'
+import { UPMS_API_PREFIX } from '@/utils/constants'
 
 /**
  * 获取菜单Tree
  */
 export function menuTree() {
   return request({
-    url: API_PREFIX + `/menu/tree`,
+    url: UPMS_API_PREFIX + `/menu/tree`,
     method: 'get'
   })
 }
@@ -20,7 +16,7 @@ export function menuTree() {
  */
 export function menuBaseTree() {
   return request({
-    url: API_PREFIX + `/menu/base/tree`,
+    url: UPMS_API_PREFIX + `/menu/base/tree`,
     method: 'get'
   })
 }
@@ -30,7 +26,7 @@ export function menuBaseTree() {
  */
 export function menuFilterList(data) {
   return request({
-    url: API_PREFIX + `/menu/filter/list`,
+    url: UPMS_API_PREFIX + `/menu/filter/list`,
     method: 'post',
     data
   })
@@ -41,7 +37,7 @@ export function menuFilterList(data) {
  */
 export function checkMenuName(data) {
   return request({
-    url: API_PREFIX + `/menu/checkName`,
+    url: UPMS_API_PREFIX + `/menu/checkName`,
     method: 'post',
     data
   })
@@ -52,7 +48,7 @@ export function checkMenuName(data) {
  */
 export function findByMenuId(id) {
   return request({
-    url: API_PREFIX + `/menu/${id}`,
+    url: UPMS_API_PREFIX + `/menu/${id}`,
     method: 'get'
   })
 }
@@ -62,7 +58,7 @@ export function findByMenuId(id) {
  */
 export function addMenu(data) {
   return request({
-    url: API_PREFIX + `/menu`,
+    url: UPMS_API_PREFIX + `/menu`,
     method: 'post',
     data
   })
@@ -73,7 +69,7 @@ export function addMenu(data) {
  */
 export function updateMenu(data) {
   return request({
-    url: API_PREFIX + `/menu`,
+    url: UPMS_API_PREFIX + `/menu`,
     method: 'put',
     data
   })
@@ -84,7 +80,7 @@ export function updateMenu(data) {
  */
 export function delMenu(id) {
   return request({
-    url: API_PREFIX + `/menu/${id}`,
+    url: UPMS_API_PREFIX + `/menu/${id}`,
     method: 'delete'
   })
 }
@@ -94,7 +90,7 @@ export function delMenu(id) {
  */
 export function exportMenu() {
   return request({
-    url: API_PREFIX + `/menu/export`,
+    url: UPMS_API_PREFIX + `/menu/export`,
     method: 'get',
     responseType: 'blob'
   })

@@ -109,7 +109,7 @@ import DetailModel from './components/DetailModel'
 import EditForm from './components/EditForm'
 import RoleModel from './components/RoleModel'
 import PassModel from './components/PassModel'
-import { userList, delUser, exportUser } from '@/api/modules/system/user'
+import { userList, delUser, exportUser } from '@/api/modules/upms/user'
 import { downFile } from '@/utils'
 
 export default {

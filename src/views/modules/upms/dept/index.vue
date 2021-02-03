@@ -45,26 +45,21 @@
         bordered
       >
         <span slot="action" slot-scope="text, record">
-          <a-popover content="新增子级节点">
-            <a-button type="dashed" size="small" @click="$refs.editForm.init(record.id, 'child')">
-              <a-icon type="plus" />
-            </a-button>
-          </a-popover>
-          <a-popover content="用户">
-            <a-button type="dashed" size="small" @click="$refs.userModel.init(record.id)">
-              <a-icon type="contacts" theme="twoTone" two-tone-color="#1890ff" />
-            </a-button>
-          </a-popover>
-          <a-popover content="修改">
-            <a-button type="dashed" size="small" @click="$refs.editForm.init(record.id)">
-              <a-icon type="edit" theme="twoTone" two-tone-color="#52c41a" />
-            </a-button>
-          </a-popover>
-          <a-popover content="删除">
-            <a-button type="dashed" size="small" @click="handleDel(record.id)">
-              <a-icon type="delete" theme="twoTone" two-tone-color="#f5222d" />
-            </a-button>
-          </a-popover>
+          <a-button type="link" @click="$refs.editForm.init(record.id, 'child')">新增子节点</a-button>
+          <a-button type="link" class="primary" @click="$refs.editForm.init(record.id)">修改</a-button>
+          <a-dropdown>
+            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+              更多 <a-icon type="down" />
+            </a>
+            <a-menu slot="overlay">
+              <a-menu-item @click="$refs.userModel.init(record.id)">
+                <a-button type="link" class="primary">用户列表</a-button>
+              </a-menu-item>
+              <a-menu-item @click="handleDel(record.id)">
+                <a-button type="link" class="danger">删除</a-button>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
         </span>
       </a-table>
       <!-- Table列表部分 - End -->
@@ -81,7 +76,7 @@
 <script>
 import EditForm from './components/EditForm'
 import UserModel from './components/UserModel'
-import { deptTree, delDept, exportDept } from '@/api/modules/system/dept'
+import { deptTree, delDept, exportDept } from '@/api/modules/upms/dept'
 import { downFile } from '@/utils'
 
 export default {
@@ -93,8 +88,8 @@ export default {
       columns: [
         { title: '部门名称', dataIndex: 'name', key: 'name' },
         { title: '描述', dataIndex: 'des', key: 'des' },
-        { title: '创建时间', dataIndex: 'createTime', key: 'createTime' },
-        { title: '操作', key: 'action', scopedSlots: { customRender: 'action' }, fixed: 'right', width: 155 }
+        { title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center', width: 150 },
+        { title: '操作', key: 'action', scopedSlots: { customRender: 'action' }, fixed: 'right', width: 200 }
       ],
       query: {},
       loading: true

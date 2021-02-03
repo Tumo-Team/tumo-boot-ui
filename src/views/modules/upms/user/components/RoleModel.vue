@@ -60,8 +60,8 @@
 </template>
 
 <script>
-import { userRoleList, userAddRole } from '@/api/modules/system/user'
-import { roleBaseTree } from '@/api/modules/system/role'
+import { userRoleList, userAddRole } from '@/api/modules/upms/user'
+import { roleBaseTree } from '@/api/modules/upms/role'
 
 export default {
   name: 'RoleModel',

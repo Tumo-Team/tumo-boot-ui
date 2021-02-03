@@ -1,16 +1,12 @@
 import request from '@/utils/request'
-
-/**
- * API 接口前缀
- */
-export const API_PREFIX = '/system'
+import { UPMS_API_PREFIX } from '@/utils/constants'
 
 /**
  * 分页、条件查询
  */
 export function userList(pageConf, query) {
   return request({
-    url: API_PREFIX + `/user/list?page=${pageConf.page}&limit=${pageConf.limit}`,
+    url: UPMS_API_PREFIX + `/user/list?page=${pageConf.page}&limit=${pageConf.limit}`,
     method: 'post',
     data: query
   })
@@ -21,7 +17,7 @@ export function userList(pageConf, query) {
  */
 export function userFilterList(data) {
   return request({
-    url: API_PREFIX + `/user/filter/list`,
+    url: UPMS_API_PREFIX + `/user/filter/list`,
     method: 'post',
     data
   })
@@ -32,7 +28,7 @@ export function userFilterList(data) {
  */
 export function userRoleList(id) {
   return request({
-    url: API_PREFIX + `/user/role/list/${id}`,
+    url: UPMS_API_PREFIX + `/user/role/list/${id}`,
     method: 'get'
   })
 }
@@ -42,7 +38,7 @@ export function userRoleList(id) {
  */
 export function userAddRole(data, id) {
   return request({
-    url: API_PREFIX + `/user/role/add/${id}`,
+    url: UPMS_API_PREFIX + `/user/role/add/${id}`,
     method: 'post',
     data
   })
@@ -53,7 +49,7 @@ export function userAddRole(data, id) {
  */
 export function checkUserName(data) {
   return request({
-    url: API_PREFIX + `/user/checkName`,
+    url: UPMS_API_PREFIX + `/user/checkName`,
     method: 'post',
     data
   })
@@ -64,7 +60,7 @@ export function checkUserName(data) {
  */
 export function findByUserId(id) {
   return request({
-    url: API_PREFIX + `/user/${id}`,
+    url: UPMS_API_PREFIX + `/user/${id}`,
     method: 'get'
   })
 }
@@ -74,7 +70,7 @@ export function findByUserId(id) {
  */
 export function addUser(data) {
   return request({
-    url: API_PREFIX + `/user`,
+    url: UPMS_API_PREFIX + `/user`,
     method: 'post',
     data
   })
@@ -85,7 +81,7 @@ export function addUser(data) {
  */
 export function updateUser(data) {
   return request({
-    url: API_PREFIX + `/user`,
+    url: UPMS_API_PREFIX + `/user`,
     method: 'put',
     data
   })
@@ -96,7 +92,7 @@ export function updateUser(data) {
  */
 export function delUser(id) {
   return request({
-    url: API_PREFIX + `/user/${id}`,
+    url: UPMS_API_PREFIX + `/user/${id}`,
     method: 'delete'
   })
 }
@@ -106,7 +102,7 @@ export function delUser(id) {
  */
 export function resetPass(data) {
   return request({
-    url: API_PREFIX + `/user/resetPass`,
+    url: UPMS_API_PREFIX + `/user/resetPass`,
     method: 'delete',
     data
   })
@@ -117,7 +113,7 @@ export function resetPass(data) {
  */
 export function exportUser() {
   return request({
-    url: API_PREFIX + `/user/export`,
+    url: UPMS_API_PREFIX + `/user/export`,
     method: 'get',
     responseType: 'blob'
   })
