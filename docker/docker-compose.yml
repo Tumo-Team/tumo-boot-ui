@@ -7,7 +7,5 @@ services:
       context: .
     restart: always
     container_name: tumo-boot-ui
-    environment:
-      - TZ=Asia/Shanghai
     ports:
       - 8091:80
