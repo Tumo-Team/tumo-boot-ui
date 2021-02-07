@@ -89,11 +89,6 @@ service.interceptors.response.use(
     const res = error.response
     console.log(res) // for debug
     message.error(res.data.msg ? res.data.msg : res.data.message, 4)
-    // if (res.status === 401 || res.status === 403) {
-    //   store.dispatch('user/logout').then(() => {
-    //     location.reload()
-    //   })
-    // }
     return Promise.reject(error)
   }
 )

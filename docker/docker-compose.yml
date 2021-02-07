@@ -1,12 +1,12 @@
 version: "3.5"
 
 services:
-  tumo-boot-admin:
+  tumo-boot-ui:
+    image: tumo-boot-ui
     build:
       context: .
     restart: always
-    container_name: tumo-boot-admin
-    image: tumo-boot-admin
+    container_name: tumo-boot-ui
     environment:
       - TZ=Asia/Shanghai
     ports:
