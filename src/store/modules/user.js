@@ -1,6 +1,7 @@
 import { login, logout, getInfo } from '@/api/auth'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import router, { resetRouter } from '@/router'
+import { resetRouter } from '@/router'
+import { Modal } from 'ant-design-vue'
 
 const state = {
   token: getToken(),
@@ -29,7 +30,7 @@ const mutations = {
 }
 
 const actions = {
-  // user login
+  // 用户登录
   login({ commit }, userInfo) {
     const { username, password, captcha, captcha_key } = userInfo
     return new Promise((resolve, reject) => {
@@ -43,8 +44,8 @@ const actions = {
     })
   },
 
-  // get user info
-  getInfo({ commit, state }) {
+  // 获取登录用户信息
+  getInfo({ commit }) {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
         const { data } = response
@@ -55,7 +56,6 @@ const actions = {
 
         const { username, avatar, introduction } = data.user
 
-        // roles must be a non-empty array
         if (!data.roles || data.roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
@@ -71,8 +71,8 @@ const actions = {
     })
   },
 
-  // user logout
-  logout({ commit, state, dispatch }) {
+  // 注销登录
+  logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
@@ -86,28 +86,22 @@ const actions = {
     })
   },
 
-  // dynamically modify permissions
-  changeRoles({ commit, dispatch }, role) {
-    return new Promise(async resolve => {
-      const token = role + '-token'
-
-      commit('SET_TOKEN', token)
-      setToken(token)
-
-      const { roles } = await dispatch('getInfo')
-
-      resetRouter()
-
-      // generate accessible routes map based on roles
-      const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
-
-      // dynamically add accessible routes
-      router.addRoutes(accessRoutes)
-
-      // reset visited views and cached views
-      // dispatch('tagsView/delAllViews', null, { root: true })
-
-      resolve()
+  // 401请求清除Session信息
+  logoutSession({ commit }) {
+    return new Promise((resolve, reject) => {
+      // 重新登录
+      Modal.warning({
+        title: 'Confirm logout',
+        content: 'Token已失效，请重新登录',
+        okText: '重新登录',
+        cancelText: 'Cancel',
+        onOk: () => {
+          commit('SET_TOKEN', '')
+          commit('SET_ROLES', [])
+          removeToken()
+          resolve()
+        }
+      })
     })
   }
 }

@@ -25,6 +25,9 @@
         <a-form-model-item v-if="form.id === undefined" has-feedback prop="password" label="密码">
           <a-input v-model="form.password" type="password" />
         </a-form-model-item>
+        <a-form-model-item has-feedback prop="realName" label="真实姓名">
+          <a-input v-model="form.realName" />
+        </a-form-model-item>
         <a-form-model-item prop="sex" label="性别">
           <a-select v-model="form.sex" placeholder="请选择性别">
             <a-select-option value="男">男</a-select-option>
@@ -111,6 +114,7 @@ export default {
       deptTree: [],
       rules: {
         username: [{ required: true, validator: validateName, trigger: 'blur' }],
+        relaName: [{ required: true, message: '请输入真实姓名', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
         email: [{ type: 'email', required: false, message: '请输入正确的邮箱地址', trigger: 'blur' }],

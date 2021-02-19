@@ -1,17 +1,5 @@
 <template>
   <div class="app-container">
-    <!-- 搜索条件部分 - Begin -->
-    <div class="tumo-table-search">
-      <a-input
-        v-model="query.name"
-        placeholder="请输入名称查询"
-        style="width: 200px"
-      />
-      <a-button type="primary" icon="search" @click="fetchData">
-        查询
-      </a-button>
-    </div>
-    <!-- 搜索条件部分 - End -->
     <a-card>
       <!-- 工具栏 - Begin -->
       <div class="tumo-table-toolbar">
@@ -95,7 +83,6 @@ export default {
         { title: '角色名称', dataIndex: 'name', key: 'name' },
         { title: '角色别名', dataIndex: 'alias', key: 'alias' },
         { title: '描述', dataIndex: 'des', key: 'des' },
-        { title: '创建时间', dataIndex: 'createTime', key: 'createTime', align: 'center', width: 150 },
         { title: '操作', key: 'action', scopedSlots: { customRender: 'action' }, fixed: 'right', align: 'center', width: 200 }
       ],
       query: {},

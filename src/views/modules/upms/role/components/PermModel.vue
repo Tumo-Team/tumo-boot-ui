@@ -133,6 +133,7 @@ export default {
         if (res.code === 200) {
           this.$message.success('权限分配成功')
           this.handleClose()
+          this.$emit('refresh')
         }
       })
     }

@@ -1,17 +1,5 @@
 <template>
   <div class="app-container">
-    <!-- 搜索条件部分 - Begin -->
-    <div class="tumo-table-search">
-      <a-input
-        v-model="query.name"
-        placeholder="请输入名称查询"
-        style="width: 200px"
-      />
-      <a-button type="primary" icon="search" @click="fetchData">
-        查询
-      </a-button>
-    </div>
-    <!-- 搜索条件部分 - End -->
 
     <a-card>
       <!-- 工具栏 - Begin -->
@@ -45,7 +33,8 @@
         bordered
       >
         <span slot="type" slot-scope="type, record">
-          <a-tag color="blue">{{ record.meta.title }}</a-tag>
+          <a-tag v-if="record.type === 'menu'" color="blue">菜单</a-tag>
+          <a-tag v-if="record.type === 'button'" color="red">按钮</a-tag>
         </span>
         <span slot="icon" slot-scope="icon, record">
           <a-icon v-if="record.meta.icon !== null" :type="record.meta.icon" />
@@ -105,7 +94,6 @@ export default {
         { title: '是否外链', dataIndex: 'frame', key: 'frame', scopedSlots: { customRender: 'frame' }, width: 80, align: 'center' },
         { title: '操作', key: 'action', scopedSlots: { customRender: 'action' }, fixed: 'right', width: 200, align: 'center' }
       ],
-      query: {},
       loading: true
     }
   },
@@ -115,7 +103,7 @@ export default {
   methods: {
     fetchData() {
       this.loading = true
-      menuTree(this.query).then(res => {
+      menuTree().then(res => {
         this.list = res.data
         this.loading = false
       })

@@ -120,6 +120,7 @@ export default {
       list: [],
       columns: [
         { title: '账户', dataIndex: 'username', key: 'username', width: 140 },
+        { title: '真实姓名', dataIndex: 'realName', key: 'realName', width: 140 },
         { title: '性别', dataIndex: 'sex', key: 'sex', width: 60, align: 'center' },
         { title: '电话', dataIndex: 'phone', key: 'phone', width: 120 },
         { title: '邮箱', dataIndex: 'email', key: 'email', width: 180 },

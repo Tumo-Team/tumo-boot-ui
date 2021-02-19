@@ -51,7 +51,7 @@
           </a-input>
         </a-form-model-item>
         <a-form-model-item v-if="form.type === 'menu'" prop="component" label="组件路径">
-          <a-input v-model="form.component" :disabled="form.parentId === undefined">
+          <a-input v-model="form.component">
             <a-tooltip slot="suffix" title="顶级节点路径是Layout无需设置；子节点为views文件夹下文件相对路径">
               <a-icon type="info-circle" style="color: rgba(0,0,0,.45)" />
             </a-tooltip>
@@ -61,7 +61,7 @@
           <a-input v-model="form.perms" />
         </a-form-model-item>
         <a-form-model-item v-if="form.type === 'menu'" prop="icon" label="菜单图标">
-          <a-input v-model="form.icon" disabled>
+          <a-input v-model="form.icon">
             <a-icon slot="prefix" type="search" @click="$refs.iconPanel.init()" />
             <a-tooltip slot="suffix" title="点击前面的搜索按钮选择图标">
               <a-icon type="info-circle" style="color: rgba(0,0,0,.45)" />

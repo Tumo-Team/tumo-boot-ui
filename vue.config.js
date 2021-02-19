@@ -26,7 +26,7 @@ module.exports = {
     },
     proxy: {
       '/tumo-boot': {
-        target: `http://localhost:8080/`,
+        target: `http://127.0.0.1:8090/`,
         ws: true
       }
     }

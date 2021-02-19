@@ -25,6 +25,12 @@
             </a-form-item>
             <a-form-item>
               <span slot="label">
+                <a-icon type="user" />&nbsp;真实姓名&nbsp;
+              </span>
+              {{ form.realName }}
+            </a-form-item>
+            <a-form-item>
+              <span slot="label">
                 <a-icon type="user" />&nbsp;性别&nbsp;
               </span>
               <a-tag color="blue">{{ form.sex }}</a-tag>

@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'Tumo-Admin-Token'
+const TokenKey = 'Tumo-Boot-Token'
 
 export function getToken() {
   return Cookies.get(TokenKey)

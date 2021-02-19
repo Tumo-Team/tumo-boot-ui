@@ -121,29 +121,6 @@ export const asyncRoutes = [
     ]
   },
 
-  {
-    path: '/external-link',
-    children: [
-      {
-        path: 'https://github.com/Tumo-Team/Tumo-Boot',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
-  {
-    path: '/',
-    component: Layout,
-    children: [
-      {
-        path: '/test',
-        name: 'Test',
-        component: () => import('@/views/modules/test/index'),
-        meta: { title: 'Test', icon: 'radar-chart' }
-      }
-    ]
-  },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
