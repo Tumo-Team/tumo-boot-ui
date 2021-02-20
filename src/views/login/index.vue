@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       form: {
-        username: 'admin',
+        username: 'tumo-boot',
         password: 'tycoding'
       },
       rules: {

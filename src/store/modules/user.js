@@ -4,27 +4,27 @@ import { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
-  name: '',
-  avatar: '',
-  introduction: '',
-  roles: []
+  user: {},
+  dept: {},
+  roles: [],
+  permissions: []
 }
 
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_INTRODUCTION: (state, introduction) => {
-    state.introduction = introduction
+  SET_USER: (state, user) => {
+    state.user = user
   },
-  SET_NAME: (state, name) => {
-    state.name = name
-  },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+  SET_DEPT: (state, dept) => {
+    state.dept = dept
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_PERMISSIONS: (state, permissions) => {
+    state.permissions = permissions
   }
 }
 
@@ -33,9 +33,9 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password, captcha, captcha_key } = userInfo
     return new Promise((resolve, reject) => {
-      login(username.trim(), password, captcha, captcha_key).then(response => {
-        commit('SET_TOKEN', response.access_token)
-        setToken(response.access_token)
+      login(username.trim(), password, captcha, captcha_key).then(res => {
+        commit('SET_TOKEN', res.access_token)
+        setToken(res.access_token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -46,23 +46,20 @@ const actions = {
   // 获取登录用户信息
   getInfo({ commit }) {
     return new Promise((resolve, reject) => {
-      getInfo().then(response => {
-        const { data } = response
-
+      getInfo().then(res => {
+        const data = res.data
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('获取用户信息失败')
         }
-
-        const { username, avatar, introduction } = data.user
 
         if (!data.roles || data.roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
+          reject('没有查询到用户角色')
         }
 
+        commit('SET_USER', data.user)
+        commit('SET_DEPT', data.dept)
         commit('SET_ROLES', data.roles)
-        commit('SET_NAME', username)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
+        commit('SET_PERMISSIONS', data.permissions)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -75,7 +72,10 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
+        commit('SET_USER', {})
+        commit('SET_DEPT', {})
         commit('SET_ROLES', [])
+        commit('SET_PERMISSIONS', [])
         removeToken()
         resetRouter()
         resolve()
@@ -89,7 +89,10 @@ const actions = {
   logoutSession({ commit }) {
     return new Promise((resolve, reject) => {
       commit('SET_TOKEN', '')
+      commit('SET_USER', {})
+      commit('SET_DEPT', {})
       commit('SET_ROLES', [])
+      commit('SET_PERMISSIONS', [])
       removeToken()
       resolve()
     })

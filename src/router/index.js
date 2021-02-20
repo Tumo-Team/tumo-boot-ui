@@ -59,23 +59,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/profile/index'),
-        hidden: true
-      },
-      {
-        path: 'setting',
-        component: () => import('@/views/profile/components/setting'),
-        hidden: true
-      },
-      {
-        path: 'setting/base',
-        component: () => import('@/views/profile/components/base-set'),
-        hidden: true
-      },
-      {
-        path: 'setting/safe',
-        component: () => import('@/views/profile/components/safe-set'),
-        hidden: true
+        component: () => import('@/views/profile/index')
       }
     ]
   }

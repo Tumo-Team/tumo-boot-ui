@@ -11,33 +11,25 @@
     <div class="right-menu">
       <Screenfull />
       <a-spin class="avatar-wrapper" :spinning="spinning">
-        <a-dropdown v-if="name" placement="bottomRight">
+        <a-dropdown v-if="user" placement="bottomRight">
           <span class="avatar-wrapper">
-            <a-avatar size="small" :src="avatar ? avatar : '/avatar/default.png'" class="avatar-img" />
-            <span class="avatar-name">{{ name }}</span>
+            <a-avatar size="small" :src="user.avatar ? user.avatar : '/avatar/default.png'" class="avatar-img" />
+            <span class="avatar-name">{{ user.username }}</span>
           </span>
           <template v-slot:overlay>
             <a-menu class="ant-pro-drop-down menu" :selected-keys="[]">
-              <a-menu-item key="github">
-                <a href="https://github.com/TyCoding/ant-design-vue-pro" target="_blank">
-                  <a-icon type="github" />
-                  Github
-                </a>
+              <a-menu-item key="github" @click="handleGithub">
+                <a-icon type="github" />
+                GitHub
               </a-menu-item>
-              <a-menu-item key="blog">
-                <a href="https://github.com/TyCoding" target="_blank">
-                  <a-icon type="link" />
-                  Blog
-                </a>
+              <a-menu-item key="blog" @click="handleBlog">
+                <a-icon type="link" />
+                个人博客
               </a-menu-item>
               <a-menu-divider />
               <a-menu-item key="profile" @click="handleProfile">
                 <a-icon type="setting" />
-                个人中心
-              </a-menu-item>
-              <a-menu-item key="settings" @click="handleSetting">
-                <a-icon type="setting" />
-                个人设置
+                个人信息
               </a-menu-item>
               <a-menu-divider />
               <a-menu-item key="logout" @click="logout">
@@ -48,8 +40,8 @@
           </template>
         </a-dropdown>
       </a-spin>
-      <a class="right-menu-github" href="https://github.com/TyCoding/ant-design-vue-pro" target="_blank">
-        <a-dropdown v-if="name">
+      <a class="right-menu-github" href="https://github.com/Tumo-Team/Tumo-Boot" target="_blank">
+        <a-dropdown v-if="user.username">
           <span class="avatar-wrapper">
             <a-icon type="github" :style="{ fontSize: '20px'}" />
           </span>
@@ -80,9 +72,7 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar',
-      'device',
-      'name'
+      'user'
     ])
   },
   mounted() {
@@ -92,11 +82,14 @@ export default {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
+    handleGithub() {
+      window.open('https://github.com/TyCoding', '_blank')
+    },
+    handleBlog() {
+      window.open('http://tycoding.cn', '_blank')
+    },
     handleProfile() {
       this.$router.push('/profile/index')
-    },
-    handleSetting() {
-      this.$router.push('/profile/setting')
     },
     logout() {
       this.$confirm({

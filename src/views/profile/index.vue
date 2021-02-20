@@ -5,51 +5,25 @@
         <a-card :bordered="false">
           <div class="account-center-avatarHolder">
             <div class="avatar">
-              <img :src="avatar">
+              <img :src="user.avatar === null ? '/avatar/default.png' : user.avatar">
             </div>
-            <div class="username">{{ name }}</div>
-            <div class="bio">兴趣使然的Coder</div>
+            <div class="username">{{ user.username }}</div>
+            <div class="bio">{{ user.email }}</div>
           </div>
           <div class="account-center-detail">
             <p>
-              <i class="title" />交互专家
+              <i class="title" />{{ dept === null ? '暂无':dept.name }}
             </p>
             <p>
-              <i class="group" />蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED
+              <i class="group" />
+              <a-tag v-for="role in roles" :key="role.id" color="green">{{ role.name }}</a-tag>
             </p>
-            <p>
-              <i class="address" />
-              <span>浙江省</span>
-              <span>杭州市</span>
-            </p>
-          </div>
-          <a-divider />
-          <div class="account-tags">
-            <div class="account-tags-title">标签</div>
-            <a-tag>中二</a-tag>
-            <a-tag><a href="https://tycoding.cn">Coder</a></a-tag>
-            <a-tag closable>
-              摸鱼
-            </a-tag>
           </div>
         </a-card>
       </a-col>
       <a-col :md="24" :lg="17">
-        <a-card
-          style="width:100%"
-          :bordered="false"
-        >
-          <a-tabs default-active-key="1">
-            <a-tab-pane key="1" tab="Tab 1">
-              Content of Tab Pane 1
-            </a-tab-pane>
-            <a-tab-pane key="2" tab="Tab 2" force-render>
-              Content of Tab Pane 2
-            </a-tab-pane>
-            <a-tab-pane key="3" tab="Tab 3">
-              Content of Tab Pane 3
-            </a-tab-pane>
-          </a-tabs>
+        <a-card style="width:100%" :bordered="false">
+          <base-set />
         </a-card>
       </a-col>
     </a-row>
@@ -59,9 +33,11 @@
 <script>
 
 import { mapGetters } from 'vuex'
+import BaseSet from './components/base-set'
 
 export default {
   components: {
+    BaseSet
   },
   data() {
     return {
@@ -69,7 +45,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['name', 'avatar'])
+    ...mapGetters(['user', 'roles', 'dept'])
   },
   methods: {
 
