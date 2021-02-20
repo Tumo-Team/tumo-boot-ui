@@ -64,8 +64,12 @@ service.interceptors.response.use(
     }
   },
   error => {
-    const res = error.response
-    message.error(res.data.msg ? res.data.msg : res.data.message, 4)
+    const data = error.response.data
+    if (data instanceof Object) {
+      message.error(data.msg ? data.msg : data.message, 4)
+    } else {
+      message.error('网络连接异常，请稍后重试')
+    }
     return Promise.reject(error)
   }
 )
