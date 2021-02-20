@@ -4,6 +4,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
 import getPageTitle from '@/utils/get-page-title'
+import { message } from 'ant-design-vue'
 
 NProgress.configure({ showSpinner: false })
 
@@ -33,6 +34,7 @@ router.beforeEach(async(to, from, next) => {
           next({ ...to, replace: true })
         } catch (error) {
           console.log('获取用户信息失败.')
+          message.error('获取用户信息失败')
           await store.dispatch('user/logoutSession')
           next(`/login?redirect=${to.path}`)
           NProgress.done()

@@ -1,7 +1,6 @@
 import { login, logout, getInfo } from '@/api/auth'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
-import { Modal } from 'ant-design-vue'
 
 const state = {
   token: getToken(),
@@ -89,19 +88,10 @@ const actions = {
   // 401请求清除Session信息
   logoutSession({ commit }) {
     return new Promise((resolve, reject) => {
-      // 重新登录
-      Modal.warning({
-        title: 'Confirm logout',
-        content: 'Token已失效，请重新登录',
-        okText: '重新登录',
-        cancelText: 'Cancel',
-        onOk: () => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          removeToken()
-          resolve()
-        }
-      })
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
+      resolve()
     })
   }
 }

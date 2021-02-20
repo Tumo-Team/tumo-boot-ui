@@ -13,6 +13,6 @@ export const AUTH_API_PREFIX = 'auth'
 export const UPMS_API_PREFIX = 'upms'
 
 /**
- * SETTING 模块API前缀
+ * SYSTEM 模块API前缀
  */
-export const SETTING_API_PREFIX = 'setting'
+export const SYSTEM_API_PREFIX = 'system'

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { message } from 'ant-design-vue'
+import { message, Modal } from 'ant-design-vue'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -41,7 +41,15 @@ service.interceptors.response.use(
 
     // 针对Security OAuth异常做特殊处理
     if (response.status === 401 || response.status === 403) {
-      store.dispatch('user/logoutSession')
+      Modal.warning({
+        title: 'Confirm logout',
+        content: 'Token已失效，请重新登录',
+        okText: '重新登录',
+        cancelText: 'Cancel',
+        onOk: () => {
+          store.dispatch('user/logoutSession')
+        }
+      })
     }
 
     // 根据response code判断请求是否成功

@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-
     <a-card>
       <!-- 工具栏 - Begin -->
       <div class="tumo-table-toolbar">
