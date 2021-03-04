@@ -64,9 +64,11 @@ service.interceptors.response.use(
     }
   },
   error => {
+    console.log(error.response)
+
     const data = error.response.data
     if (data instanceof Object) {
-      message.error(data.msg ? data.msg : data.message, 4)
+      message.error(data.msg ? data.msg : data.message ? data.message : '网络连接异常，请稍后重试', 4)
     } else {
       message.error('网络连接异常，请稍后重试')
     }
