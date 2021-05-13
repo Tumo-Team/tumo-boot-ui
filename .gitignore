@@ -1,24 +1,27 @@
+node_modules
 .DS_Store
-node_modules/
-dist/
-docker/dist/
-npm-debug.apiLog*
-yarn-debug.apiLog*
-yarn-error.apiLog*
-**/*.apiLog
+dist
+.npmrc
+.cache
 
-tests/**/coverage/
-tests/e2e/reports
-selenium-debug.apiLog
+test/upload-server/static
+
+.local
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Editor directories and files
 .idea
-.vscode
+# .vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.local
-
-package-lock.json
-yarn.lock
+*.sw?

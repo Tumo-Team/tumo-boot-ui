@@ -1,20 +1,33 @@
 <template>
-  <div id="app">
-    <a-config-provider :locale="locale">
-      <router-view />
-    </a-config-provider>
-  </div>
+  <ConfigProvider v-bind="lockEvent" :locale="getAntdLocale">
+    <AppProvider>
+      <RouterView />
+    </AppProvider>
+  </ConfigProvider>
 </template>
 
-<script>
-import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
+<script lang="ts">
+  import { defineComponent } from 'vue';
+  import { ConfigProvider } from 'ant-design-vue';
+  import { AppProvider } from '/@/components/Application';
 
-export default {
-  name: 'App',
-  data() {
-    return {
-      locale: zhCN
-    }
-  }
-}
+  import { useLockPage } from '/@/hooks/web/useLockPage';
+  import { useTitle } from '/@/hooks/web/useTitle';
+  import { useLocale } from '/@/locales/useLocale';
+
+  export default defineComponent({
+    name: 'App',
+    components: { ConfigProvider, AppProvider },
+    setup() {
+      useTitle();
+
+      // support Multi-language
+      const { getAntdLocale } = useLocale();
+
+      // Create a lock screen monitor
+      const lockEvent = useLockPage();
+
+      return { getAntdLocale, lockEvent };
+    },
+  });
 </script>
