@@ -11,9 +11,9 @@ export default {
       // The field name of the current page passed to the background
       pageField: 'page',
       // The number field name of each page displayed in the background
-      sizeField: 'pageSize',
+      sizeField: 'limit',
       // Field name of the form data returned by the interface
-      listField: 'items',
+      listField: 'rows',
       // Total number of tables returned by the interface field name
       totalField: 'total',
     },

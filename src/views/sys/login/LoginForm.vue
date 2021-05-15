@@ -89,7 +89,7 @@
       const formData = reactive({
         username: 'tumo-boot',
         password: '123456',
-        captcha: '',
+        captcha: '1',
         captchaKey: '',
       });
 
@@ -107,7 +107,7 @@
       // 页面渲染时触发
       onMounted(() => {
         // 获取验证码
-        handleCaptcha();
+        // handleCaptcha();
       });
 
       // 验证码

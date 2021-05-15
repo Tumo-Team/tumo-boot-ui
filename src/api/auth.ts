@@ -28,7 +28,7 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
       url: Api.Login,
       headers: {
         Authorization: 'Basic Y2xpZW50OnNlY3JldA==',
-        'Captcha-Key': params.captchaKey,
+        // 'Captcha-Key': params.captchaKey,
       },
       params: {
         username: params.username,

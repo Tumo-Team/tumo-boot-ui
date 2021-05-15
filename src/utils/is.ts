@@ -92,3 +92,13 @@ export function isUrl(path: string): boolean {
   const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
   return reg.test(path);
 }
+
+export function isEmail(path: string): boolean {
+  const reg = /^[A-Za-z0-9-_\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+  return reg.test(path);
+}
+
+export function isPhone(path: string): boolean {
+  const reg = /^(?:(?:\+|00)86)?1[3-9]\d{9}$/;
+  return reg.test(path);
+}
