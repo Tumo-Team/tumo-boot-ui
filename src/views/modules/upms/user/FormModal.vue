@@ -7,9 +7,10 @@
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { accountFormSchema } from './data';
-  import { getUser } from '/@/api/modules/upms/user';
+  import { userFormSchema } from './data';
+  import { getUser, addUser, updateUser } from '/@/api/modules/upms/user';
   import { getDeptTree } from '/@/api/modules/upms/dept';
+  import { isNullOrUnDef } from '/@/utils/is';
 
   export default defineComponent({
     name: 'FormModal',
@@ -20,7 +21,7 @@
 
       const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
         labelWidth: 100,
-        schemas: accountFormSchema,
+        schemas: userFormSchema,
         showActionButtonGroup: false,
         actionColOptions: {
           span: 23,
@@ -58,8 +59,13 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+          if (isNullOrUnDef(values.id)) {
+            // 新增
+            await addUser(values);
+          } else {
+            // 修改
+            await updateUser(values);
+          }
           closeModal();
           emit('success');
         } finally {

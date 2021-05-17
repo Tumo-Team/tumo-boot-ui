@@ -38,6 +38,8 @@
   import { useModal } from '/@/components/Modal';
   import FormModal from './FormModal.vue';
 
+  import { deleteUser } from '/@/api/modules/upms/user';
+
   import { columns, searchFormSchema } from './data';
 
   export default defineComponent({
@@ -77,8 +79,9 @@
         });
       }
 
-      function handleDelete(id: string | number) {
-        console.log(id);
+      async function handleDelete(id: string | number) {
+        await deleteUser(id);
+        reload();
       }
 
       function handleSuccess() {

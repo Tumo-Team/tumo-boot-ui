@@ -77,7 +77,13 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const accountFormSchema: FormSchema[] = [
+export const userFormSchema: FormSchema[] = [
+  {
+    field: 'id',
+    label: 'id',
+    component: 'Input',
+    show: false,
+  },
   {
     field: 'username',
     label: '用户名',
@@ -96,6 +102,24 @@ export const accountFormSchema: FormSchema[] = [
     component: 'InputPassword',
     required: true,
     show: false,
+  },
+  {
+    field: 'status',
+    label: '状态',
+    component: 'RadioGroup',
+    defaultValue: false,
+    componentProps: {
+      options: [
+        {
+          label: '启用',
+          value: true,
+        },
+        {
+          label: '停用',
+          value: false,
+        },
+      ],
+    },
   },
   {
     label: '角色',
@@ -185,6 +209,20 @@ export const accountFormSchema: FormSchema[] = [
   {
     field: 'sex',
     label: '性别',
-    component: 'Input',
+    component: 'Select',
+    componentProps: {
+      options: [
+        {
+          label: '男',
+          value: '男',
+          key: '1',
+        },
+        {
+          label: '女',
+          value: '女',
+          key: '2',
+        },
+      ],
+    },
   },
 ];

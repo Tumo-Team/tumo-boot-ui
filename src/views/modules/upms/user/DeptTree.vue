@@ -31,7 +31,6 @@
 
       function handleSelect(keys: string, e) {
         emit('select', keys[0]);
-        console.log(keys, e);
       }
 
       onMounted(() => {
