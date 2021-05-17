@@ -13,10 +13,11 @@
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { formSchema } from './menu.data';
+  import { formSchema } from './data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { getMenuTree, getMenu, updateMenu, addMenu } from '/@/api/modules/upms/menu';
+  import { isNullOrUnDef } from '/@/utils/is';
 
   export default defineComponent({
     name: 'MenuDrawer',
@@ -38,13 +39,18 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
+          const menu = await getMenu(data.id);
+          menu.isDisabled = String(menu.isDisabled);
+          menu.isExt = String(menu.isExt);
+          menu.isKeepalive = String(menu.isKeepalive);
+          menu.isShow = String(menu.isShow);
           setFieldsValue({
-            ...data.record,
+            ...menu,
           });
         }
-        const treeData = await getMenuList();
+        const treeData = await getMenuTree();
         updateSchema({
-          field: 'parentMenu',
+          field: 'parentId',
           componentProps: { treeData },
         });
       });
@@ -55,8 +61,13 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+          if (isNullOrUnDef(values.id)) {
+            // 新增
+            await addMenu(values);
+          } else {
+            // 修改
+            await updateMenu(values);
+          }
           closeDrawer();
           emit('success');
         } finally {

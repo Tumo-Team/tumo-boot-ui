@@ -7,26 +7,35 @@ import { Icon } from '/@/components/Icon';
 export const columns: BasicColumn[] = [
   {
     title: '菜单名称',
-    dataIndex: 'menuName',
+    dataIndex: 'name',
     width: 200,
     align: 'left',
+  },
+  {
+    title: '菜单类型',
+    dataIndex: 'type',
+    width: 100,
   },
   {
     title: '图标',
     dataIndex: 'icon',
     width: 50,
     customRender: ({ record }) => {
-      return h(Icon, { icon: record.icon });
+      return h(Icon, { icon: record.meta.icon });
     },
   },
   {
     title: '权限标识',
-    dataIndex: 'permission',
+    dataIndex: 'perms',
     width: 180,
   },
   {
     title: '组件',
     dataIndex: 'component',
+  },
+  {
+    title: '路径',
+    dataIndex: 'path',
   },
   {
     title: '排序',
@@ -35,42 +44,36 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '状态',
-    dataIndex: 'status',
+    dataIndex: 'isDisabled',
     width: 80,
     customRender: ({ record }) => {
-      const status = record.status;
-      const enable = ~~status === 0;
+      const isDisabled = record.isDisabled;
+      const enable = ~~isDisabled === 0;
       const color = enable ? 'green' : 'red';
       const text = enable ? '启用' : '停用';
       return h(Tag, { color: color }, () => text);
     },
   },
-  {
-    title: '创建时间',
-    dataIndex: 'createTime',
-    width: 180,
-  },
 ];
 
-const isDir = (type: string) => type === '0';
-const isMenu = (type: string) => type === '1';
-const isButton = (type: string) => type === '2';
+const isMenu = (type: string) => type === 'menu';
+const isButton = (type: string) => type === 'button';
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'menuName',
+    field: 'name',
     label: '菜单名称',
     component: 'Input',
     colProps: { span: 8 },
   },
   {
-    field: 'status',
+    field: 'isDisabled',
     label: '状态',
     component: 'Select',
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '启用', value: 'false' },
+        { label: '停用', value: 'true' },
       ],
     },
     colProps: { span: 8 },
@@ -79,40 +82,43 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
+    field: 'id',
+    label: 'id',
+    component: 'Input',
+    show: false,
+  },
+  {
     field: 'type',
     label: '菜单类型',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 'menu',
     componentProps: {
       options: [
-        { label: '目录', value: '0' },
-        { label: '菜单', value: '1' },
-        { label: '按钮', value: '2' },
+        { label: '菜单', value: 'menu' },
+        { label: '按钮', value: 'button' },
       ],
     },
     colProps: { lg: 24, md: 24 },
   },
   {
-    field: 'menuName',
+    field: 'name',
     label: '菜单名称',
     component: 'Input',
     required: true,
   },
-
   {
-    field: 'parentMenu',
+    field: 'parentId',
     label: '上级菜单',
     component: 'TreeSelect',
     componentProps: {
       replaceFields: {
-        title: 'menuName',
+        title: 'name',
         key: 'id',
         value: 'id',
       },
       getPopupContainer: () => document.body,
     },
   },
-
   {
     field: 'orderNo',
     label: '排序',
@@ -126,9 +132,8 @@ export const formSchema: FormSchema[] = [
     required: true,
     show: ({ values }) => !isButton(values.type),
   },
-
   {
-    field: 'routePath',
+    field: 'path',
     label: '路由地址',
     component: 'Input',
     required: true,
@@ -141,20 +146,19 @@ export const formSchema: FormSchema[] = [
     show: ({ values }) => isMenu(values.type),
   },
   {
-    field: 'permission',
+    field: 'perms',
     label: '权限标识',
     component: 'Input',
-    show: ({ values }) => !isDir(values.type),
   },
   {
-    field: 'status',
+    field: 'isDisabled',
     label: '状态',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 'false',
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '禁用', value: '1' },
+        { label: '启用', value: 'false' },
+        { label: '禁用', value: 'true' },
       ],
     },
   },
@@ -162,39 +166,38 @@ export const formSchema: FormSchema[] = [
     field: 'isExt',
     label: '是否外链',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 'false',
     componentProps: {
       options: [
-        { label: '否', value: '0' },
-        { label: '是', value: '1' },
+        { label: '否', value: 'false' },
+        { label: '是', value: 'true' },
       ],
     },
     show: ({ values }) => !isButton(values.type),
   },
-
   {
-    field: 'keepalive',
+    field: 'isKeepalive',
     label: '是否缓存',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 'true',
     componentProps: {
       options: [
-        { label: '否', value: '0' },
-        { label: '是', value: '1' },
+        { label: '否', value: 'false' },
+        { label: '是', value: 'true' },
       ],
     },
     show: ({ values }) => isMenu(values.type),
   },
 
   {
-    field: 'show',
+    field: 'isShow',
     label: '是否显示',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 'true',
     componentProps: {
       options: [
-        { label: '是', value: '0' },
-        { label: '否', value: '1' },
+        { label: '否', value: 'false' },
+        { label: '是', value: 'true' },
       ],
     },
     show: ({ values }) => !isButton(values.type),

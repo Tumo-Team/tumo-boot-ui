@@ -9,42 +9,42 @@
           :actions="[
             {
               icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record),
+              onClick: handleEdit.bind(null, record.id),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
                 title: '是否确认删除',
-                confirm: handleDelete.bind(null, record),
+                confirm: handleDelete.bind(null, record.id),
               },
             },
           ]"
         />
       </template>
     </BasicTable>
-    <MenuDrawer @register="registerDrawer" @success="handleSuccess" />
+    <FormModal @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getMenuList } from '/@/api/demo/system';
+  import { getMenuTree, deleteMenu } from '/@/api/modules/upms/menu';
 
   import { useDrawer } from '/@/components/Drawer';
-  import MenuDrawer from './MenuDrawer.vue';
+  import FormModal from './FormModal.vue';
 
-  import { columns, searchFormSchema } from './menu.data';
+  import { columns, searchFormSchema } from './data';
 
   export default defineComponent({
     name: 'MenuManagement',
-    components: { BasicTable, MenuDrawer, TableAction },
+    components: { BasicTable, FormModal, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
         title: '菜单列表',
-        api: getMenuList,
+        api: getMenuTree,
         columns,
         formConfig: {
           labelWidth: 120,
@@ -72,15 +72,16 @@
         });
       }
 
-      function handleEdit(record: Recordable) {
+      function handleEdit(id: string | number) {
         openDrawer(true, {
-          record,
+          id,
           isUpdate: true,
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(id: string | number) {
+        await deleteMenu(id);
+        reload();
       }
 
       function handleSuccess() {
