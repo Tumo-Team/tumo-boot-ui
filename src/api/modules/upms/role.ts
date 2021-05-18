@@ -3,6 +3,7 @@ import { ApiPrefix } from '/@/api/model/baseModel';
 
 const Api = {
   RoleList: `${ApiPrefix.UPMS_PREFIX}/role/list`,
+  RoleTree: `${ApiPrefix.UPMS_PREFIX}/role/tree`,
   BasicApi: `${ApiPrefix.UPMS_PREFIX}/role`,
   CheckRoleName: `${ApiPrefix.UPMS_PREFIX}/role/checkName`,
 };
@@ -13,6 +14,16 @@ const Api = {
 export function getRoleList(params: any) {
   return defHttp.get({
     url: Api.RoleList,
+    params,
+  });
+}
+
+/**
+ * 获取菜单树
+ */
+export function getRoleTree(params: any) {
+  return defHttp.get({
+    url: Api.RoleTree,
     params,
   });
 }

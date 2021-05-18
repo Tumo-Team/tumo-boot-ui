@@ -2,18 +2,17 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
-
 export const columns: BasicColumn[] = [
   {
-    title: '部门名称',
-    dataIndex: 'deptName',
-    width: 160,
+    title: '角色名称',
+    dataIndex: 'name',
+    width: 200,
     align: 'left',
   },
   {
-    title: '排序',
-    dataIndex: 'orderNo',
-    width: 50,
+    title: '角色别名',
+    dataIndex: 'alias',
+    width: 180,
   },
   {
     title: '状态',
@@ -21,27 +20,21 @@ export const columns: BasicColumn[] = [
     width: 80,
     customRender: ({ record }) => {
       const status = record.status;
-      const enable = ~~status === 0;
-      const color = enable ? 'green' : 'red';
-      const text = enable ? '启用' : '停用';
+      const color = status ? 'green' : 'red';
+      const text = status ? '启用' : '停用';
       return h(Tag, { color: color }, () => text);
     },
   },
   {
-    title: '创建时间',
-    dataIndex: 'createTime',
-    width: 180,
-  },
-  {
-    title: '备注',
-    dataIndex: 'remark',
+    title: '描述',
+    dataIndex: 'des',
   },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'deptName',
-    label: '部门名称',
+    field: 'name',
+    label: '角色名称',
     component: 'Input',
     colProps: { span: 8 },
   },
@@ -51,8 +44,8 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '启用', value: 'true' },
+        { label: '停用', value: 'false' },
       ],
     },
     colProps: { span: 8 },
@@ -61,48 +54,57 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
-    field: 'deptName',
-    label: '部门名称',
+    field: 'id',
+    label: 'id',
     component: 'Input',
-    required: true,
+    show: false,
   },
   {
-    field: 'parentDept',
-    label: '上级部门',
+    field: 'name',
+    label: '角色名称',
+    required: true,
+    component: 'Input',
+  },
+  {
+    field: 'parentId',
+    label: '上级角色',
     component: 'TreeSelect',
-
     componentProps: {
       replaceFields: {
-        title: 'deptName',
+        title: 'name',
         key: 'id',
         value: 'id',
       },
       getPopupContainer: () => document.body,
     },
-    required: true,
   },
   {
-    field: 'orderNo',
-    label: '排序',
-    component: 'InputNumber',
+    field: 'alias',
+    label: '角色别名',
     required: true,
+    component: 'Input',
   },
   {
     field: 'status',
     label: '状态',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 'true',
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '启用', value: 'true' },
+        { label: '停用', value: 'false' },
       ],
     },
-    required: true,
   },
   {
     label: '备注',
-    field: 'remark',
+    field: 'des',
     component: 'InputTextArea',
+  },
+  {
+    label: ' ',
+    field: 'menuIds',
+    slot: 'menu',
+    component: 'Input',
   },
 ];

@@ -9,42 +9,42 @@
           :actions="[
             {
               icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record),
+              onClick: handleEdit.bind(null, record.id),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
                 title: '是否确认删除',
-                confirm: handleDelete.bind(null, record),
+                confirm: handleDelete.bind(null, record.id),
               },
             },
           ]"
         />
       </template>
     </BasicTable>
-    <DeptModal @register="registerModal" @success="handleSuccess" />
+    <FormModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getDeptList } from '/@/api/demo/system';
+  import { getDeptTree, deleteDept } from '/@/api/modules/upms/dept';
 
   import { useModal } from '/@/components/Modal';
-  import DeptModal from './DeptModal.vue';
+  import FormModal from './FormModal.vue';
 
-  import { columns, searchFormSchema } from './dept.data';
+  import { columns, searchFormSchema } from './data';
 
   export default defineComponent({
     name: 'DeptManagement',
-    components: { BasicTable, DeptModal, TableAction },
+    components: { BasicTable, FormModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '部门列表',
-        api: getDeptList,
+        api: getDeptTree,
         columns,
         formConfig: {
           labelWidth: 120,
@@ -72,15 +72,15 @@
         });
       }
 
-      function handleEdit(record: Recordable) {
+      function handleEdit(id: string | number) {
         openModal(true, {
-          record,
+          id,
           isUpdate: true,
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(id: string | number) {
+        await deleteDept(id);
       }
 
       function handleSuccess() {

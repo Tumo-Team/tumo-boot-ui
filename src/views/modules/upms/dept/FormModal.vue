@@ -7,9 +7,11 @@
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { formSchema } from './dept.data';
+  import { formSchema } from './data';
 
-  import { getDeptList } from '/@/api/demo/system';
+  import { getDeptTree, getDept, addDept, updateDept } from '/@/api/modules/upms/dept';
+  import { isNullOrUnDef } from '/@/utils/is';
+
   export default defineComponent({
     name: 'DeptModal',
     components: { BasicModal, BasicForm },
@@ -29,13 +31,14 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
+          const dept = await getDept(data.id);
           setFieldsValue({
-            ...data.record,
+            ...dept,
           });
         }
-        const treeData = await getDeptList();
+        const treeData = await getDeptTree();
         updateSchema({
-          field: 'parentDept',
+          field: 'parentId',
           componentProps: { treeData },
         });
       });
@@ -46,8 +49,13 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+          if (isNullOrUnDef(values.id)) {
+            // 新增
+            await addDept(values);
+          } else {
+            // 修改
+            await updateDept(values);
+          }
           closeModal();
           emit('success');
         } finally {

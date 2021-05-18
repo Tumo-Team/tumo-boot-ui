@@ -9,14 +9,14 @@
           :actions="[
             {
               icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record),
+              onClick: handleEdit.bind(null, record.id),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
                 title: '是否确认删除',
-                confirm: handleDelete.bind(null, record),
+                confirm: handleDelete.bind(null, record.id),
               },
             },
           ]"
@@ -30,12 +30,12 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getRoleListByPage } from '/@/api/demo/system';
+  import { getRoleTree, deleteRole } from '/@/api/modules/upms/role';
 
   import { useDrawer } from '/@/components/Drawer';
-  import RoleDrawer from './RoleDrawer.vue';
+  import RoleDrawer from './FormModal.vue';
 
-  import { columns, searchFormSchema } from './role.data';
+  import { columns, searchFormSchema } from './data';
 
   export default defineComponent({
     name: 'RoleManagement',
@@ -44,7 +44,7 @@
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
         title: '角色列表',
-        api: getRoleListByPage,
+        api: getRoleTree,
         columns,
         formConfig: {
           labelWidth: 120,
@@ -69,15 +69,16 @@
         });
       }
 
-      function handleEdit(record: Recordable) {
+      function handleEdit(id: string | number) {
         openDrawer(true, {
-          record,
+          id,
           isUpdate: true,
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(id: string | number) {
+        await deleteRole(id);
+        reload();
       }
 
       function handleSuccess() {

@@ -4,7 +4,6 @@ import { ApiPrefix } from '/@/api/model/baseModel';
 const Api = {
   UserList: `${ApiPrefix.UPMS_PREFIX}/user/list`,
   UserPage: `${ApiPrefix.UPMS_PREFIX}/user/page`,
-  UserRoleList: `${ApiPrefix.UPMS_PREFIX}/user/role/list`,
   BasicApi: `${ApiPrefix.UPMS_PREFIX}/user`,
   CheckUserName: `${ApiPrefix.UPMS_PREFIX}/user/checkName`,
 };
@@ -26,15 +25,6 @@ export function getUserPage(params: any) {
   return defHttp.get({
     url: Api.UserPage,
     params,
-  });
-}
-
-/**
- * 获取指定用户ID的所有角色
- */
-export function getUserRoleList(id: string | number) {
-  return defHttp.get({
-    url: `${Api.UserRoleList}/${id}`,
   });
 }
 

@@ -2,7 +2,7 @@ import { defHttp } from '/@/utils/http/axios';
 import { ApiPrefix } from '/@/api/model/baseModel';
 
 const Api = {
-  DeptList: `${ApiPrefix.UPMS_PREFIX}/dept/filter/list`,
+  DeptList: `${ApiPrefix.UPMS_PREFIX}/dept/list`,
   DeptTree: `${ApiPrefix.UPMS_PREFIX}/dept/tree`,
   BasicApi: `${ApiPrefix.UPMS_PREFIX}/dept`,
   CheckDeptName: `${ApiPrefix.UPMS_PREFIX}/dept/checkName`,

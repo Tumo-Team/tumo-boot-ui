@@ -12,7 +12,7 @@
         <BasicTree
           v-model:value="model[field]"
           :treeData="treeData"
-          :replaceFields="{ title: 'menuName', key: 'id' }"
+          :replaceFields="{ title: 'name', key: 'id' }"
           checkable
           toolbar
           title="菜单分配"
@@ -24,11 +24,13 @@
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { formSchema } from './role.data';
+  import { formSchema } from './data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { getRole, getRoleTree, addRole, updateRole } from '/@/api/modules/upms/role';
+  import { getMenuTree } from '/@/api/modules/upms/menu';
+  import { isNullOrUnDef } from '/@/utils/is';
 
   export default defineComponent({
     name: 'RoleDrawer',
@@ -38,7 +40,7 @@
       const isUpdate = ref(true);
       const treeData = ref<TreeItem[]>([]);
 
-      const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+      const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
         labelWidth: 90,
         schemas: formSchema,
         showActionButtonGroup: false,
@@ -50,11 +52,19 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
+          const role = await getRole(data.id);
+          role.status = String(role.status);
           setFieldsValue({
-            ...data.record,
+            ...role,
           });
         }
-        treeData.value = ((await getMenuList()) as any) as TreeItem[];
+        treeData.value = ((await getMenuTree()) as any) as TreeItem[];
+
+        const roleTree = await getRoleTree();
+        updateSchema({
+          field: 'parentId',
+          componentProps: { treeData: roleTree },
+        });
       });
 
       const getTitle = computed(() => (!unref(isUpdate) ? '新增角色' : '编辑角色'));
@@ -63,8 +73,13 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+          if (isNullOrUnDef(values.id)) {
+            // 新增
+            await addRole(values);
+          } else {
+            // 修改
+            await updateRole(values);
+          }
           closeDrawer();
           emit('success');
         } finally {
