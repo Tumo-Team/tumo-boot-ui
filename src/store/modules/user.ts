@@ -9,7 +9,7 @@ import { PageEnum } from '/@/enums/pageEnum';
 import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 
 import { getAuthCache, setAuthCache, removeToken } from '/@/utils/auth';
-import { GetUserInfoByUserIdModel, LoginParams } from '/@/api/sys/model/userModel';
+import { GetUserInfoByUserIdModel, LoginParams } from '/@/api/model/userModel';
 
 import { loginApi, getUserInfo } from '/@/api/auth';
 

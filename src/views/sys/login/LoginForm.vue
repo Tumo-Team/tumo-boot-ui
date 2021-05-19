@@ -114,11 +114,16 @@
       function handleCaptcha() {
         spinning.value = true;
         formData.captcha = '';
-        getCaptcha().then((res) => {
-          captchaUrl.value = res.image;
-          formData.captchaKey = res.key;
-          spinning.value = false;
-        });
+        getCaptcha()
+          .then((res) => {
+            captchaUrl.value = res.image;
+            formData.captchaKey = res.key;
+            spinning.value = false;
+          })
+          .catch((error) => {
+            spinning.value = false;
+            console.log(error);
+          });
       }
 
       // 登录

@@ -1,7 +1,7 @@
 <template>
   <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="headerImg" />
+      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
           {{ getUserInfo.realName }}
@@ -18,6 +18,12 @@
           v-if="getShowDoc"
         />
         <MenuDivider v-if="getShowDoc" />
+        <MenuItem
+          key="profile"
+          :text="t('layout.header.dropdownItemProfile')"
+          icon="ion:settings-outline"
+        />
+        <MenuDivider />
         <MenuItem
           key="lock"
           :text="t('layout.header.tooltipLock')"
@@ -47,13 +53,14 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useModal } from '/@/components/Modal';
 
-  import headerImg from '/@/assets/images/header.jpg';
   import { propTypes } from '/@/utils/propTypes';
   import { openWindow } from '/@/utils';
+  import { PageEnum } from '/@/enums/pageEnum';
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
+  import router from '/@/router';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'profile' | 'doc' | 'lock';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -74,14 +81,19 @@
       const userStore = useUserStore();
 
       const getUserInfo = computed(() => {
-        const { realName = '', desc } = userStore.getUserInfo || {};
-        return { realName, desc };
+        const { realName, avatar } = userStore.getUserInfo || {};
+        return { realName, avatar };
       });
 
       const [register, { openModal }] = useModal();
 
       function handleLock() {
         openModal(true);
+      }
+
+      // 个人设置页面
+      function handleProfile() {
+        router.push(PageEnum.PROFILE_SETTING_PAGE);
       }
 
       //  login out
@@ -99,6 +111,9 @@
           case 'logout':
             handleLoginOut();
             break;
+          case 'profile':
+            handleProfile();
+            break;
           case 'doc':
             openDoc();
             break;
@@ -114,7 +129,6 @@
         getUserInfo,
         handleMenuClick,
         getShowDoc,
-        headerImg,
         register,
       };
     },

@@ -30,7 +30,6 @@ export const columns: BasicColumn[] = [
   {
     title: '角色',
     dataIndex: 'role',
-    width: 200,
     customRender: ({ record }) => {
       const list: any[] = [];
       const roles = record.roles;

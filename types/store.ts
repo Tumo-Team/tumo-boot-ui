@@ -30,10 +30,10 @@ export interface ErrorLogInfo {
 }
 
 export interface UserInfo {
-  userId: string | number;
+  id: string | number;
   username: string;
   realName: string;
-  desc?: string;
+  avatar: string;
 }
 
 export interface BeforeMiniState {

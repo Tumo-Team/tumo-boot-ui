@@ -1,6 +1,6 @@
 import { defHttp } from '/@/utils/http/axios';
 import { ApiPrefix } from '/@/api/model/baseModel';
-import { LoginParams, LoginResultModel } from '/@/api/sys/model/userModel';
+import { LoginParams, LoginResultModel } from '/@/api/model/userModel';
 import { ErrorMessageMode } from '/@/utils/http/axios/types';
 
 const Api = {

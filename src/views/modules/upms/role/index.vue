@@ -50,6 +50,7 @@
           labelWidth: 120,
           schemas: searchFormSchema,
         },
+        pagination: false,
         useSearchForm: true,
         showTableSetting: true,
         bordered: true,

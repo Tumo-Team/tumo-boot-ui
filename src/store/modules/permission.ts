@@ -22,6 +22,8 @@ import { filter } from '/@/utils/helper/treeHelper';
 import { buildMenu } from '/@/api/auth';
 
 import { useMessage } from '/@/hooks/web/useMessage';
+import router from '/@/router';
+import { PageEnum } from '/@/enums/pageEnum';
 
 interface PermissionState {
   // Permission code list
@@ -118,6 +120,7 @@ export const usePermissionStore = defineStore({
           routeList = (await buildMenu()) as AppRouteRecordRaw[];
         } catch (error) {
           console.error(error);
+          router.push(PageEnum.BASE_LOGIN);
         }
 
         // Dynamically introduce components
