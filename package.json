@@ -3,7 +3,7 @@
   "version": "2.4.0",
   "scripts": {
     "bootstrap": "yarn install",
-    "serve": "cross-env --max_old_space_size=4096 vite",
+    "serve": "npm run dev",
     "dev": "cross-env  --max_old_space_size=4096  vite",
     "build": "vite build && esno ./build/script/postBuild.ts",
     "build:no-cache": "yarn clean:cache && npm run build",

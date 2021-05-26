@@ -19,12 +19,7 @@
         />
         <MenuDivider v-if="getShowDoc" />
         <MenuItem
-          key="profile"
-          :text="t('layout.header.dropdownItemProfile')"
-          icon="ion:settings-outline"
-        />
-        <MenuDivider />
-        <MenuItem
+          v-if="getUseLockPage"
           key="lock"
           :text="t('layout.header.tooltipLock')"
           icon="ion:lock-closed-outline"
@@ -77,7 +72,7 @@
     setup() {
       const { prefixCls } = useDesign('header-user-dropdown');
       const { t } = useI18n();
-      const { getShowDoc } = useHeaderSetting();
+      const { getShowDoc, getUseLockPage } = useHeaderSetting();
       const userStore = useUserStore();
 
       const getUserInfo = computed(() => {
@@ -130,6 +125,7 @@
         handleMenuClick,
         getShowDoc,
         register,
+        getUseLockPage,
       };
     },
   });
