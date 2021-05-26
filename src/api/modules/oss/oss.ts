@@ -3,6 +3,7 @@ import { ApiPrefix } from '/@/api/model/baseModel';
 
 const Api = {
   OssPage: `${ApiPrefix.OSS_PREFIX}/page`,
+  OssAddList: `${ApiPrefix.OSS_PREFIX}/put-list`,
   BasicApi: `${ApiPrefix.OSS_PREFIX}`,
 };
 
@@ -22,6 +23,26 @@ export function getOssPage(params: any) {
 export function getOss(id: string | number) {
   return defHttp.get({
     url: `${Api.BasicApi}/${id}`,
+  });
+}
+
+/**
+ * 新增
+ */
+export function addOss(params: any) {
+  return defHttp.post({
+    url: `${Api.BasicApi}`,
+    params,
+  });
+}
+
+/**
+ * 新增（批量）
+ */
+export function addOssList(params: any) {
+  return defHttp.post({
+    url: `${Api.OssAddList}`,
+    params,
   });
 }
 

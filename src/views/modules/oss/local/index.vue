@@ -38,7 +38,7 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { getOssPage, deleteOss } from '/@/api/modules/oss/oss';
+  import { getOssPage, addOssList, deleteOss } from '/@/api/modules/oss/oss';
   import { uploadListApi } from '/@/api/modules/oss/upload';
 
   import { BasicUpload } from '/@/components/Upload';
@@ -74,8 +74,9 @@
         },
       });
 
-      function handleCreate(list: string[]) {
-        console.log(list);
+      async function handleCreate(list: string[]) {
+        await addOssList(list);
+        reload();
       }
 
       function handleEdit(id: string | number) {

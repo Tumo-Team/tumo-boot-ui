@@ -65,10 +65,6 @@
     components: { BasicModal, Upload, Alert, FileList },
     props: {
       ...basicProps,
-      previewFileList: {
-        type: Array as PropType<string[]>,
-        default: () => [],
-      },
     },
     emits: ['change', 'register'],
     setup(props, { emit }) {
@@ -212,7 +208,7 @@
       // 点击开始上传
       async function handleStartUpload() {
         const { maxNumber } = props;
-        if ((fileListRef.value.length + props.previewFileList?.length ?? 0) > maxNumber) {
+        if ((fileListRef.value.length ?? 0) > maxNumber) {
           return createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
         }
         try {
@@ -250,7 +246,7 @@
         for (const item of fileListRef.value) {
           const { status, responseData } = item;
           if (status === UploadResultStatus.SUCCESS && responseData) {
-            fileList.push(responseData.url);
+            fileList.push(responseData.data);
           }
         }
         // 存在一个上传成功的即可保存
