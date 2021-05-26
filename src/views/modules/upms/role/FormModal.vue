@@ -33,7 +33,7 @@
   import { isNullOrUnDef } from '/@/utils/is';
 
   export default defineComponent({
-    name: 'RoleDrawer',
+    name: 'FormModal',
     components: { BasicDrawer, BasicForm, BasicTree },
     emits: ['success', 'register'],
     setup(_, { emit }) {
@@ -58,7 +58,7 @@
             ...role,
           });
         }
-        treeData.value = ((await getMenuTree()) as any) as TreeItem[];
+        treeData.value = (await getMenuTree()) as any as TreeItem[];
 
         const roleTree = await getRoleTree();
         updateSchema({

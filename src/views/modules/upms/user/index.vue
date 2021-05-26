@@ -31,19 +31,18 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getUserPage } from '/@/api/modules/upms/user';
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './DeptTree.vue';
 
   import { useModal } from '/@/components/Modal';
   import FormModal from './FormModal.vue';
 
-  import { deleteUser } from '/@/api/modules/upms/user';
+  import { getUserPage, deleteUser } from '/@/api/modules/upms/user';
 
   import { columns, searchFormSchema } from './data';
 
   export default defineComponent({
-    name: 'AccountManagement',
+    name: 'Index',
     components: { BasicTable, PageWrapper, DeptTree, FormModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();

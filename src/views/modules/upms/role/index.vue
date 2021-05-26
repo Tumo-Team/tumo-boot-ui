@@ -38,7 +38,7 @@
   import { columns, searchFormSchema } from './data';
 
   export default defineComponent({
-    name: 'RoleManagement',
+    name: 'Index',
     components: { BasicTable, RoleDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();

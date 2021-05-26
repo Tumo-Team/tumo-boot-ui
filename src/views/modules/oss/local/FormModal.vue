@@ -7,10 +7,8 @@
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { formSchema } from './data';
-
-  import { getDeptTree, getDept, addDept, updateDept } from '/@/api/modules/upms/dept';
-  import { isNullOrUnDef } from '/@/utils/is';
+  import { userFormSchema } from './data';
+  import { getOss, updateOss } from '/@/api/modules/oss/oss';
 
   export default defineComponent({
     name: 'FormModal',
@@ -19,10 +17,13 @@
     setup(_, { emit }) {
       const isUpdate = ref(true);
 
-      const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
+      const [registerForm, { setFieldsValue, resetFields, validate }] = useForm({
         labelWidth: 100,
-        schemas: formSchema,
+        schemas: userFormSchema,
         showActionButtonGroup: false,
+        actionColOptions: {
+          span: 23,
+        },
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
@@ -31,31 +32,21 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          const dept = await getDept(data.id);
+          const oss = await getOss(data.id);
           setFieldsValue({
-            ...dept,
+            ...oss,
           });
         }
-        const treeData = await getDeptTree();
-        updateSchema({
-          field: 'parentId',
-          componentProps: { treeData },
-        });
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增部门' : '编辑部门'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增文件' : '编辑文件'));
 
       async function handleSubmit() {
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          if (isNullOrUnDef(values.id)) {
-            // 新增
-            await addDept(values);
-          } else {
-            // 修改
-            await updateDept(values);
-          }
+          // 修改
+          await updateOss(values);
           closeModal();
           emit('success');
         } finally {

@@ -1,6 +1,12 @@
 <template>
-  <Form v-bind="{ ...$attrs, ...$props }" :class="getFormClass" ref="formElRef" :model="formModel">
-    <Row :style="getRowWrapStyle">
+  <Form
+    v-bind="{ ...$attrs, ...$props, ...getProps }"
+    :class="getFormClass"
+    ref="formElRef"
+    :model="formModel"
+    @keypress.enter="handleEnterPress"
+  >
+    <Row v-bind="{ ...getRow }">
       <slot name="formHeader"></slot>
       <template v-for="schema in getSchema" :key="schema.field">
         <FormItem
@@ -35,17 +41,7 @@
   import type { AdvanceState } from './types/hooks';
   import type { CSSProperties, Ref } from 'vue';
 
-  import {
-    defineComponent,
-    reactive,
-    ref,
-    computed,
-    unref,
-    onMounted,
-    watch,
-    toRefs,
-    nextTick,
-  } from 'vue';
+  import { defineComponent, reactive, ref, computed, unref, onMounted, watch, nextTick } from 'vue';
   import { Form, Row } from 'ant-design-vue';
   import FormItem from './components/FormItem.vue';
   import FormAction from './components/FormAction.vue';
@@ -65,6 +61,8 @@
 
   import { basicProps } from './props';
   import { useDesign } from '/@/hooks/web/useDesign';
+
+  import type { RowProps } from 'ant-design-vue/lib/grid/Row';
 
   export default defineComponent({
     name: 'BasicForm',
@@ -91,11 +89,9 @@
       const { prefixCls } = useDesign('basic-form');
 
       // Get the basic configuration of the form
-      const getProps = computed(
-        (): FormProps => {
-          return { ...props, ...unref(propsRef) } as FormProps;
-        }
-      );
+      const getProps = computed((): FormProps => {
+        return { ...props, ...unref(propsRef) } as FormProps;
+      });
 
       const getFormClass = computed(() => {
         return [
@@ -106,13 +102,14 @@
         ];
       });
 
-      // Get uniform row style
-      const getRowWrapStyle = computed(
-        (): CSSProperties => {
-          const { baseRowStyle = {} } = unref(getProps);
-          return baseRowStyle;
-        }
-      );
+      // Get uniform row style and Row configuration for the entire form
+      const getRow = computed((): CSSProperties | RowProps => {
+        const { baseRowStyle = {}, rowProps } = unref(getProps);
+        return {
+          style: baseRowStyle,
+          ...rowProps,
+        };
+      });
 
       const getSchema = computed((): FormSchema[] => {
         const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
@@ -143,13 +140,8 @@
         defaultValueRef,
       });
 
-      const { transformDateFunc, fieldMapToTime, autoFocusFirstItem } = toRefs(
-        unref(getProps)
-      ) as any;
-
       const { handleFormValues, initDefault } = useFormValues({
-        transformDateFuncRef: transformDateFunc,
-        fieldMapToTimeRef: fieldMapToTime,
+        getProps,
         defaultValueRef,
         getSchema,
         formModel,
@@ -157,7 +149,7 @@
 
       useAutoFocus({
         getSchema,
-        autoFocusFirstItem,
+        getProps,
         isInitedDefault: isInitedDefaultRef,
         formElRef: formElRef as Ref<FormActionType>,
       });
@@ -228,6 +220,17 @@
         formModel[key] = value;
       }
 
+      function handleEnterPress(e: KeyboardEvent) {
+        const { autoSubmitOnEnter } = unref(getProps);
+        if (!autoSubmitOnEnter) return;
+        if (e.key === 'Enter' && e.target && e.target instanceof HTMLElement) {
+          const target: HTMLElement = e.target as HTMLElement;
+          if (target && target.tagName && target.tagName.toUpperCase() == 'INPUT') {
+            handleSubmit();
+          }
+        }
+      }
+
       const formActionType: Partial<FormActionType> = {
         getFieldsValue,
         setFieldsValue,
@@ -251,10 +254,11 @@
 
       return {
         handleToggleAdvanced,
+        handleEnterPress,
         formModel,
         defaultValueRef,
         advanceState,
-        getRowWrapStyle,
+        getRow,
         getProps,
         formElRef,
         getSchema,

@@ -2,15 +2,21 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增菜单 </a-button>
+        <BasicUpload
+          :maxSize="200"
+          :maxNumber="Infinity"
+          @change="handleCreate"
+          :emptyHidePreview="true"
+          :api="uploadListApi"
+          class="my-5"
+        />
+      </template>
+      <template #url="{ record }">
+        <a :href="record.url" target="_blank">{{ record.url }}</a>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
-            {
-              icon: 'ant-design:plus-outlined',
-              onClick: handleAddChild.bind(null, record.id),
-            },
             {
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record.id),
@@ -27,70 +33,60 @@
         />
       </template>
     </BasicTable>
-    <FormModal @register="registerDrawer" @success="handleSuccess" />
+    <FormModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import { getOssPage, deleteOss } from '/@/api/modules/oss/oss';
+  import { uploadListApi } from '/@/api/modules/oss/upload';
 
+  import { BasicUpload } from '/@/components/Upload';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getMenuTree, deleteMenu } from '/@/api/modules/upms/menu';
 
-  import { useDrawer } from '/@/components/Drawer';
+  import { useModal } from '/@/components/Modal';
   import FormModal from './FormModal.vue';
 
   import { columns, searchFormSchema } from './data';
 
   export default defineComponent({
     name: 'Index',
-    components: { BasicTable, FormModal, TableAction },
+    components: { BasicTable, BasicUpload, FormModal, TableAction },
     setup() {
-      const [registerDrawer, { openDrawer }] = useDrawer();
+      const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
-        title: '菜单列表',
-        api: getMenuTree,
+        title: '本地文件列表',
+        api: getOssPage,
         columns,
         formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
         },
-        pagination: false,
-        striped: false,
+        pagination: true,
         useSearchForm: true,
         showTableSetting: true,
         bordered: true,
-        showIndexColumn: false,
         actionColumn: {
-          width: 120,
+          width: 80,
           title: '操作',
           dataIndex: 'action',
           slots: { customRender: 'action' },
-          fixed: undefined,
         },
       });
 
-      function handleCreate() {
-        openDrawer(true, {
-          isUpdate: false,
-        });
+      function handleCreate(list: string[]) {
+        console.log(list);
       }
 
       function handleEdit(id: string | number) {
-        openDrawer(true, {
+        openModal(true, {
           id,
           isUpdate: true,
         });
       }
 
-      function handleAddChild(id: string | number) {
-        openDrawer(true, {
-          parentId: id,
-          isUpdate: false,
-        });
-      }
-
       async function handleDelete(id: string | number) {
-        await deleteMenu(id);
+        await deleteOss(id);
         reload();
       }
 
@@ -100,10 +96,10 @@
 
       return {
         registerTable,
-        registerDrawer,
+        registerModal,
+        uploadListApi,
         handleCreate,
         handleEdit,
-        handleAddChild,
         handleDelete,
         handleSuccess,
       };

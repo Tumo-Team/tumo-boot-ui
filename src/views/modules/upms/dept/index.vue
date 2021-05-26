@@ -38,7 +38,7 @@
   import { columns, searchFormSchema } from './data';
 
   export default defineComponent({
-    name: 'DeptManagement',
+    name: 'Index',
     components: { BasicTable, FormModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();

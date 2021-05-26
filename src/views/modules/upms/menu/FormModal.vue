@@ -20,7 +20,7 @@
   import { isNullOrUnDef } from '/@/utils/is';
 
   export default defineComponent({
-    name: 'MenuDrawer',
+    name: 'FormModal',
     components: { BasicDrawer, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
@@ -48,6 +48,14 @@
             ...menu,
           });
         }
+
+        // 新增子节点
+        if (!isNullOrUnDef(data.parentId)) {
+          setFieldsValue({
+            parentId: data.parentId,
+          });
+        }
+
         const treeData = await getMenuTree();
         updateSchema({
           field: 'parentId',
