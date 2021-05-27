@@ -38,8 +38,8 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { getOssPage, addOssList, deleteOss } from '/@/api/modules/oss/oss';
-  import { uploadListApi } from '/@/api/modules/oss/upload';
+  import { getOssPage, addOssList, deleteOss } from '/@/api/modules/resource/oss';
+  import { uploadListApi } from '/@/api/modules/resource/upload';
 
   import { BasicUpload } from '/@/components/Upload';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
