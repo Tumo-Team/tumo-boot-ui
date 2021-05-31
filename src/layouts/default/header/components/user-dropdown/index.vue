@@ -19,6 +19,12 @@
         />
         <MenuDivider v-if="getShowDoc" />
         <MenuItem
+          key="profile"
+          :text="t('layout.header.dropdownItemProfile')"
+          icon="bx-bx-user-pin"
+        />
+        <MenuDivider />
+        <MenuItem
           v-if="getUseLockPage"
           key="lock"
           :text="t('layout.header.tooltipLock')"

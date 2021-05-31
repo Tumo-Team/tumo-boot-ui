@@ -12,15 +12,20 @@ export const columns: BasicColumn[] = [
     width: 180,
   },
   {
+    title: '桶路径',
+    dataIndex: 'bucket',
+    width: 100,
+  },
+  {
     title: '文件地址',
     dataIndex: 'url',
     ellipsis: true,
     slots: { customRender: 'url' },
   },
   {
-    title: '文件类型',
+    title: '类型',
     dataIndex: 'type',
-    width: 90,
+    width: 60,
   },
   {
     title: '文件大小',

@@ -8,7 +8,7 @@
         <div class="change-avatar">
           <div class="mb-2"> 头像 </div>
           <img width="140" :src="avatarImg" />
-          <Upload :showUploadList="false">
+          <Upload :action="uploadUrl" :headers="headers" name="file" :showUploadList="false">
             <Button class="ml-5"> <Icon icon="feather:upload" />更换头像 </Button>
           </Upload>
         </div>
@@ -24,11 +24,14 @@
   import { CollapseContainer } from '/@/components/Container/index';
   import Icon from '/@/components/Icon/index';
 
+  import { getToken } from '/@/utils/auth';
   import { useMessage } from '/@/hooks/web/useMessage';
 
   import { getUserInfo } from '/@/api/auth';
   import { updateUser } from '/@/api/modules/upms/user';
   import { baseSetSchemas } from './data';
+
+  import { useGlobSetting } from '/@/hooks/setting';
 
   export default defineComponent({
     components: {
@@ -48,6 +51,11 @@
         labelWidth: 120,
         schemas: baseSetSchemas,
         showActionButtonGroup: false,
+      });
+
+      const { uploadUrl = '' } = useGlobSetting();
+      const headers = ref<any>({
+        Authorization: getToken(),
       });
 
       onMounted(async () => {
@@ -86,6 +94,8 @@
       return {
         avatarImg,
         register,
+        headers,
+        uploadUrl,
         handleSubmit,
       };
     },

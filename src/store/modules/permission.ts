@@ -16,6 +16,7 @@ import { PermissionModeEnum } from '/@/enums/appEnum';
 import { asyncRoutes } from '/@/router/routes';
 import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import dashboard from '/@/router/routes/modules/dashboard';
+import profile from '/@/router/routes/modules/profile';
 
 import { filter } from '/@/utils/helper/treeHelper';
 
@@ -132,6 +133,9 @@ export const usePermissionStore = defineStore({
         //  Background routing to menu structure
         const backMenuList = transformRouteToMenu(routeList);
         this.setBackMenuList(backMenuList);
+
+        // 静态路由表
+        routeList.push(profile);
 
         routeList = flatMultiLevelRoutes(routeList);
         routes = [PAGE_NOT_FOUND_ROUTE, ...routeList];

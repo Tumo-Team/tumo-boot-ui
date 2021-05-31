@@ -65,6 +65,7 @@
         pagination: true,
         useSearchForm: true,
         showTableSetting: true,
+        showIndexColumn: false,
         bordered: true,
         actionColumn: {
           width: 80,

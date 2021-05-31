@@ -5,7 +5,7 @@
         <TableAction
           :actions="[
             {
-              icon: 'clarity:note-edit-line',
+              icon: 'carbon-view-filled',
               onClick: handleInfo.bind(null, record),
             },
             {

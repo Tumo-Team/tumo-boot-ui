@@ -1,6 +1,8 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { DescItem } from '/@/components/Description';
+import { h } from 'vue';
+import { Tag } from 'ant-design-vue';
 
 export const columns: BasicColumn[] = [
   {
@@ -11,6 +13,12 @@ export const columns: BasicColumn[] = [
     title: '日志类型',
     dataIndex: 'type',
     width: 100,
+    customRender: ({ record }) => {
+      const type = record.type;
+      const color = type == 1 ? 'green' : 'red';
+      const text = type == 1 ? '正常' : '异常';
+      return h(Tag, { color: color }, () => text);
+    },
   },
   {
     title: '操作描述',
