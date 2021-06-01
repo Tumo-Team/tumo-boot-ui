@@ -6,21 +6,22 @@ import { store } from '/@/store';
 
 import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
-import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
+import { PERMS_KEY, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 
-import { getAuthCache, setAuthCache, removeToken } from '/@/utils/auth';
+import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoByUserIdModel, LoginParams } from '/@/api/model/userModel';
 
-import { loginApi, getUserInfo } from '/@/api/auth';
+import { getUserInfo, loginApi, logoutApi } from '/@/api/auth';
 
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
-import router, { resetRouter } from '/@/router';
+import router from '/@/router';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
   token?: string;
   roleList: RoleEnum[];
+  permList: string[];
   sessionTimeout?: boolean;
 }
 
@@ -33,6 +34,8 @@ export const useUserStore = defineStore({
     token: undefined,
     // roleList
     roleList: [],
+    // 权限标识列表
+    permList: [],
     // Whether the login expired
     sessionTimeout: false,
   }),
@@ -46,6 +49,9 @@ export const useUserStore = defineStore({
     getRoleList(): RoleEnum[] {
       return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
     },
+    getPermList(): string[] {
+      return this.permList.length > 0 ? this.permList : getAuthCache<string[]>(PERMS_KEY);
+    },
     getSessionTimeout(): boolean {
       return !!this.sessionTimeout;
     },
@@ -58,6 +64,10 @@ export const useUserStore = defineStore({
     setRoleList(roleList: RoleEnum[]) {
       this.roleList = roleList;
       setAuthCache(ROLES_KEY, roleList);
+    },
+    setPermList(permList: string[]) {
+      this.permList = permList;
+      setAuthCache(PERMS_KEY, permList);
     },
     setUserInfo(info: UserInfo) {
       this.userInfo = info;
@@ -101,20 +111,19 @@ export const useUserStore = defineStore({
     },
     async getUserInfoAction() {
       const userInfo = await getUserInfo();
-      const { user, roles } = userInfo;
+      const { user, roles, perms } = userInfo;
       const roleList = roles.map((item) => item.value) as RoleEnum[];
       this.setUserInfo(user);
       this.setRoleList(roleList);
+      this.setPermList(perms);
       return userInfo;
     },
     /**
      * @description: logout
      */
-    logout() {
-      this.setToken('');
-      this.setRoleList([]);
-      removeToken();
-      resetRouter();
+    async logout() {
+      await logoutApi();
+      this.resetState();
       router.replace(PageEnum.BASE_LOGIN);
     },
 

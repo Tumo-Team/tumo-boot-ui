@@ -118,6 +118,11 @@ export const usePermissionStore = defineStore({
         // this function may only need to be executed once, and the actual project can be put at the right time by itself
         let routeList: AppRouteRecordRaw[] = [];
         try {
+          // 从后端获取权限标识（因为getUserInfo时返回了，所以直接从Store中拿）
+          const perms = toRaw(userStore.getPermList);
+          this.setPermCodeList(perms);
+
+          // 从后端获取权限菜单
           routeList = (await buildMenu()) as AppRouteRecordRaw[];
         } catch (error) {
           console.error(error);

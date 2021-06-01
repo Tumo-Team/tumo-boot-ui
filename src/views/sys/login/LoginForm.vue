@@ -87,7 +87,7 @@
       const spinning = ref<boolean>(false);
 
       const formData = reactive({
-        username: 'tumo-boot',
+        username: 'administrator',
         password: '123456',
         captcha: '1',
         captchaKey: '',

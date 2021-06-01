@@ -8,6 +8,7 @@ const Api = {
   GetCaptcha: `${ApiPrefix.AUTH_PREFIX}/captcha`,
   GetUserInfo: `${ApiPrefix.UPMS_PREFIX}/user/info`,
   BuildMenu: `${ApiPrefix.UPMS_PREFIX}/menu/build`,
+  Logout: `${ApiPrefix.AUTH_PREFIX}/logout`,
 };
 
 /**
@@ -59,5 +60,14 @@ export function getUserInfo() {
 export function buildMenu() {
   return defHttp.get({
     url: Api.BuildMenu,
+  });
+}
+
+/**
+ * 注销登录
+ */
+export function logoutApi() {
+  return defHttp.delete({
+    url: Api.Logout,
   });
 }
