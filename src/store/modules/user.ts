@@ -15,7 +15,7 @@ import { getUserInfo, loginApi, logoutApi } from '/@/api/auth';
 
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
-import router from '/@/router';
+import { router } from '/@/router';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;

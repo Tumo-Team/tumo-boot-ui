@@ -8,9 +8,8 @@ import { AxiosCanceler } from './axiosCancel';
 import { isFunction } from '/@/utils/is';
 import { cloneDeep } from 'lodash-es';
 
-import { errorResult } from './const';
 import { ContentTypeEnum } from '/@/enums/httpEnum';
-import { RequestEnum } from '../../../enums/httpEnum';
+import { RequestEnum } from '/@/enums/httpEnum';
 
 export * from './axiosTransform';
 
@@ -208,8 +207,12 @@ export class VAxios {
         .request<any, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
           if (transformRequestHook && isFunction(transformRequestHook)) {
-            const ret = transformRequestHook(res, opt);
-            ret !== errorResult ? resolve(ret) : reject(new Error('request error!'));
+            try {
+              const ret = transformRequestHook(res, opt);
+              resolve(ret);
+            } catch (err) {
+              reject(err || new Error('request error!'));
+            }
             return;
           }
           resolve(res as unknown as Promise<T>);

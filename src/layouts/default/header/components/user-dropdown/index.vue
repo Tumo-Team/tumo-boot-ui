@@ -45,6 +45,7 @@
   import { Dropdown, Menu } from 'ant-design-vue';
 
   import { defineComponent, computed } from 'vue';
+  import { router } from '/@/router';
 
   import { DOC_URL } from '/@/settings/siteSetting';
 
@@ -54,14 +55,14 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useModal } from '/@/components/Modal';
 
+  import headerImg from '/@/assets/images/header.jpg';
   import { propTypes } from '/@/utils/propTypes';
   import { openWindow } from '/@/utils';
   import { PageEnum } from '/@/enums/pageEnum';
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
-  import router from '/@/router';
 
-  type MenuEvent = 'logout' | 'profile' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'doc' | 'lock';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -82,8 +83,8 @@
       const userStore = useUserStore();
 
       const getUserInfo = computed(() => {
-        const { realName, avatar } = userStore.getUserInfo || {};
-        return { realName, avatar };
+        const { realName = '', avatar, desc } = userStore.getUserInfo || {};
+        return { realName, avatar: avatar || headerImg, desc };
       });
 
       const [register, { openModal }] = useModal();

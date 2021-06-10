@@ -23,8 +23,6 @@ import { filter } from '/@/utils/helper/treeHelper';
 import { buildMenu } from '/@/api/auth';
 
 import { useMessage } from '/@/hooks/web/useMessage';
-import router from '/@/router';
-import { PageEnum } from '/@/enums/pageEnum';
 
 interface PermissionState {
   // Permission code list
@@ -68,6 +66,7 @@ export const usePermissionStore = defineStore({
 
     setBackMenuList(list: Menu[]) {
       this.backMenuList = list;
+      list?.length > 0 && this.setLastBuildMenuTime();
     },
 
     setLastBuildMenuTime() {
@@ -126,7 +125,6 @@ export const usePermissionStore = defineStore({
           routeList = (await buildMenu()) as AppRouteRecordRaw[];
         } catch (error) {
           console.error(error);
-          router.push(PageEnum.BASE_LOGIN);
         }
 
         // Dynamically introduce components
@@ -139,11 +137,8 @@ export const usePermissionStore = defineStore({
         const backMenuList = transformRouteToMenu(routeList);
         this.setBackMenuList(backMenuList);
 
-        // 静态路由表
-        routeList.push(profile);
-
         routeList = flatMultiLevelRoutes(routeList);
-        routes = [PAGE_NOT_FOUND_ROUTE, ...routeList];
+        routes = [PAGE_NOT_FOUND_ROUTE, profile, ...routeList];
       }
       routes.push(ERROR_LOG_ROUTE);
       return routes;

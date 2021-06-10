@@ -1,7 +1,7 @@
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useUserStoreWidthOut } from '/@/store/modules/user';
-import router from '/@/router';
+import { router } from '/@/router';
 import { PageEnum } from '/@/enums/pageEnum';
 
 const { createMessage } = useMessage();

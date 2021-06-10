@@ -6,7 +6,7 @@ import { useUserStore } from '/@/store/modules/user';
 
 import { useTabs } from './useTabs';
 
-import router, { resetRouter } from '/@/router';
+import { router, resetRouter } from '/@/router';
 // import { RootRoute } from '/@/router/routes';
 
 import projectSetting from '/@/settings/projectSetting';
@@ -41,15 +41,13 @@ export function usePermission() {
    * Reset and regain authority resource information
    * @param id
    */
-  async function resume(id?: string | number) {
-    console.log(id);
+  async function resume() {
     const tabStore = useMultipleTabStore();
     tabStore.clearCacheTabs();
     resetRouter();
     const routes = await permissionStore.buildRoutesAction();
-    console.log(routes)
     routes.forEach((route) => {
-      router.addRoute((route as unknown) as RouteRecordRaw);
+      router.addRoute(route as unknown as RouteRecordRaw);
     });
     permissionStore.setLastBuildMenuTime();
     closeAll();
@@ -101,16 +99,15 @@ export function usePermission() {
       roles = [roles];
     }
     userStore.setRoleList(roles);
-    await resume(1);
+    await resume();
   }
 
   /**
-   * Change menu
+   * refresh menu data
    */
-  async function changeMenu(id?: string | number) {
-    // TODO The id passed in here is for testing. Actually, you don’t need to pass it. The id of the login person will be automatically obtained.
-    resume(id);
+  async function refreshMenu() {
+    resume();
   }
 
-  return { changeRole, hasPermission, togglePermissionMode, changeMenu };
+  return { changeRole, hasPermission, togglePermissionMode, refreshMenu };
 }
