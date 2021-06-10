@@ -4,7 +4,7 @@
     :loading="$attrs.loading"
     title="细颗粒度权限（根据用户角色的权限标识，实现按钮级别权限控制）"
   >
-    <div class="!my-4"> 用户权限标识列表：<b v-text="permList"></b> </div>
+    <div class="!my-4"> 当前登录用户权限标识列表：<b v-text="permList"></b> </div>
     <Divider />
 
     <Alert class="mt-4" type="info" :message="'函数方式，用法：' + funMode" show-icon />

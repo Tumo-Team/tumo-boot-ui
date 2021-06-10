@@ -121,13 +121,24 @@ export const baseSetSchemas: FormSchema[] = [
   },
 ];
 
-// 安全设置 list
-export const secureSettingList: FormSchema[] = [
+// 安全设置 Form
+export const secureSettingForm: FormSchema[] = [
+  {
+    field: 'id',
+    label: 'id',
+    component: 'Input',
+    show: false,
+  },
   {
     field: 'password',
-    label: '密码',
+    label: '新密码',
     component: 'InputPassword',
     required: true,
-    show: false,
+  },
+  {
+    field: 'repass',
+    label: '再次输入',
+    component: 'InputPassword',
+    required: true,
   },
 ];

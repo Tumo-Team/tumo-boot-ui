@@ -1,36 +1,59 @@
 <template>
   <CollapseContainer title="安全设置" :canExpan="false">
-    <List>
-      <template v-for="item in list" :key="item.key">
-        <ListItem>
-          <ListItemMeta>
-            <template #title>
-              {{ item.title }}
-              <div class="extra" v-if="item.extra">
-                {{ item.extra }}
-              </div>
-            </template>
-            <template #description>
-              <div>{{ item.description }} </div>
-            </template>
-          </ListItemMeta>
-        </ListItem>
-      </template>
-    </List>
+    <a-row :gutter="24">
+      <a-col :span="14">
+        <BasicForm @register="register" />
+      </a-col>
+    </a-row>
+    <Button type="primary" @click="handleSubmit"> 更新密码 </Button>
   </CollapseContainer>
 </template>
 <script lang="ts">
-  import { List } from 'ant-design-vue';
-  import { defineComponent } from 'vue';
+  import { Button, Row, Col } from 'ant-design-vue';
+  import { defineComponent, onMounted } from 'vue';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { BasicForm, useForm } from '/@/components/Form/index';
   import { CollapseContainer } from '/@/components/Container/index';
 
-  import { secureSettingList } from './data';
+  import { getUserInfo } from '/@/api/auth';
+  import { updateUser } from '/@/api/modules/upms/user';
+  import { secureSettingForm } from './data';
+  import { useUserStore } from '/@/store/modules/user';
 
   export default defineComponent({
-    components: { CollapseContainer, List, ListItem: List.Item, ListItemMeta: List.Item.Meta },
+    components: { CollapseContainer, BasicForm, Button, [Row.name]: Row, [Col.name]: Col },
     setup() {
+      const [register, { setFieldsValue, validate }] = useForm({
+        labelWidth: 120,
+        schemas: secureSettingForm,
+        showActionButtonGroup: false,
+      });
+      const userStore = useUserStore();
+
+      const { createMessage } = useMessage();
+      const { error } = createMessage;
+
+      onMounted(async () => {
+        const data = await getUserInfo();
+        const { user } = data;
+        setFieldsValue({
+          id: user.id,
+        });
+      });
+
+      async function handleSubmit() {
+        const values = await validate();
+        if (values.password !== values.repass) {
+          error('两次输入密码不一致');
+          return;
+        }
+        await updateUser(values);
+        userStore.confirmLoginOut();
+      }
+
       return {
-        list: secureSettingList,
+        register,
+        handleSubmit,
       };
     },
   });

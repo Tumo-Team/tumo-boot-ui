@@ -21,7 +21,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'icon',
     width: 50,
     customRender: ({ record }) => {
-      return h(Icon, { icon: record.meta.icon });
+      return isMenu(record.type) ? h(Icon, { icon: record.meta.icon }) : '';
     },
   },
   {
@@ -44,14 +44,14 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '状态',
-    dataIndex: 'isDisabled',
+    dataIndex: 'disabled',
     width: 80,
     customRender: ({ record }) => {
-      const isDisabled = record.isDisabled;
+      const isDisabled = record.disabled;
       const enable = ~~isDisabled === 0;
       const color = enable ? 'green' : 'red';
       const text = enable ? '启用' : '停用';
-      return h(Tag, { color: color }, () => text);
+      return isMenu(record.type) ? h(Tag, { color: color }, () => text) : '';
     },
   },
 ];
@@ -129,14 +129,14 @@ export const formSchema: FormSchema[] = [
     field: 'icon',
     label: '图标',
     component: 'IconPicker',
-    required: true,
+    required: ({ values }) => !isButton(values.type),
     show: ({ values }) => !isButton(values.type),
   },
   {
     field: 'path',
     label: '路由地址',
     component: 'Input',
-    required: true,
+    required: ({ values }) => !isButton(values.type),
     show: ({ values }) => !isButton(values.type),
   },
   {

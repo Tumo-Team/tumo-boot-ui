@@ -89,7 +89,7 @@
       const formData = reactive({
         username: 'administrator',
         password: '123456',
-        captcha: '1',
+        captcha: '',
         captchaKey: '',
       });
 
@@ -107,7 +107,7 @@
       // 页面渲染时触发
       onMounted(() => {
         // 获取验证码
-        // handleCaptcha();
+        handleCaptcha();
       });
 
       // 验证码
@@ -147,26 +147,6 @@
             });
             console.log('error', error);
           });
-        /*const data = await validForm();
-        if (!data) return;
-        try {
-          loading.value = true;
-          const userInfo = await userStore.login(
-            toRaw({
-              password: data.password,
-              username: data.account,
-            })
-          );
-          if (userInfo) {
-            notification.success({
-              message: t('sys.login.loginSuccessTitle'),
-              description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
-              duration: 3,
-            });
-          }
-        } finally {
-          loading.value = false;
-        }*/
       }
 
       return {
