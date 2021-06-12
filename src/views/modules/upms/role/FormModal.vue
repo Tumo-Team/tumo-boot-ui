@@ -58,8 +58,13 @@
             ...role,
           });
         }
-        treeData.value = (await getMenuTree()) as any as TreeItem[];
 
+        // 过滤parentId
+        setFieldsValue({
+          parentId: data.parentId == 0 ? null : data.parentId,
+        });
+
+        treeData.value = (await getMenuTree()) as any as TreeItem[];
         const roleTree = await getRoleTree();
         updateSchema({
           field: 'parentId',

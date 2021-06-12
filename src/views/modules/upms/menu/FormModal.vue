@@ -49,12 +49,10 @@
           });
         }
 
-        // 新增子节点
-        if (!isNullOrUnDef(data.parentId)) {
-          setFieldsValue({
-            parentId: data.parentId,
-          });
-        }
+        // 过滤parentId
+        setFieldsValue({
+          parentId: data.parentId == 0 ? null : data.parentId,
+        });
 
         const treeData = await getMenuTree();
         updateSchema({

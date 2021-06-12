@@ -34,6 +34,10 @@ const Auth = {
       update: 'resource:log:update',
       delete: 'resource:log:delete',
     },
+    token: {
+      info: 'resource:token:info',
+      delete: 'resource:token:delete',
+    },
   },
 };
 
