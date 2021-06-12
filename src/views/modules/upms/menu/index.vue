@@ -2,20 +2,25 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增菜单 </a-button>
+        <a-button v-auth="Auth.upms.menu.add" type="primary" @click="handleCreate">
+          新增菜单
+        </a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
+              auth: Auth.upms.menu.add,
               icon: 'ant-design:plus-outlined',
               onClick: handleAddChild.bind(null, record.id),
             },
             {
+              auth: Auth.upms.menu.update,
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record.id),
             },
             {
+              auth: Auth.upms.menu.delete,
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -35,6 +40,7 @@
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getMenuTree, deleteMenu } from '/@/api/modules/upms/menu';
+  import Auth from '/@/utils/constants/auth';
 
   import { useDrawer } from '/@/components/Drawer';
   import FormModal from './FormModal.vue';
@@ -106,6 +112,7 @@
         handleAddChild,
         handleDelete,
         handleSuccess,
+        Auth,
       };
     },
   });

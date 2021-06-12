@@ -5,7 +5,6 @@ const Api = {
   RoleList: `${ApiPrefix.UPMS_PREFIX}/role/list`,
   RoleTree: `${ApiPrefix.UPMS_PREFIX}/role/tree`,
   BasicApi: `${ApiPrefix.UPMS_PREFIX}/role`,
-  CheckRoleName: `${ApiPrefix.UPMS_PREFIX}/role/checkName`,
 };
 
 /**
@@ -34,16 +33,6 @@ export function getRoleTree(params: any) {
 export function getRole(id: string | number) {
   return defHttp.get({
     url: `${Api.BasicApi}/${id}`,
-  });
-}
-
-/**
- * 校验名称
- */
-export function checkRoleName(params: any) {
-  return defHttp.post({
-    url: Api.CheckRoleName,
-    params,
   });
 }
 

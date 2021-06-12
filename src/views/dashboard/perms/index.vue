@@ -8,15 +8,15 @@
     <Divider />
 
     <Alert class="mt-4" type="info" :message="'函数方式，用法：' + funMode" show-icon />
-    <div v-if="hasPermission('user:list')">函数方式：user:list权限</div>
+    <div v-if="hasPermission('user:view')">函数方式：user:view权限</div>
     <Divider />
 
     <Alert class="mt-4" type="info" :message="'指令方式，用法：' + directMode" show-icon />
-    <div v-auth="'user:list'">指令方式：user:list权限</div>
+    <div v-auth="'user:view'">指令方式：user:view权限</div>
     <Divider />
 
     <Alert class="mt-4" type="info" :message="'组件方式，用法：' + compMode" show-icon />
-    <Authority :value="'user:list'"> 组件方式：user:list权限 </Authority>
+    <Authority :value="'user:view'"> 组件方式：user:view权限 </Authority>
   </Card>
 </template>
 <script lang="ts">
@@ -24,7 +24,7 @@
   import { usePermission } from '/@/hooks/web/usePermission';
   import { useUserStore } from '/@/store/modules/user';
 
-  import { Authority } from '/@/components/Authority/index';
+  import { Authority } from '/@/components/Authority';
   import { Card, Alert, Divider } from 'ant-design-vue';
 
   export default defineComponent({

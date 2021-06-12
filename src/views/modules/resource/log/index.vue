@@ -9,6 +9,7 @@
               onClick: handleInfo.bind(null, record),
             },
             {
+              auth: Auth.resource.log.delete,
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -26,6 +27,7 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { getLogPage, deleteLog } from '/@/api/modules/resource/log';
+  import Auth from '/@/utils/constants/auth';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
@@ -73,6 +75,7 @@
         registerDrawer,
         handleInfo,
         handleDelete,
+        Auth,
       };
     },
   });

@@ -8,9 +8,11 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { userFormSchema } from './data';
-  import { getUser, addUser, updateUser } from '/@/api/modules/upms/user';
+  import { checkUserName, getUser, addUser, updateUser } from '/@/api/modules/upms/user';
   import { getDeptTree } from '/@/api/modules/upms/dept';
   import { isNullOrUnDef } from '/@/utils/is';
+
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
     name: 'FormModal',
@@ -58,6 +60,12 @@
       async function handleSubmit() {
         try {
           const values = await validate();
+          const { createMessage } = useMessage();
+          if (!(await checkUserName(values))) {
+            createMessage.warn('该用户名已存在');
+            return;
+          }
+
           setModalProps({ confirmLoading: true });
           if (isNullOrUnDef(values.id)) {
             // 新增

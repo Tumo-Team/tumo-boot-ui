@@ -2,16 +2,20 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增角色 </a-button>
+        <a-button v-auth="Auth.upms.role.add" type="primary" @click="handleCreate">
+          新增角色
+        </a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
+              auth: Auth.upms.role.update,
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record.id),
             },
             {
+              auth: Auth.upms.role.delete,
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -31,6 +35,7 @@
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getRoleTree, deleteRole } from '/@/api/modules/upms/role';
+  import Auth from '/@/utils/constants/auth';
 
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './FormModal.vue';
@@ -93,6 +98,7 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        Auth,
       };
     },
   });

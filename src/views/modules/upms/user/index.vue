@@ -3,16 +3,20 @@
     <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
     <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增用户</a-button>
+        <a-button v-auth="Auth.upms.user.add" type="primary" @click="handleCreate">
+          新增用户
+        </a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
+              auth: Auth.upms.user.update,
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record.id),
             },
             {
+              auth: Auth.upms.user.delete,
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -33,6 +37,7 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './DeptTree.vue';
+  import Auth from '/@/utils/constants/auth';
 
   import { useModal } from '/@/components/Modal';
   import FormModal from './FormModal.vue';
@@ -99,6 +104,7 @@
         handleDelete,
         handleSuccess,
         handleSelect,
+        Auth,
       };
     },
   });

@@ -5,7 +5,6 @@ const Api = {
   DeptList: `${ApiPrefix.UPMS_PREFIX}/dept/list`,
   DeptTree: `${ApiPrefix.UPMS_PREFIX}/dept/tree`,
   BasicApi: `${ApiPrefix.UPMS_PREFIX}/dept`,
-  CheckDeptName: `${ApiPrefix.UPMS_PREFIX}/dept/checkName`,
 };
 
 /**
@@ -33,16 +32,6 @@ export function getDeptTree() {
 export function getDept(id: string | number) {
   return defHttp.get({
     url: `${Api.BasicApi}/${id}`,
-  });
-}
-
-/**
- * 校验名称
- */
-export function checkDeptName(params: any) {
-  return defHttp.post({
-    url: Api.CheckDeptName,
-    params,
   });
 }
 

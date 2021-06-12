@@ -6,7 +6,6 @@ const Api = {
   MenuList: `${ApiPrefix.UPMS_PREFIX}/menu/list`,
   MenuRoleList: `${ApiPrefix.UPMS_PREFIX}/menu/role/list`,
   BasicApi: `${ApiPrefix.UPMS_PREFIX}/menu`,
-  CheckMenuName: `${ApiPrefix.UPMS_PREFIX}/menu/checkName`,
 };
 
 /**
@@ -35,16 +34,6 @@ export function getMenuList(params: any) {
 export function getMenu(id: string | number) {
   return defHttp.get({
     url: `${Api.BasicApi}/${id}`,
-  });
-}
-
-/**
- * 校验名称
- */
-export function checkMenuName(params: any) {
-  return defHttp.post({
-    url: Api.CheckMenuName,
-    params,
   });
 }
 

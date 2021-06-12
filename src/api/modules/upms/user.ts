@@ -41,9 +41,12 @@ export function getUser(id: string | number) {
  * 校验名称
  */
 export function checkUserName(params: any) {
-  return defHttp.post({
+  return defHttp.get({
     url: Api.CheckUserName,
-    params,
+    params: {
+      id: params.id,
+      username: params.username,
+    },
   });
 }
 
