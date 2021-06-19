@@ -58,6 +58,7 @@ export const columns: BasicColumn[] = [
 
 const isMenu = (type: string) => type === 'menu';
 const isButton = (type: string) => type === 'button';
+const isExt = (type: string) => type === 'true';
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -143,6 +144,8 @@ export const formSchema: FormSchema[] = [
     field: 'component',
     label: '组件路径',
     component: 'Input',
+    dynamicDisabled: ({ values }) => isExt(values.isExt),
+    required: ({ values }) => !isButton(values.type) && !isExt(values.isExt),
     show: ({ values }) => isMenu(values.type),
   },
   {

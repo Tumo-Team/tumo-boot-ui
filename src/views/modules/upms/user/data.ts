@@ -99,8 +99,6 @@ export const userFormSchema: FormSchema[] = [
     field: 'password',
     label: '密码',
     component: 'InputPassword',
-    required: true,
-    show: false,
   },
   {
     field: 'status',

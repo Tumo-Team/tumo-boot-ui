@@ -51,7 +51,6 @@
           schemas: searchFormSchema,
         },
         showIndexColumn: false,
-        pagination: true,
         useSearchForm: false,
         showTableSetting: true,
         bordered: true,

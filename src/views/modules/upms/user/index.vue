@@ -12,6 +12,12 @@
           :actions="[
             {
               auth: Auth.upms.user.update,
+              icon: 'mdi:lock-reset',
+              color: 'success',
+              onClick: handleResetPass.bind(null, record.id),
+            },
+            {
+              auth: Auth.upms.user.update,
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record.id),
             },
@@ -34,6 +40,7 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
 
+  import { useMessage } from '/@/hooks/web/useMessage';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './DeptTree.vue';
@@ -42,7 +49,7 @@
   import { useModal } from '/@/components/Modal';
   import FormModal from './FormModal.vue';
 
-  import { getUserPage, deleteUser } from '/@/api/modules/upms/user';
+  import { getUserPage, deleteUser, resetPass } from '/@/api/modules/upms/user';
 
   import { columns, searchFormSchema } from './data';
 
@@ -63,16 +70,37 @@
         showTableSetting: true,
         bordered: true,
         actionColumn: {
-          width: 80,
+          width: 120,
           title: '操作',
           dataIndex: 'action',
           slots: { customRender: 'action' },
         },
       });
+      const { createConfirm, createMessage } = useMessage();
+      const { info, success, error } = createMessage;
 
       function handleCreate() {
         openModal(true, {
           isUpdate: false,
+        });
+      }
+
+      function handleResetPass(id: string | number) {
+        createConfirm({
+          iconType: 'warning',
+          title: '重置密码',
+          content: '你确定将该账户密码重置为123456？',
+          onOk: async () => {
+            const data = await resetPass(id, null);
+            if (data == null) {
+              success('重置密码成功！');
+            } else {
+              error('重置密码失败，请联系管理员');
+            }
+          },
+          onCancel: () => {
+            info('已取消！');
+          },
         });
       }
 
@@ -101,6 +129,7 @@
         registerModal,
         handleCreate,
         handleEdit,
+        handleResetPass,
         handleDelete,
         handleSuccess,
         handleSelect,

@@ -57,6 +57,7 @@
   import { LoginStateEnum, useLoginState } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { onKeyStroke } from '@vueuse/core';
+  import { isNull } from '/@/utils/is';
 
   import { getCaptcha } from '/@/api/auth';
 
@@ -128,18 +129,18 @@
 
       // 登录
       function handleLogin() {
+        loading.value = true;
         formRef.value
           .validate()
-          .then(() => {
-            try {
-              loading.value = true;
-              userStore.login(toRaw(formData));
-            } finally {
-              handleCaptcha();
+          .then(async () => {
+            const userInfo = await userStore.login(toRaw(formData));
+            if (isNull(userInfo)) {
               loading.value = false;
+              handleCaptcha();
             }
           })
           .catch((error) => {
+            loading.value = false;
             handleCaptcha();
             notification.error({
               message: t('sys.login.formVerifyTitle'),

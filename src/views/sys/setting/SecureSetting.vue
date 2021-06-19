@@ -13,10 +13,10 @@
   import { defineComponent, onMounted } from 'vue';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { CollapseContainer } from '/@/components/Container/index';
+  import { CollapseContainer } from '/@/components/Container';
 
   import { getUserInfo } from '/@/api/auth';
-  import { updateUser } from '/@/api/modules/upms/user';
+  import { resetPass } from '/@/api/modules/upms/user';
   import { secureSettingForm } from './data';
   import { useUserStore } from '/@/store/modules/user';
 
@@ -42,12 +42,12 @@
       });
 
       async function handleSubmit() {
-        const values = await validate();
-        if (values.password !== values.repass) {
+        const { id, password, repass } = await validate();
+        if (password !== repass) {
           error('两次输入密码不一致');
           return;
         }
-        await updateUser(values);
+        await resetPass(id, password);
         userStore.confirmLoginOut();
       }
 

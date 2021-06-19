@@ -6,6 +6,7 @@ const Api = {
   UserPage: `${ApiPrefix.UPMS_PREFIX}/user/page`,
   BasicApi: `${ApiPrefix.UPMS_PREFIX}/user`,
   CheckUserName: `${ApiPrefix.UPMS_PREFIX}/user/checkName`,
+  ResetPass: `${ApiPrefix.UPMS_PREFIX}/user/reset`,
 };
 
 /**
@@ -76,5 +77,18 @@ export function updateUser(params: any) {
 export function deleteUser(id: string | number) {
   return defHttp.delete({
     url: `${Api.BasicApi}/${id}`,
+  });
+}
+
+/**
+ * 重置密码
+ */
+export function resetPass(id: string | number, password: string | null) {
+  return defHttp.get({
+    url: `${Api.ResetPass}`,
+    params: {
+      id,
+      password,
+    },
   });
 }

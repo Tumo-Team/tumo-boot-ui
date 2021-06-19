@@ -47,6 +47,7 @@
           {
             field: 'password',
             show: !unref(isUpdate),
+            required: !unref(isUpdate),
           },
           {
             field: 'deptId',

@@ -66,7 +66,6 @@
           labelWidth: 120,
           schemas: searchFormSchema,
         },
-        pagination: true,
         useSearchForm: true,
         showTableSetting: true,
         showIndexColumn: false,
