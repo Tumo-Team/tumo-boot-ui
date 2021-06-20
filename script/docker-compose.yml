@@ -1,0 +1,18 @@
+version: "3.5"
+
+services:
+  tumo-boot-ui:
+    image: registry.cn-hangzhou.aliyuncs.com/tumo/tumo-boot-ui
+    restart: always
+    container_name: tumo-boot-ui
+    ports:
+      - 8091:80
+    networks:
+      - tumo_boot_net
+
+networks:
+  tumo_boot_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16

@@ -8,4 +8,4 @@ services:
     restart: always
     container_name: tumo-boot-ui
     ports:
-      - 8091:80
+      - 8011:80
