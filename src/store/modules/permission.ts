@@ -46,16 +46,16 @@ export const usePermissionStore = defineStore({
     backMenuList: [],
   }),
   getters: {
-    getPermCodeList() {
+    getPermCodeList(): string[] | number[] {
       return this.permCodeList;
     },
-    getBackMenuList() {
+    getBackMenuList(): Menu[] {
       return this.backMenuList;
     },
-    getLastBuildMenuTime() {
+    getLastBuildMenuTime(): number {
       return this.lastBuildMenuTime;
     },
-    getIsDynamicAddedRoute() {
+    getIsDynamicAddedRoute(): boolean {
       return this.isDynamicAddedRoute;
     },
   },
@@ -88,7 +88,7 @@ export const usePermissionStore = defineStore({
       const appStore = useAppStoreWidthOut();
 
       let routes: AppRouteRecordRaw[] = [];
-      const roleList = toRaw(userStore.getRoleList);
+      const roleList = toRaw(userStore.getRoleList) || [];
       const { permissionMode = projectSetting.permissionMode } = appStore.getProjectConfig;
       // 从本地菜单配置中获取菜单
       if (permissionMode === PermissionModeEnum.ROLE) {

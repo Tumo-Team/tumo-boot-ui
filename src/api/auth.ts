@@ -23,7 +23,7 @@ export function getCaptcha() {
 /**
  * 登录认证接口
  */
-export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
+export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'message') {
   return defHttp.get<LoginResultModel>(
     {
       url: Api.Login,
@@ -39,7 +39,7 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
       },
     },
     {
-      isTransformRequestResult: false,
+      isTransformResponse: false,
       errorMessageMode: mode,
     }
   );

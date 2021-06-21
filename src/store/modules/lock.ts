@@ -16,7 +16,7 @@ export const useLockStore = defineStore({
     lockInfo: Persistent.getLocal(LOCK_INFO_KEY),
   }),
   getters: {
-    getLockInfo() {
+    getLockInfo(): Nullable<LockInfo> {
       return this.lockInfo;
     },
   },
@@ -42,8 +42,8 @@ export const useLockStore = defineStore({
           const res = await userStore.login({
             username,
             password: password!,
-            goHome: false,
-            mode: 'none',
+            captcha: '',
+            captchaKey: '',
           });
           if (res) {
             this.resetLockInfo();

@@ -30,9 +30,9 @@ const Auth = {
       delete: 'resource:log:delete',
     },
     oss: {
-      add: 'resource:log:add',
-      update: 'resource:log:update',
-      delete: 'resource:log:delete',
+      add: 'resource:oss:add',
+      update: 'resource:oss:update',
+      delete: 'resource:oss:delete',
     },
     token: {
       info: 'resource:token:info',
