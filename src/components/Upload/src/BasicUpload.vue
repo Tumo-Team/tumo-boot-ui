@@ -29,7 +29,7 @@
     />
 
     <UploadPreviewModal
-      v-if="showPreview"
+      v-if="false"
       :value="fileList"
       @register="registerPreviewModal"
       @list-change="handlePreviewChange"
@@ -64,10 +64,9 @@
       const fileList = ref<string[]>([]);
 
       const showPreview = computed(() => {
-        // const { emptyHidePreview } = props;
-        // if (!emptyHidePreview) return true;
-        // return emptyHidePreview ? fileList.value.length > 0 : true;
-        return false;
+        const { emptyHidePreview } = props;
+        if (!emptyHidePreview) return true;
+        return emptyHidePreview ? fileList.value.length > 0 : true;
       });
 
       const bindValue = computed(() => {

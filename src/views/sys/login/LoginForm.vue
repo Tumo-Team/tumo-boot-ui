@@ -2,7 +2,14 @@
   <h2 class="font-bold text-2xl xl:text-3xl enter-x text-center xl:text-left mb-6">
     {{ t('sys.login.signInFormTitle') }}
   </h2>
-  <Form class="p-4 enter-x" :model="formData" :rules="rules" ref="formRef" v-show="getShow">
+  <Form
+    class="p-4 enter-x"
+    :model="formData"
+    :rules="rules"
+    ref="formRef"
+    v-show="getShow"
+    @keypress.enter="handleLogin"
+  >
     <FormItem name="username" class="enter-x">
       <Input
         size="large"
@@ -173,6 +180,7 @@
     .ant-input {
       min-width: 200px !important;
     }
+
     .ant-input-group-addon {
       background: transparent;
       border: 0;

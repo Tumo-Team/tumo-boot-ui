@@ -4,7 +4,7 @@
       <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
-          {{ getUserInfo.username }}
+          {{ getUserInfo.realName }}
         </span>
       </span>
     </span>
@@ -18,12 +18,6 @@
           v-if="getShowDoc"
         />
         <MenuDivider v-if="getShowDoc" />
-        <MenuItem
-          key="profile"
-          :text="t('layout.header.dropdownItemProfile')"
-          icon="bx-bx-user-pin"
-        />
-        <MenuDivider />
         <MenuItem
           v-if="getUseLockPage"
           key="lock"
@@ -45,7 +39,6 @@
   import { Dropdown, Menu } from 'ant-design-vue';
 
   import { defineComponent, computed } from 'vue';
-  import { router } from '/@/router';
 
   import { DOC_URL } from '/@/settings/siteSetting';
 
@@ -58,11 +51,10 @@
   import headerImg from '/@/assets/images/header.jpg';
   import { propTypes } from '/@/utils/propTypes';
   import { openWindow } from '/@/utils';
-  import { PageEnum } from '/@/enums/pageEnum';
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  type MenuEvent = 'logout' | 'profile' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'doc' | 'lock';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -83,19 +75,14 @@
       const userStore = useUserStore();
 
       const getUserInfo = computed(() => {
-        const { username, avatar } = userStore.getUserInfo || {};
-        return { username, avatar: avatar || headerImg };
+        const { realName = '', avatar, desc } = userStore.getUserInfo || {};
+        return { realName, avatar: avatar || headerImg, desc };
       });
 
       const [register, { openModal }] = useModal();
 
       function handleLock() {
         openModal(true);
-      }
-
-      // 个人设置页面
-      function handleProfile() {
-        router.push(PageEnum.PROFILE_SETTING_PAGE);
       }
 
       //  login out
@@ -112,9 +99,6 @@
         switch (e.key) {
           case 'logout':
             handleLoginOut();
-            break;
-          case 'profile':
-            handleProfile();
             break;
           case 'doc':
             openDoc();

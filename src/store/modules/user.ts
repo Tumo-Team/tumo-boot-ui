@@ -1,9 +1,7 @@
 import type { UserInfo } from '/#/store';
-import type { ErrorMessageMode } from '/@/utils/http/axios/types';
-
+import type { ErrorMessageMode } from '/#/axios';
 import { defineStore } from 'pinia';
 import { store } from '/@/store';
-
 import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
 import { PERMS_KEY, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
@@ -106,7 +104,7 @@ export const useUserStore = defineStore({
         !sessionTimeout && goHome && (await router.replace(PageEnum.BASE_HOME));
         return userInfo;
       } catch (error) {
-        return null;
+        return Promise.reject(error);
       }
     },
     async getUserInfoAction() {
@@ -146,6 +144,6 @@ export const useUserStore = defineStore({
 });
 
 // Need to be used outside the setup
-export function useUserStoreWidthOut() {
+export function useUserStoreWithOut() {
   return useUserStore(store);
 }
