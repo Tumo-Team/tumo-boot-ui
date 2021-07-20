@@ -1,7 +1,7 @@
 import { defHttp } from '/@/utils/http/axios';
 import { ApiPrefix } from '/@/api/model/baseModel';
 import { LoginParams, LoginResultModel } from '/@/api/model/userModel';
-import { ErrorMessageMode } from '/@/utils/http/axios/types';
+import { ErrorMessageMode } from '/#/axios';
 
 const Api = {
   Login: `${ApiPrefix.AUTH_PREFIX}/oauth/token`,

@@ -19,6 +19,12 @@
         />
         <MenuDivider v-if="getShowDoc" />
         <MenuItem
+          key="profile"
+          :text="t('layout.header.dropdownItemProfile')"
+          icon="bx-bx-user-pin"
+        />
+        <MenuDivider />
+        <MenuItem
           v-if="getUseLockPage"
           key="lock"
           :text="t('layout.header.tooltipLock')"
@@ -39,6 +45,7 @@
   import { Dropdown, Menu } from 'ant-design-vue';
 
   import { defineComponent, computed } from 'vue';
+  import { router } from '/@/router';
 
   import { DOC_URL } from '/@/settings/siteSetting';
 
@@ -51,10 +58,11 @@
   import headerImg from '/@/assets/images/header.jpg';
   import { propTypes } from '/@/utils/propTypes';
   import { openWindow } from '/@/utils';
+  import { PageEnum } from '/@/enums/pageEnum';
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'profile' | 'doc' | 'lock';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -85,6 +93,11 @@
         openModal(true);
       }
 
+      // 个人设置页面
+      function handleProfile() {
+        router.push(PageEnum.PROFILE_SETTING_PAGE);
+      }
+
       //  login out
       function handleLoginOut() {
         userStore.confirmLoginOut();
@@ -99,6 +112,9 @@
         switch (e.key) {
           case 'logout':
             handleLoginOut();
+            break;
+          case 'profile':
+            handleProfile();
             break;
           case 'doc':
             openDoc();

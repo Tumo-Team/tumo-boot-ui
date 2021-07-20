@@ -23,6 +23,7 @@ import { filter } from '/@/utils/helper/treeHelper';
 import { buildMenu } from '/@/api/auth';
 
 import { useMessage } from '/@/hooks/web/useMessage';
+import { PageEnum } from '/@/enums/pageEnum';
 
 interface PermissionState {
   // Permission code list
@@ -108,6 +109,42 @@ export const usePermissionStore = defineStore({
         return roleList.some((role) => roles.includes(role));
       };
 
+      const routeRmoveIgnoreFilter = (route: AppRouteRecordRaw) => {
+        const { meta } = route;
+        const { ignoreRoute } = meta || {};
+        return !ignoreRoute;
+      };
+
+      /**
+       * @description 根据设置的首页path，修正routes中的affix标记（固定首页）
+       * */
+      const patchHomeAffix = (routes: AppRouteRecordRaw[]) => {
+        if (!routes || routes.length === 0) return;
+        let homePath: string = userStore.getUserInfo.homePath || PageEnum.BASE_HOME;
+        function patcher(routes: AppRouteRecordRaw[], parentPath = '') {
+          if (parentPath) parentPath = parentPath + '/';
+          routes.forEach((route: AppRouteRecordRaw) => {
+            const { path, children, redirect } = route;
+            const currentPath = path.startsWith('/') ? path : parentPath + path;
+            if (currentPath === homePath) {
+              if (redirect) {
+                homePath = route.redirect! as string;
+              } else {
+                route.meta = Object.assign({}, route.meta, { affix: true });
+                throw new Error('end');
+              }
+            }
+            children && children.length > 0 && patcher(children, currentPath);
+          });
+        }
+        try {
+          patcher(routes);
+        } catch (e) {
+          // 已处理完毕跳出循环
+        }
+        return;
+      };
+
       switch (permissionMode) {
         case PermissionModeEnum.ROLE:
           routes = filter(asyncRoutes, routeFilter);
@@ -119,10 +156,13 @@ export const usePermissionStore = defineStore({
         case PermissionModeEnum.ROUTE_MAPPING:
           routes = filter(asyncRoutes, routeFilter);
           routes = routes.filter(routeFilter);
-          const menuList = transformRouteToMenu(asyncRoutes);
+          const menuList = transformRouteToMenu(routes, true);
+          routes = filter(routes, routeRmoveIgnoreFilter);
+          routes = routes.filter(routeRmoveIgnoreFilter);
           menuList.sort((a, b) => {
             return (a.meta?.orderNo || 0) - (b.meta?.orderNo || 0);
           });
+
           this.setFrontMenuList(menuList);
           // Convert multi-level routing to level 2 routing
           routes = flatMultiLevelRoutes(routes);
@@ -161,12 +201,17 @@ export const usePermissionStore = defineStore({
           const backMenuList = transformRouteToMenu(routeList);
           this.setBackMenuList(backMenuList);
 
+          // remove meta.ignoreRoute item
+          routeList = filter(routeList, routeRmoveIgnoreFilter);
+          routeList = routeList.filter(routeRmoveIgnoreFilter);
+
           routeList = flatMultiLevelRoutes(routeList);
           routes = [PAGE_NOT_FOUND_ROUTE, profile, ...routeList];
           break;
       }
 
       routes.push(ERROR_LOG_ROUTE);
+      patchHomeAffix(routes);
       return routes;
     },
   },

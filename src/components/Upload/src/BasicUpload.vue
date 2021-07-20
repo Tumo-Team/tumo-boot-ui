@@ -27,19 +27,11 @@
       @change="handleChange"
       @delete="handleDelete"
     />
-
-    <UploadPreviewModal
-      v-if="false"
-      :value="fileList"
-      @register="registerPreviewModal"
-      @list-change="handlePreviewChange"
-    />
   </div>
 </template>
 <script lang="ts">
   import { defineComponent, ref, watch, unref, computed } from 'vue';
   import UploadModal from './UploadModal.vue';
-  import UploadPreviewModal from './UploadPreviewModal.vue';
   import { Icon } from '/@/components/Icon';
   import { Tooltip } from 'ant-design-vue';
   import { useModal } from '/@/components/Modal';
@@ -49,7 +41,7 @@
 
   export default defineComponent({
     name: 'BasicUpload',
-    components: { UploadModal, UploadPreviewModal, Icon, Tooltip },
+    components: { UploadModal, Icon, Tooltip },
     props: uploadContainerProps,
     emits: ['change', 'delete'],
 
@@ -88,12 +80,6 @@
         emit('change', fileList.value);
       }
 
-      // 预览modal保存操作
-      function handlePreviewChange(urls: string[]) {
-        fileList.value = [...(urls || [])];
-        emit('change', fileList.value);
-      }
-
       function handleDelete(record: Recordable) {
         emit('delete', record);
       }
@@ -102,7 +88,6 @@
         registerUploadModal,
         openUploadModal,
         handleChange,
-        handlePreviewChange,
         registerPreviewModal,
         openPreviewModal,
         fileList,
