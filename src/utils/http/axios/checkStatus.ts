@@ -33,7 +33,7 @@ export function checkStatus(
         userStore.setToken(undefined);
         userStore.setSessionTimeout(true);
       } else {
-        userStore.logout();
+        userStore.logout(true);
       }
       break;
     case 403:

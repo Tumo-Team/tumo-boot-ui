@@ -8,7 +8,7 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { userFormSchema } from './data';
-  import { getOss, updateOss } from '/@/api/modules/resource/oss';
+  import { getOss, updateOss } from '/@/api/modules/system/oss';
 
   export default defineComponent({
     name: 'FormModal',

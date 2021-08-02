@@ -5,16 +5,17 @@
         <TableAction
           :actions="[
             {
+              auth: Auth.system.token.info,
               icon: 'carbon-view-filled',
               onClick: handleInfo.bind(null, record),
             },
             {
-              auth: Auth.resource.log.delete,
+              auth: Auth.system.token.delete,
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
-                confirm: handleDelete.bind(null, record.id),
+                title: '是否强制下线该用户',
+                confirm: handleDelete.bind(null, record.value),
               },
             },
           ]"
@@ -26,7 +27,7 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { getLogPage, deleteLog } from '/@/api/modules/resource/log';
+  import { getTokenPage, deleteToken } from '/@/api/modules/system/token';
   import Auth from '/@/utils/constants/auth';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
@@ -43,13 +44,14 @@
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
         title: '日志列表',
-        api: getLogPage,
+        api: getTokenPage,
         columns,
         formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
         },
-        useSearchForm: true,
+        showIndexColumn: false,
+        useSearchForm: false,
         showTableSetting: true,
         bordered: true,
         actionColumn: {
@@ -60,8 +62,8 @@
         },
       });
 
-      async function handleDelete(id: string | number) {
-        await deleteLog(id);
+      async function handleDelete(token: string) {
+        await deleteToken(token);
         reload();
       }
 

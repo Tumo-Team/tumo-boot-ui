@@ -3,7 +3,7 @@
     <BasicTable @register="registerTable">
       <template #toolbar>
         <BasicUpload
-          v-auth="Auth.resource.oss.add"
+          v-auth="Auth.system.oss.add"
           :maxSize="200"
           :maxNumber="Infinity"
           @change="handleCreate"
@@ -19,12 +19,12 @@
         <TableAction
           :actions="[
             {
-              auth: Auth.resource.oss.update,
+              auth: Auth.system.oss.update,
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record.id),
             },
             {
-              auth: Auth.resource.oss.delete,
+              auth: Auth.system.oss.delete,
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -41,8 +41,8 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { getOssPage, addOssList, deleteOss } from '/@/api/modules/resource/oss';
-  import { uploadListApi } from '/@/api/modules/resource/upload';
+  import { getOssPage, addOssList, deleteOss } from '/@/api/modules/system/oss';
+  import { uploadListApi } from '/@/api/modules/system/upload';
   import Auth from '/@/utils/constants/auth';
 
   import { BasicUpload } from '/@/components/Upload';

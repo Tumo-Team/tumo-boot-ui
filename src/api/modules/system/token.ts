@@ -2,8 +2,8 @@ import { defHttp } from '/@/utils/http/axios';
 import { ApiPrefix } from '/@/api/model/baseModel';
 
 const Api = {
-  TokenPage: `${ApiPrefix.AUTH_PREFIX}/token/page`,
-  DeleteToken: `${ApiPrefix.AUTH_PREFIX}/token`,
+  TokenPage: `${ApiPrefix.SYSTEM_PREFIX}/token/page`,
+  DeleteToken: `${ApiPrefix.SYSTEM_PREFIX}/token`,
 };
 
 /**

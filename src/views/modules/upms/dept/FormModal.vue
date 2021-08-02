@@ -32,15 +32,13 @@
 
         if (unref(isUpdate)) {
           const dept = await getDept(data.id);
+          if (dept.parentId == 0) {
+            dept.parentId = null;
+          }
           setFieldsValue({
             ...dept,
           });
         }
-
-        // 过滤parentId
-        setFieldsValue({
-          parentId: data.parentId == 0 ? null : data.parentId,
-        });
 
         const treeData = await getDeptTree();
         updateSchema({

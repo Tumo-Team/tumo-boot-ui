@@ -25,18 +25,18 @@ const Auth = {
     },
   },
 
-  resource: {
+  system: {
     log: {
-      delete: 'resource:log:delete',
+      delete: 'system:log:delete',
     },
     oss: {
-      add: 'resource:oss:add',
-      update: 'resource:oss:update',
-      delete: 'resource:oss:delete',
+      add: 'system:oss:add',
+      update: 'system:oss:update',
+      delete: 'system:oss:delete',
     },
     token: {
-      info: 'resource:token:info',
-      delete: 'resource:token:delete',
+      info: 'system:token:info',
+      delete: 'system:token:delete',
     },
   },
 };

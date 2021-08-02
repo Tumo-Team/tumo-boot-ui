@@ -10,11 +10,12 @@ import { useGlobSetting } from '/@/hooks/setting';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { RequestEnum, ResultEnum, ContentTypeEnum } from '/@/enums/httpEnum';
 import { isString } from '/@/utils/is';
-import { getToken } from '/@/utils/auth';
+import { getToken, clearAuthCache } from '/@/utils/auth';
 import { setObjToUrlParams, deepMerge } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
+import { Api } from '/@/api/auth';
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
@@ -166,6 +167,29 @@ const transform: AxiosTransform = {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
         errMessage = t('sys.api.apiTimeoutMessage');
       }
+      // 针对getUserInfo和getMenu接口的响应细化处理
+      if (response && response.status != 200) {
+        if (config.url.indexOf(Api.GetUserInfo) > 0) {
+          createMessage.error('获取用户信息失败，请联系管理员！');
+          // 手动清除缓存，避免多次登录 污染Authorization请求头
+          clearAuthCache(true);
+          return Promise.reject(error);
+        }
+        if (config.url.indexOf(Api.BuildMenu) > 0) {
+          createMessage.error('加载权限菜单失败，请联系管理员！');
+          clearAuthCache(true);
+          return Promise.reject(error);
+        }
+        if (config.url.indexOf(Api.GetCaptcha) > 0) {
+          createMessage.error('获取验证码失败，请联系管理员！');
+          clearAuthCache(true);
+          return Promise.reject(error);
+        }
+      }
+      if (response.status === 403 || response.status == 401) {
+        // 无权限，或请求失败
+        errMessage = t('sys.api.apiRequestFailed');
+      }
       if (err?.includes('Network Error')) {
         errMessage = t('sys.api.networkExceptionMsg');
       }
@@ -179,6 +203,7 @@ const transform: AxiosTransform = {
         return Promise.reject(error);
       }
     } catch (error) {
+      console.log('ss');
       throw new Error(error);
     }
 

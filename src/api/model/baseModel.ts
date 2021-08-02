@@ -4,12 +4,12 @@
 export const ApiPrefix = {
   // 基础接口前缀
   BASIC_PREFIX: '/tumo-boot',
-  // Auth服务接口前缀
+  // Auth模块接口前缀
   AUTH_PREFIX: '/auth',
-  // Upms服务接口前缀
+  // Upms模块接口前缀
   UPMS_PREFIX: '/upms',
-  // Resource服务接口
-  RESOURCE_PREFIX: '/resource',
+  // System模块接口前缀
+  SYSTEM_PREFIX: '/system',
 };
 
 export interface BasicPageParams {

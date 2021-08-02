@@ -134,7 +134,7 @@ export const useUserStore = defineStore({
     /**
      * @description: logout
      */
-    async logout(goLogin = false) {
+    async logout(goLogin = true) {
       try {
         await logoutApi();
       } catch {
@@ -156,7 +156,7 @@ export const useUserStore = defineStore({
         title: t('sys.app.logoutTip'),
         content: t('sys.app.logoutMessage'),
         onOk: async () => {
-          await this.logout();
+          await this.logout(true);
         },
       });
     },

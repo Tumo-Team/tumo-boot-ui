@@ -44,15 +44,13 @@
           menu.isExt = String(menu.isExt);
           menu.isKeepalive = String(menu.isKeepalive);
           menu.isShow = String(menu.isShow);
+          if (menu.parentId == 0) {
+            menu.parentId = null;
+          }
           setFieldsValue({
             ...menu,
           });
         }
-
-        // 过滤parentId
-        setFieldsValue({
-          parentId: data.parentId == 0 ? null : data.parentId,
-        });
 
         const treeData = await getMenuTree();
         updateSchema({
