@@ -95,7 +95,7 @@
       const spinning = ref<boolean>(false);
 
       const formData = reactive({
-        username: 'administrator',
+        username: 'demo',
         password: '123456',
         captcha: '',
         captchaKey: '',

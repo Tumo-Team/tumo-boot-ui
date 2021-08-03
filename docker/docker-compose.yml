@@ -1,4 +1,4 @@
-version: "3.5"
+version: '3.5'
 
 services:
   tumo-boot-ui:
@@ -8,4 +8,13 @@ services:
     restart: always
     container_name: tumo-boot-ui
     ports:
-      - 8011:80
+      - 8091:80
+    networks:
+      - tumo_boot_net
+
+networks:
+  tumo_boot_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
