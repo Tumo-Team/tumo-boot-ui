@@ -27,7 +27,7 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { getLogPage, deleteLog } from '/@/api/modules/system/log';
-  import Auth from '/@/utils/constants/auth';
+  import Auth from '/@/settings/constants/auth';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
 

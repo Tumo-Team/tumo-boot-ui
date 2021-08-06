@@ -28,7 +28,7 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
   import { getTokenPage, deleteToken } from '/@/api/modules/system/token';
-  import Auth from '/@/utils/constants/auth';
+  import Auth from '/@/settings/constants/auth';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
 

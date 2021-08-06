@@ -44,7 +44,7 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './DeptTree.vue';
-  import Auth from '/@/utils/constants/auth';
+  import Auth from '/@/settings/constants/auth';
 
   import { useModal } from '/@/components/Modal';
   import FormModal from './FormModal.vue';

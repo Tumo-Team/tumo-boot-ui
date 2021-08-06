@@ -40,7 +40,7 @@
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getMenuTree, deleteMenu } from '/@/api/modules/upms/menu';
-  import Auth from '/@/utils/constants/auth';
+  import Auth from '/@/settings/constants/auth';
 
   import { useDrawer } from '/@/components/Drawer';
   import FormModal from './FormModal.vue';

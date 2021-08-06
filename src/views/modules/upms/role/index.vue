@@ -35,7 +35,7 @@
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getRoleTree, deleteRole } from '/@/api/modules/upms/role';
-  import Auth from '/@/utils/constants/auth';
+  import Auth from '/@/settings/constants/auth';
 
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './FormModal.vue';

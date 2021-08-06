@@ -30,11 +30,11 @@ export const columns: BasicColumn[] = [
     width: 180,
   },
   {
-    title: '组件',
+    title: '组件路径',
     dataIndex: 'component',
   },
   {
-    title: '路径',
+    title: '路由地址',
     dataIndex: 'path',
   },
   {
@@ -145,7 +145,7 @@ export const formSchema: FormSchema[] = [
     label: '组件路径',
     component: 'Input',
     dynamicDisabled: ({ values }) => isExt(values.isExt),
-    required: ({ values }) => !isButton(values.type) && !isExt(values.isExt),
+    required: ({ values }) => !isButton(values.type) || !isExt(values.isExt),
     show: ({ values }) => isMenu(values.type),
   },
   {

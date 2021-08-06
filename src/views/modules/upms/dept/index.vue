@@ -35,7 +35,7 @@
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getDeptTree, deleteDept } from '/@/api/modules/upms/dept';
-  import Auth from '/@/utils/constants/auth';
+  import Auth from '/@/settings/constants/auth';
 
   import { useModal } from '/@/components/Modal';
   import FormModal from './FormModal.vue';

@@ -43,7 +43,7 @@
   import { defineComponent } from 'vue';
   import { getOssPage, addOssList, deleteOss } from '/@/api/modules/system/oss';
   import { uploadListApi } from '/@/api/modules/system/upload';
-  import Auth from '/@/utils/constants/auth';
+  import Auth from '/@/settings/constants/auth';
 
   import { BasicUpload } from '/@/components/Upload';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
