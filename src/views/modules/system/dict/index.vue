@@ -2,29 +2,24 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <BasicUpload
-          v-auth="Auth.system.oss.add"
-          :maxSize="200"
-          :maxNumber="Infinity"
-          @change="handleCreate"
-          :emptyHidePreview="true"
-          :api="uploadListApi"
-          class="my-5"
-        />
-      </template>
-      <template #url="{ record }">
-        <a :href="record.url" target="_blank">{{ record.url }}</a>
+        <a-button type="primary" @click="handleCreate"> 新增字典 </a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
-              auth: Auth.system.oss.update,
+              // auth: Auth.system.oss.update,
+              icon: 'clarity:bullet-list-line',
+              onClick: handleInfo.bind(null, record.id),
+            },
+            {
+              // auth: Auth.system.oss.update,
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record.id),
             },
             {
-              auth: Auth.system.oss.delete,
+              // auth: Auth.system.oss.delete,
+              disabled: record.isSystem,
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -37,30 +32,32 @@
       </template>
     </BasicTable>
     <FormModal @register="registerModal" @success="handleSuccess" />
+    <ItemModal @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { getOssPage, addOssList, deleteOss } from '/@/api/modules/system/oss';
-  import { uploadListApi } from '/@/api/modules/system/upload';
+  import { getDictPage, deleteDict } from '/@/api/modules/system/dict';
   import Auth from '/@/settings/constants/auth';
 
-  import { BasicUpload } from '/@/components/Upload';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
   import { useModal } from '/@/components/Modal';
+  import { useDrawer } from '/@/components/Drawer';
   import FormModal from './FormModal.vue';
 
+  import ItemModal from './ItemModal.vue';
   import { columns, searchFormSchema } from './data';
 
   export default defineComponent({
     name: 'Index',
-    components: { BasicTable, BasicUpload, FormModal, TableAction },
+    components: { BasicTable, FormModal, ItemModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();
+      const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
-        title: '本地文件列表',
-        api: getOssPage,
+        title: '字典列表',
+        api: getDictPage,
         columns,
         formConfig: {
           labelWidth: 120,
@@ -72,16 +69,17 @@
         bordered: true,
         tableSetting: { fullScreen: true },
         actionColumn: {
-          width: 80,
+          width: 110,
           title: '操作',
           dataIndex: 'action',
           slots: { customRender: 'action' },
         },
       });
 
-      async function handleCreate(list: string[]) {
-        await addOssList(list);
-        reload();
+      function handleCreate() {
+        openModal(true, {
+          isUpdate: false,
+        });
       }
 
       function handleEdit(id: string | number) {
@@ -91,8 +89,15 @@
         });
       }
 
+      function handleInfo(id: string | number) {
+        openDrawer(true, {
+          id,
+          isUpdate: false,
+        });
+      }
+
       async function handleDelete(id: string | number) {
-        await deleteOss(id);
+        await deleteDict(id);
         reload();
       }
 
@@ -103,10 +108,11 @@
       return {
         registerTable,
         registerModal,
-        uploadListApi,
+        registerDrawer,
         handleCreate,
         handleEdit,
         handleDelete,
+        handleInfo,
         handleSuccess,
         Auth,
       };

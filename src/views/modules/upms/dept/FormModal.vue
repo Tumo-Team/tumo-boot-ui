@@ -32,6 +32,7 @@
 
         if (unref(isUpdate)) {
           const dept = await getDept(data.id);
+          data.parentId = dept.parentId;
           setFieldsValue({
             ...dept,
           });

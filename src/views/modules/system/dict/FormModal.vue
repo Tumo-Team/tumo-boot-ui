@@ -8,7 +8,8 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './data';
-  import { getOss, updateOss } from '/@/api/modules/system/oss';
+  import { getDict, updateDict, addDict } from '/@/api/modules/system/dict';
+  import { isNullOrUnDef } from '/@/utils/is';
 
   export default defineComponent({
     name: 'FormModal',
@@ -32,21 +33,27 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          const oss = await getOss(data.id);
+          const dict = await getDict(data.id);
+          dict.isSystem = String(dict.isSystem);
           setFieldsValue({
-            ...oss,
+            ...dict,
           });
         }
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增文件' : '编辑文件'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增字典' : '编辑字典'));
 
       async function handleSubmit() {
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // 修改
-          await updateOss(values);
+          if (isNullOrUnDef(values.id)) {
+            // 新增
+            await addDict(values);
+          } else {
+            // 修改
+            await updateDict(values);
+          }
           closeModal();
           emit('success');
         } finally {

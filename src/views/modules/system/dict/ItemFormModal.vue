@@ -7,8 +7,9 @@
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { formSchema } from './data';
-  import { getOss, updateOss } from '/@/api/modules/system/oss';
+  import { itemFormSchema } from './data';
+  import { getDictItem, updateDictItem, addDictItem } from '/@/api/modules/system/dictItem';
+  import { isNullOrUnDef } from '/@/utils/is';
 
   export default defineComponent({
     name: 'FormModal',
@@ -19,7 +20,7 @@
 
       const [registerForm, { setFieldsValue, resetFields, validate }] = useForm({
         labelWidth: 100,
-        schemas: formSchema,
+        schemas: itemFormSchema,
         showActionButtonGroup: false,
         actionColOptions: {
           span: 23,
@@ -32,21 +33,31 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          const oss = await getOss(data.id);
+          const dictItem = await getDictItem(data.id);
+          dictItem.isSystem = String(dictItem.isSystem);
           setFieldsValue({
-            ...oss,
+            ...dictItem,
           });
         }
+
+        setFieldsValue({
+          dictId: data.dictId,
+        });
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增文件' : '编辑文件'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增字典项' : '编辑字典项'));
 
       async function handleSubmit() {
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // 修改
-          await updateOss(values);
+          if (isNullOrUnDef(values.id)) {
+            // 新增
+            await addDictItem(values);
+          } else {
+            // 修改
+            await updateDictItem(values);
+          }
           closeModal();
           emit('success');
         } finally {

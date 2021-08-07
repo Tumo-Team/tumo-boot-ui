@@ -2,15 +2,14 @@ import { defHttp } from '/@/utils/http/axios';
 import { ApiPrefix } from '/@/api/model/baseModel';
 
 const Api = {
-  BaseApi: `${ApiPrefix.SYSTEM_PREFIX}/oss`,
-  BasePageApi: `${ApiPrefix.SYSTEM_PREFIX}/oss/page`,
-  OssAddList: `${ApiPrefix.SYSTEM_PREFIX}/oss/put-list`,
+  BaseApi: `${ApiPrefix.SYSTEM_PREFIX}/dict`,
+  BasePageApi: `${ApiPrefix.SYSTEM_PREFIX}/dict/page`,
 };
 
 /**
  * 分页、条件查询
  */
-export function getOssPage(params: any) {
+export function getDictPage(params: any) {
   return defHttp.get({
     url: Api.BasePageApi,
     params,
@@ -20,16 +19,16 @@ export function getOssPage(params: any) {
 /**
  * 根据ID查询
  */
-export function getOss(id: string | number) {
+export function getDict(id: string | number) {
   return defHttp.get({
     url: `${Api.BaseApi}/${id}`,
   });
 }
 
 /**
- * 新增
+ * 新增字典
  */
-export function addOss(params: any) {
+export function addDict(params: any) {
   return defHttp.post({
     url: `${Api.BaseApi}`,
     params,
@@ -37,19 +36,9 @@ export function addOss(params: any) {
 }
 
 /**
- * 新增（批量）
+ * 修改字典
  */
-export function addOssList(params: any) {
-  return defHttp.post({
-    url: `${Api.OssAddList}`,
-    params,
-  });
-}
-
-/**
- * 修改
- */
-export function updateOss(params: any) {
+export function updateDict(params: any) {
   return defHttp.put({
     url: `${Api.BaseApi}`,
     params,
@@ -59,7 +48,7 @@ export function updateOss(params: any) {
 /**
  * 删除
  */
-export function deleteOss(id: string | number) {
+export function deleteDict(id: string | number) {
   return defHttp.delete({
     url: `${Api.BaseApi}/${id}`,
   });

@@ -2,8 +2,8 @@ import { defHttp } from '/@/utils/http/axios';
 import { ApiPrefix } from '/@/api/model/baseModel';
 
 const Api = {
-  LogPage: `${ApiPrefix.SYSTEM_PREFIX}/log/page`,
-  BasicApi: `${ApiPrefix.SYSTEM_PREFIX}/log`,
+  BasePageApi: `${ApiPrefix.SYSTEM_PREFIX}/log/page`,
+  BaseApi: `${ApiPrefix.SYSTEM_PREFIX}/log`,
 };
 
 /**
@@ -11,7 +11,7 @@ const Api = {
  */
 export function getLogPage(params: any) {
   return defHttp.get({
-    url: Api.LogPage,
+    url: Api.BasePageApi,
     params,
   });
 }
@@ -21,7 +21,7 @@ export function getLogPage(params: any) {
  */
 export function getLog(id: string | number) {
   return defHttp.get({
-    url: `${Api.BasicApi}/${id}`,
+    url: `${Api.BaseApi}/${id}`,
   });
 }
 
@@ -30,6 +30,6 @@ export function getLog(id: string | number) {
  */
 export function deleteLog(id: string | number) {
   return defHttp.delete({
-    url: `${Api.BasicApi}/${id}`,
+    url: `${Api.BaseApi}/${id}`,
   });
 }

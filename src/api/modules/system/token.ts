@@ -2,8 +2,8 @@ import { defHttp } from '/@/utils/http/axios';
 import { ApiPrefix } from '/@/api/model/baseModel';
 
 const Api = {
-  TokenPage: `${ApiPrefix.SYSTEM_PREFIX}/token/page`,
-  DeleteToken: `${ApiPrefix.SYSTEM_PREFIX}/token`,
+  BasePageApi: `${ApiPrefix.AUTH_PREFIX}/token/page`,
+  DeleteTokenApi: `${ApiPrefix.AUTH_PREFIX}/token`,
 };
 
 /**
@@ -11,7 +11,7 @@ const Api = {
  */
 export function getTokenPage(params: any) {
   return defHttp.get({
-    url: Api.TokenPage,
+    url: Api.BasePageApi,
     params,
   });
 }
@@ -21,6 +21,6 @@ export function getTokenPage(params: any) {
  */
 export function deleteToken(token: string) {
   return defHttp.delete({
-    url: `${Api.DeleteToken}/${token}`,
+    url: `${Api.DeleteTokenApi}/${token}`,
   });
 }

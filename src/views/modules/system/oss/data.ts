@@ -52,7 +52,7 @@ export const searchFormSchema: FormSchema[] = [
   },
 ];
 
-export const userFormSchema: FormSchema[] = [
+export const formSchema: FormSchema[] = [
   {
     field: 'id',
     label: 'id',

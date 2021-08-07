@@ -2,10 +2,9 @@ import { defHttp } from '/@/utils/http/axios';
 import { ApiPrefix } from '/@/api/model/baseModel';
 
 const Api = {
-  MenuTree: `${ApiPrefix.UPMS_PREFIX}/menu/tree`,
-  MenuList: `${ApiPrefix.UPMS_PREFIX}/menu/list`,
-  MenuRoleList: `${ApiPrefix.UPMS_PREFIX}/menu/role/list`,
-  BasicApi: `${ApiPrefix.UPMS_PREFIX}/menu`,
+  MenuTreeApi: `${ApiPrefix.UPMS_PREFIX}/menu/tree`,
+  MenuListApi: `${ApiPrefix.UPMS_PREFIX}/menu/list`,
+  BaseApi: `${ApiPrefix.UPMS_PREFIX}/menu`,
 };
 
 /**
@@ -13,7 +12,7 @@ const Api = {
  */
 export function getMenuTree(params: any) {
   return defHttp.get({
-    url: Api.MenuTree,
+    url: Api.MenuTreeApi,
     params,
   });
 }
@@ -23,7 +22,7 @@ export function getMenuTree(params: any) {
  */
 export function getMenuList(params: any) {
   return defHttp.get({
-    url: Api.MenuList,
+    url: Api.MenuListApi,
     params,
   });
 }
@@ -33,7 +32,7 @@ export function getMenuList(params: any) {
  */
 export function getMenu(id: string | number) {
   return defHttp.get({
-    url: `${Api.BasicApi}/${id}`,
+    url: `${Api.BaseApi}/${id}`,
   });
 }
 
@@ -42,7 +41,7 @@ export function getMenu(id: string | number) {
  */
 export function addMenu(params: any) {
   return defHttp.post({
-    url: `${Api.BasicApi}`,
+    url: `${Api.BaseApi}`,
     params,
   });
 }
@@ -52,7 +51,7 @@ export function addMenu(params: any) {
  */
 export function updateMenu(params: any) {
   return defHttp.put({
-    url: `${Api.BasicApi}`,
+    url: `${Api.BaseApi}`,
     params,
   });
 }
@@ -62,6 +61,6 @@ export function updateMenu(params: any) {
  */
 export function deleteMenu(id: string | number) {
   return defHttp.delete({
-    url: `${Api.BasicApi}/${id}`,
+    url: `${Api.BaseApi}/${id}`,
   });
 }

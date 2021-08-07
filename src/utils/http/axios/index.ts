@@ -168,23 +168,16 @@ const transform: AxiosTransform = {
         errMessage = t('sys.api.apiTimeoutMessage');
       }
       // 针对getUserInfo和getMenu接口的响应细化处理
-      if (response && response.status != 200) {
-        if (config.url.indexOf(Api.GetUserInfo) > 0) {
-          createMessage.error('获取用户信息失败，请联系管理员！');
-          // 手动清除缓存，避免多次登录 污染Authorization请求头
-          clearAuthCache(true);
-          return Promise.reject(error);
-        }
-        if (config.url.indexOf(Api.BuildMenu) > 0) {
-          createMessage.error('加载权限菜单失败，请联系管理员！');
-          clearAuthCache(true);
-          return Promise.reject(error);
-        }
-        if (config.url.indexOf(Api.GetCaptcha) > 0) {
-          createMessage.error('获取验证码失败，请联系管理员！');
-          clearAuthCache(true);
-          return Promise.reject(error);
-        }
+      const url = config.url;
+      if (
+        url.indexOf(Api.GetUserInfo) > 0 ||
+        url.indexOf(Api.BuildMenu) > 0 ||
+        url.indexOf(Api.GetCaptcha) > 0
+      ) {
+        createMessage.error(errMessage);
+        // 手动清除缓存，避免多次登录 污染Authorization请求头
+        clearAuthCache(true);
+        return Promise.reject(error);
       }
       if (err?.includes('Network Error')) {
         errMessage = t('sys.api.networkExceptionMsg');

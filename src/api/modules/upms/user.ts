@@ -2,11 +2,11 @@ import { defHttp } from '/@/utils/http/axios';
 import { ApiPrefix } from '/@/api/model/baseModel';
 
 const Api = {
-  UserList: `${ApiPrefix.UPMS_PREFIX}/user/list`,
-  UserPage: `${ApiPrefix.UPMS_PREFIX}/user/page`,
-  BasicApi: `${ApiPrefix.UPMS_PREFIX}/user`,
-  CheckUserName: `${ApiPrefix.UPMS_PREFIX}/user/checkName`,
-  ResetPass: `${ApiPrefix.UPMS_PREFIX}/user/reset`,
+  BaseApi: `${ApiPrefix.UPMS_PREFIX}/user`,
+  UserListApi: `${ApiPrefix.UPMS_PREFIX}/user/list`,
+  UserPageApi: `${ApiPrefix.UPMS_PREFIX}/user/page`,
+  CheckUserNameApi: `${ApiPrefix.UPMS_PREFIX}/user/checkName`,
+  ResetPassApi: `${ApiPrefix.UPMS_PREFIX}/user/reset`,
 };
 
 /**
@@ -14,7 +14,7 @@ const Api = {
  */
 export function getUserList(params: any) {
   return defHttp.get({
-    url: Api.UserList,
+    url: Api.UserListApi,
     params,
   });
 }
@@ -24,7 +24,7 @@ export function getUserList(params: any) {
  */
 export function getUserPage(params: any) {
   return defHttp.get({
-    url: Api.UserPage,
+    url: Api.UserPageApi,
     params,
   });
 }
@@ -34,7 +34,7 @@ export function getUserPage(params: any) {
  */
 export function getUser(id: string | number) {
   return defHttp.get({
-    url: `${Api.BasicApi}/${id}`,
+    url: `${Api.BaseApi}/${id}`,
   });
 }
 
@@ -43,7 +43,7 @@ export function getUser(id: string | number) {
  */
 export function checkUserName(params: any) {
   return defHttp.get({
-    url: Api.CheckUserName,
+    url: Api.CheckUserNameApi,
     params: {
       id: params.id,
       username: params.username,
@@ -56,7 +56,7 @@ export function checkUserName(params: any) {
  */
 export function addUser(params: any) {
   return defHttp.post({
-    url: `${Api.BasicApi}`,
+    url: `${Api.BaseApi}`,
     params,
   });
 }
@@ -66,7 +66,7 @@ export function addUser(params: any) {
  */
 export function updateUser(params: any) {
   return defHttp.put({
-    url: `${Api.BasicApi}`,
+    url: `${Api.BaseApi}`,
     params,
   });
 }
@@ -76,7 +76,7 @@ export function updateUser(params: any) {
  */
 export function deleteUser(id: string | number) {
   return defHttp.delete({
-    url: `${Api.BasicApi}/${id}`,
+    url: `${Api.BaseApi}/${id}`,
   });
 }
 
@@ -85,7 +85,7 @@ export function deleteUser(id: string | number) {
  */
 export function resetPass(id: string | number, password: string | null) {
   return defHttp.get({
-    url: `${Api.ResetPass}`,
+    url: `${Api.ResetPassApi}`,
     params: {
       id,
       password,

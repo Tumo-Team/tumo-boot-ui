@@ -60,6 +60,7 @@
         showTableSetting: true,
         bordered: true,
         showIndexColumn: false,
+        tableSetting: { fullScreen: true },
         actionColumn: {
           width: 80,
           title: '操作',

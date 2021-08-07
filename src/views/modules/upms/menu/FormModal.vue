@@ -44,6 +44,7 @@
           menu.isExt = String(menu.isExt);
           menu.isKeepalive = String(menu.isKeepalive);
           menu.isShow = String(menu.isShow);
+          data.parentId = menu.parentId;
           setFieldsValue({
             ...menu,
           });

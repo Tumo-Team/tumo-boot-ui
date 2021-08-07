@@ -38,6 +38,11 @@ const Auth = {
       info: 'system:token:info',
       delete: 'system:token:delete',
     },
+    dict: {
+      add: 'system:dict:add',
+      update: 'system:dict:update',
+      delete: 'system:dict:delete',
+    },
   },
 };
 

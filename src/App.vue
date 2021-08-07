@@ -22,8 +22,9 @@
       useTitle();
 
       // 全局水印，请自行删除
+      const { setWatermark } = useWatermark();
       onMounted(() => {
-        useWatermark('Tumo Team');
+        setWatermark('Tumo Team');
       });
 
       // support Multi-language

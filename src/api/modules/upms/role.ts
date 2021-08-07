@@ -2,9 +2,9 @@ import { defHttp } from '/@/utils/http/axios';
 import { ApiPrefix } from '/@/api/model/baseModel';
 
 const Api = {
-  RoleList: `${ApiPrefix.UPMS_PREFIX}/role/list`,
-  RoleTree: `${ApiPrefix.UPMS_PREFIX}/role/tree`,
-  BasicApi: `${ApiPrefix.UPMS_PREFIX}/role`,
+  RoleListApi: `${ApiPrefix.UPMS_PREFIX}/role/list`,
+  RoleTreeApi: `${ApiPrefix.UPMS_PREFIX}/role/tree`,
+  BaseApi: `${ApiPrefix.UPMS_PREFIX}/role`,
 };
 
 /**
@@ -12,7 +12,7 @@ const Api = {
  */
 export function getRoleList(params: any) {
   return defHttp.get({
-    url: Api.RoleList,
+    url: Api.RoleListApi,
     params,
   });
 }
@@ -22,7 +22,7 @@ export function getRoleList(params: any) {
  */
 export function getRoleTree(params: any) {
   return defHttp.get({
-    url: Api.RoleTree,
+    url: Api.RoleTreeApi,
     params,
   });
 }
@@ -32,7 +32,7 @@ export function getRoleTree(params: any) {
  */
 export function getRole(id: string | number) {
   return defHttp.get({
-    url: `${Api.BasicApi}/${id}`,
+    url: `${Api.BaseApi}/${id}`,
   });
 }
 
@@ -41,7 +41,7 @@ export function getRole(id: string | number) {
  */
 export function addRole(params: any) {
   return defHttp.post({
-    url: `${Api.BasicApi}`,
+    url: `${Api.BaseApi}`,
     params,
   });
 }
@@ -51,7 +51,7 @@ export function addRole(params: any) {
  */
 export function updateRole(params: any) {
   return defHttp.put({
-    url: `${Api.BasicApi}`,
+    url: `${Api.BaseApi}`,
     params,
   });
 }
@@ -61,6 +61,6 @@ export function updateRole(params: any) {
  */
 export function deleteRole(id: string | number) {
   return defHttp.delete({
-    url: `${Api.BasicApi}/${id}`,
+    url: `${Api.BaseApi}/${id}`,
   });
 }

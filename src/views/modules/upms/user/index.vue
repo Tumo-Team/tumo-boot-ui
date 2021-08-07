@@ -69,6 +69,7 @@
         useSearchForm: true,
         showTableSetting: true,
         bordered: true,
+        tableSetting: { fullScreen: true },
         actionColumn: {
           width: 120,
           title: '操作',
