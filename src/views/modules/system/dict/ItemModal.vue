@@ -11,18 +11,20 @@
   >
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增字典项 </a-button>
+        <a-button v-auth="Auth.system.dictItem.add" type="primary" @click="handleCreate">
+          新增字典项
+        </a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
-              // auth: Auth.system.oss.update,
+              auth: Auth.system.dictItem.update,
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record.id),
             },
             {
-              // auth: Auth.system.oss.delete,
+              auth: Auth.system.dictItem.delete,
               disabled: record.isSystem,
               icon: 'ant-design:delete-outlined',
               color: 'error',
@@ -46,6 +48,7 @@
   import { useModal } from '/@/components/Modal';
   import { itemColumns } from './data';
   import ItemFormModal from './ItemFormModal.vue';
+  import Auth from '/@/settings/constants/auth';
 
   export default defineComponent({
     name: 'ItemModal',
@@ -120,6 +123,7 @@
         handleDelete,
         handleClose,
         handleSuccess,
+        Auth,
       };
     },
   });

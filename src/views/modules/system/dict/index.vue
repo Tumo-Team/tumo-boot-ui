@@ -2,23 +2,25 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增字典 </a-button>
+        <a-button v-auth="Auth.system.dict.add" type="primary" @click="handleCreate">
+          新增字典
+        </a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
-              // auth: Auth.system.oss.update,
+              auth: Auth.system.dict.update,
               icon: 'clarity:bullet-list-line',
               onClick: handleInfo.bind(null, record.id),
             },
             {
-              // auth: Auth.system.oss.update,
+              auth: Auth.system.dict.update,
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record.id),
             },
             {
-              // auth: Auth.system.oss.delete,
+              auth: Auth.system.dict.delete,
               disabled: record.isSystem,
               icon: 'ant-design:delete-outlined',
               color: 'error',
