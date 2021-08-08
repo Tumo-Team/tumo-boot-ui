@@ -5,7 +5,7 @@ import { useGlobSetting } from '/@/hooks/setting';
 const { uploadUrl = '' } = useGlobSetting();
 
 export const Api = {
-  PutFile: `${uploadUrl}/put`,
+  PutFileApi: `${uploadUrl}/put`,
 };
 
 export function uploadListApi(
@@ -14,7 +14,7 @@ export function uploadListApi(
 ) {
   return defHttp.uploadFile(
     {
-      url: Api.PutFile,
+      url: Api.PutFileApi,
       onUploadProgress,
     },
     params

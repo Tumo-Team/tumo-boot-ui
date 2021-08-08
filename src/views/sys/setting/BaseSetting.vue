@@ -7,8 +7,14 @@
       <a-col :span="10">
         <div class="change-avatar">
           <div class="mb-2"> 头像 </div>
-          <img width="140" :src="avatarImg" />
-          <Upload :action="uploadUrl" :headers="headers" name="file" :showUploadList="false">
+          <img width="140" :src="userInfo.avatar" />
+          <Upload
+            :action="uploadUrl"
+            :headers="headers"
+            name="file"
+            @change="handlerFileChange"
+            :showUploadList="false"
+          >
             <Button class="ml-5"> <Icon icon="feather:upload" />更换头像 </Button>
           </Upload>
         </div>
@@ -19,19 +25,19 @@
 </template>
 <script lang="ts">
   import { Button, Upload, Row, Col } from 'ant-design-vue';
-  import { defineComponent, onMounted, ref } from 'vue';
+  import { defineComponent, onMounted, ref, toRaw } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { CollapseContainer } from '/@/components/Container/index';
+  import { CollapseContainer } from '/@/components/Container';
   import Icon from '/@/components/Icon/index';
 
   import { getToken } from '/@/utils/auth';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { useUserStoreWithOut } from '/@/store/modules/user';
 
   import { getUserInfo } from '/@/api/auth';
   import { updateUser } from '/@/api/modules/upms/user';
+  import { Api } from '/@/api/modules/system/upload';
   import { baseSetSchemas } from './data';
-
-  import { useGlobSetting } from '/@/hooks/setting';
 
   export default defineComponent({
     components: {
@@ -45,7 +51,8 @@
     },
     setup() {
       const { createMessage, createConfirm } = useMessage();
-      const avatarImg = ref<string>('');
+      const userStore = useUserStoreWithOut();
+      const userInfo = ref({ avatar: '' });
 
       const [register, { setFieldsValue, validate }] = useForm({
         labelWidth: 120,
@@ -53,7 +60,6 @@
         showActionButtonGroup: false,
       });
 
-      const { uploadUrl = '' } = useGlobSetting();
       const headers = ref<any>({
         Authorization: getToken(),
       });
@@ -61,41 +67,53 @@
       onMounted(async () => {
         const data = await getUserInfo();
         const { user, dept, roles } = data;
-        avatarImg.value = user.avatar;
         user.deptName = dept?.name ?? '';
         const rolesName: any[] = [];
         roles.forEach((r) => {
           rolesName.push(r.name);
         });
         user.rolesName = rolesName;
+        userInfo.value = user;
         setFieldsValue(user);
       });
+
+      async function handlerFileChange(obj) {
+        const res = toRaw(obj.file.response);
+        if (res !== null && res !== undefined) {
+          if (res.code === 200) {
+            userInfo.value.avatar = res.data.url;
+
+            await updateUser(userInfo.value);
+            createConfirm({
+              title: '头像更新成功',
+              iconType: 'success',
+              content: '重新登录系统后生效！是否重新登录？',
+              onOk: () => {
+                userStore.logout();
+              },
+              onCancel: () => {
+                createMessage.info('头像信息将在重新登录系统后生效');
+              },
+            });
+          }
+        }
+      }
 
       async function handleSubmit() {
         const values = await validate();
         try {
           await updateUser(values);
-          createConfirm({
-            title: '基本信息更新成功',
-            iconType: 'success',
-            content: '是否立即刷新页面使修改生效？',
-            onOk: () => {
-              window.location.reload();
-            },
-            onCancel: () => {
-              createMessage.info('数据将在刷新页面后生效');
-            },
-          });
         } catch (error) {
           console.log(error);
         }
       }
 
       return {
-        avatarImg,
         register,
         headers,
-        uploadUrl,
+        userInfo,
+        uploadUrl: Api.PutFileApi,
+        handlerFileChange,
         handleSubmit,
       };
     },
