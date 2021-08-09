@@ -145,8 +145,7 @@ export const formSchema: FormSchema[] = [
     label: '组件路径',
     component: 'Input',
     dynamicDisabled: ({ values }) => isExt(values.isExt),
-    required: ({ values }) =>
-      !isButton(values.type) || (!isExt(values.isExt) && !isButton(values.type)),
+    required: ({ values }) => isExt(values.isExt) && isMenu(values.type),
     show: ({ values }) => isMenu(values.type),
   },
   {
