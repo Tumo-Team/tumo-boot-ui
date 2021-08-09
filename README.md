@@ -1,39 +1,61 @@
-<div align="center"> <a href="https://github.com/anncwb/vue-vben-admin"> <img alt="VbenAdmin Logo" width="200" height="200" src="https://anncwb.github.io/anncwb/images/logo.png"> </a> <br> <br>
+<p align="center">
+    <img src="http://cdn.tycoding.cn/MIK-WxRzP9.png" />
+</p>
+<p align="center">
+    <a href="https://github.com/Tumo-Team" target="_blank">
+        <strong>Tumo Team —— Tumo-Boot</strong>
+    </a>
+</p>
 
-[![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
+## 项目介绍
 
-<h1>Tumo Boot UI</h1>
-</div>
+**[Tumo-Boot](https://github.com/Tumo-Team/tumo-boot)** 是基于 SpringBoot2.5.x、SpringSecurity 的 RBAC 项目脚手架，前端基于 Node、Vue3.x、Ant-Design-Vue2.x、Vite、TypeScript。
 
-## Introduction
+如果你已经熟悉了 RBAC 单体项目开发，你可以学习 **Tumo-Cloud：** [https://github.com/Tumo-Team/tumo-cloud](https://github.com/Tumo-Team/tumo-cloud)。
 
-基于 [vben-admin-thin-next](https://github.com/anncwb/vben-admin-thin-next)
+## 项目地址
 
-## Install and use
+- Tumo-Boot 项目预览：[http://boot.tycoding.cn](http://boot.tycoding.cn)
+- Tumo-Boot 文档预览：[http://docs.boot.tycoding.cn](http://docs.boot.tycoding.cn)
+- Tumo-Boot 后端源码：[https://github.com/Tumo-Team/tumo-boot](https://github.com/Tumo-Team/tumo-boot)
+- Tumo-Boot 前端源码：[https://github.com/Tumo-Team/tumo-boot-ui](https://github.com/Tumo-Team/tumo-boot-ui)
+- Tumo-Boot 文档源码：[https://github.com/Tumo-Team/tumo-boot-docs](https://github.com/Tumo-Team/tumo-boot-docs)
 
-- Get the project code
+## 技术栈
 
-```bash
-git clone https://github.com/anncwb/vue-vben-admin.git
-```
+**环境**
 
-- Installation dependencies
+| Name  | Version    |
+| ----- | ---------- |
+| JDK   | 1.8        |
+| MySql | 5.7        |
+| OS    | MacOS10.14 |
+| IDEA  | 2020.2     |
 
-```bash
-cd vue-vben-admin
+**后端**
 
-yarn install
+| Name | Version | Document |
+| --- | --- | --- |
+| Spring Boot | 2.5.0 | [https://github.com/spring-projects/spring-boot](https://github.com/spring-projects/spring-boot) |
+| Spring Security | 5.5.0 | [https://github.com/spring-projects/spring-security](https://github.com/spring-projects/spring-security) |
+| Mybatis-Plus | 3.4.3.1 | [https://baomidou.com/guide/](https://baomidou.com/guide/) |
+| Hutool | 5.7.2 | [https://hutool.cn/docs/#/](https://hutool.cn/docs/#/) |
+| Knife4j | 3.0.3 | [https://doc.xiaominfo.com/knife4j/documentation/](https://doc.xiaominfo.com/knife4j/documentation/) |
 
-```
+**前端**
 
-- run
+| Name | Version | Document |
+| --- | --- | --- |
+| Vben | 2.6.1 | [https://github.com/anncwb/vue-vben-admin](https://github.com/anncwb/vue-vben-admin) |
+| Vue.js | 3.1.5 | [https://cn.vuejs.org/v2/guide/](https://cn.vuejs.org/v2/guide/) |
+| Ant-Design-Vue | 2.2.2 | [https://www.antdv.com/docs/vue/introduce-cn/](https://www.antdv.com/docs/vue/introduce-cn/) |
 
-```bash
-yarn serve
-```
+## 运行项目
 
-- build
+详细的文档请看：[http://docs.boot.tycoding.cn](http://docs.boot.tycoding.cn)
 
-```bash
-yarn build
-```
+## License
+
+[MIT](https://github.com/Tumo-Team/tumo-boot/blob/master/LICENSE)
+
+Copyright (c) 2021-present TyCoding

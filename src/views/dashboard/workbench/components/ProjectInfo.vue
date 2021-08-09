@@ -10,25 +10,11 @@
           ( 一套基于SpringBoot2.4.x 和 Vue3.x & TypeScript 的基础RBAC权限项目模板 )
         </ListItem>
         <ListItem style="display: block">
-          <b>Tumo-Boot-Pro：</b>
-          <a href="https://github.com/tumo-team/tumo-boot-pro" target="_blank"
-            >https://github.com/tumo-team/tumo-boot-pro</a
-          >
-          ( 将在Tumo-Boot项目的基础上集成更多常用功能模块 )
-        </ListItem>
-        <ListItem style="display: block">
           <b>Tumo-Cloud：</b>
           <a href="https://github.com/tumo-team/tumo-cloud" target="_blank"
             >https://github.com/tumo-team/tumo-cloud</a
           >
           ( 一套基于SpringCloud Alibaba & Nacos 的基础RBAC分布式微服务权限项目模板 )
-        </ListItem>
-        <ListItem style="display: block">
-          <b>Tumo-Cloud-Pro：</b>
-          <a href="https://github.com/tumo-team/tumo-cloud-pro" target="_blank"
-            >https://github.com/tumo-team/tumo-cloud-pro</a
-          >
-          ( 将在Tumo-Cloud项目的基础上集成更多常用功能模块 )
         </ListItem>
       </List>
     </CollapsePanel>
@@ -62,10 +48,10 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
-  import { List, Collapse, Tag } from 'ant-design-vue';
+  import { List, Collapse } from 'ant-design-vue';
 
   export default defineComponent({
-    components: { List, ListItem: List.Item, Collapse, CollapsePanel: Collapse.Panel, Tag },
+    components: { List, ListItem: List.Item, Collapse, CollapsePanel: Collapse.Panel },
     setup() {
       const activeKey = ref([1]);
       return {
