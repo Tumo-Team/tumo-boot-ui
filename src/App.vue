@@ -6,31 +6,16 @@
   </ConfigProvider>
 </template>
 
-<script lang="ts">
-  import { defineComponent, onMounted } from 'vue';
+<script lang="ts" setup>
   import { ConfigProvider } from 'ant-design-vue';
   import { AppProvider } from '/@/components/Application';
   import { useTitle } from '/@/hooks/web/useTitle';
   import { useLocale } from '/@/locales/useLocale';
 
-  import { useWatermark } from '/@/hooks/web/useWatermark';
+  import 'dayjs/locale/zh-cn';
+  // support Multi-language
+  const { getAntdLocale } = useLocale();
 
-  export default defineComponent({
-    name: 'App',
-    components: { ConfigProvider, AppProvider },
-    setup() {
-      useTitle();
-
-      // 全局水印，请自行删除
-      const { setWatermark } = useWatermark();
-      onMounted(() => {
-        setWatermark('Tumo Team');
-      });
-
-      // support Multi-language
-      const { getAntdLocale } = useLocale();
-
-      return { getAntdLocale };
-    },
-  });
+  // Listening to page changes and dynamically changing site titles
+  useTitle();
 </script>

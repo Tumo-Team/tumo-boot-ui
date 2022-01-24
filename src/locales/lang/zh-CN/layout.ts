@@ -3,7 +3,6 @@ export default {
   header: {
     // user dropdown
     dropdownItemDoc: '文档',
-    dropdownItemProfile: '个人设置',
     dropdownItemLoginOut: '退出系统',
 
     // tooltip
@@ -85,6 +84,7 @@ export default {
     breadcrumb: '面包屑',
     breadcrumbIcon: '面包屑图标',
     tabs: '标签页',
+    tabDetail: '标签详情页',
     tabsQuickBtn: '标签页快捷按钮',
     tabsRedoBtn: '标签页刷新按钮',
     tabsFoldBtn: '标签页折叠按钮',

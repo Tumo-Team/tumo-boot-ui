@@ -83,8 +83,6 @@ export default {
     otherSignIn: 'Sign in with',
 
     // notify
-    formVerifyTitle: 'Login error',
-    formVerifyDes: 'Please input the form',
     loginSuccessTitle: 'Login successful',
     loginSuccessDesc: 'Welcome back',
 
@@ -99,8 +97,8 @@ export default {
 
     userName: 'Username',
     password: 'Password',
-    captcha: 'Captcha',
     confirmPassword: 'Confirm Password',
+    captcha: 'Captcha',
     email: 'Email',
     smsCode: 'SMS code',
     mobile: 'Mobile',

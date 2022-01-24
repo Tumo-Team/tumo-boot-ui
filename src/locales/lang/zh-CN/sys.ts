@@ -7,7 +7,7 @@ export default {
     apiTimeoutMessage: '接口请求超时,请刷新页面重试!',
     apiRequestFailed: '请求出错，请稍候重试',
     networkException: '网络异常',
-    networkExceptionMsg: '请检查您的网络连接是否正常!',
+    networkExceptionMsg: '网络异常，请检查您的网络连接是否正常!',
 
     errMsg401: '用户没有权限（令牌、用户名、密码错误）!',
     errMsg403: '用户得到授权，但是访问是被禁止的。!',
@@ -77,8 +77,6 @@ export default {
     otherSignIn: '其他登录方式',
 
     // notify
-    formVerifyTitle: '登录失败',
-    formVerifyDes: '请填写表单',
     loginSuccessTitle: '登录成功',
     loginSuccessDesc: '欢迎回来',
 
@@ -93,8 +91,8 @@ export default {
 
     userName: '账号',
     password: '密码',
-    captcha: '验证码',
     confirmPassword: '确认密码',
+    captcha: '验证码',
     email: '邮箱',
     smsCode: '短信验证码',
     mobile: '手机号码',

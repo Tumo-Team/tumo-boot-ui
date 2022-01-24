@@ -36,4 +36,9 @@ export const LoginRoute: AppRouteRecordRaw = {
 };
 
 // Basic routing without permission
-export const basicRoutes = [LoginRoute, RootRoute, REDIRECT_ROUTE, PAGE_NOT_FOUND_ROUTE];
+export const basicRoutes = [
+  LoginRoute,
+  RootRoute,
+  REDIRECT_ROUTE,
+  PAGE_NOT_FOUND_ROUTE,
+];

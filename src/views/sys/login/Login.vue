@@ -66,11 +66,8 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent, computed } from 'vue';
-
-  import { AppLogo } from '/@/components/Application';
-  import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
+<script lang="ts" setup>
+  import { computed } from 'vue';
   import LoginForm from './LoginForm.vue';
 
   import { useGlobSetting } from '/@/hooks/setting';
@@ -78,33 +75,17 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useLocaleStore } from '/@/store/modules/locale';
 
-  export default defineComponent({
-    name: 'Login',
-    components: {
-      AppLogo,
-      LoginForm,
-      AppLocalePicker,
-      AppDarkModeToggle,
-    },
-    props: {
-      sessionTimeout: {
-        type: Boolean,
-      },
-    },
-    setup() {
-      const globSetting = useGlobSetting();
-      const { prefixCls } = useDesign('login');
-      const { t } = useI18n();
-      const localeStore = useLocaleStore();
-
-      return {
-        t,
-        prefixCls,
-        title: computed(() => globSetting?.title ?? ''),
-        showLocale: localeStore.getShowPicker,
-      };
+  defineProps({
+    sessionTimeout: {
+      type: Boolean,
     },
   });
+
+  const globSetting = useGlobSetting();
+  const { prefixCls } = useDesign('login');
+  const localeStore = useLocaleStore();
+  const showLocale = localeStore.getShowPicker;
+  const title = computed(() => globSetting?.title ?? '');
 </script>
 <style lang="less">
   @prefix-cls: ~'@{namespace}-login';
@@ -136,6 +117,12 @@
       .app-iconify {
         color: #fff;
       }
+    }
+
+    input.fix-auto-fill,
+    .fix-auto-fill input {
+      -webkit-text-fill-color: #c9d1d9 !important;
+      box-shadow: inherit !important;
     }
   }
 
