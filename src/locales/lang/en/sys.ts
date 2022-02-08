@@ -70,6 +70,8 @@ export default {
     signInFormTitle: 'Sign in',
     signUpFormTitle: 'Sign up',
     forgetFormTitle: 'Reset password',
+    formVerifyTitle: 'Login error',
+    formVerifyDes: 'Please input form',
 
     signInTitle: 'Backstage management system',
     signInDesc: 'Enter your personal details and get started!',
