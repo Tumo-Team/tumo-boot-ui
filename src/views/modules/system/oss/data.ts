@@ -1,5 +1,8 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
+import { uploadListApi } from '/@/api/modules/system/upload';
+import { h } from 'vue';
+import { BasicUpload } from '/@/components/Upload';
 
 export const columns: BasicColumn[] = [
   {
@@ -63,6 +66,24 @@ export const formSchema: FormSchema[] = [
     field: 'originName',
     label: '文件名称',
     component: 'Input',
+  },
+  {
+    field: 'url',
+    label: '文件地址',
+    required: false,
+    component: 'Input',
+    render: ({ model, field }) => {
+      return h(BasicUpload, {
+        api: uploadListApi,
+        maxSize: 200,
+        maxNumber: 1,
+        value: [model[field]],
+        accept: ['*'],
+        onChange: (e: ChangeEvent) => {
+          model[field] = e[0];
+        },
+      });
+    },
   },
   {
     field: 'des',
