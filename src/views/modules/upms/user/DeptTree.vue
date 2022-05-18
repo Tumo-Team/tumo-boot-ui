@@ -6,7 +6,7 @@
       search
       :clickRowToExpand="false"
       :treeData="treeData"
-      :replaceFields="{ key: 'id', title: 'name' }"
+      :fieldNames="{ key: 'id', title: 'name' }"
       @select="handleSelect"
     />
   </div>
@@ -26,10 +26,10 @@
       const treeData = ref<TreeItem[]>([]);
 
       async function fetch() {
-        treeData.value = ((await getDeptTree()) as unknown) as TreeItem[];
+        treeData.value = (await getDeptTree()) as unknown as TreeItem[];
       }
 
-      function handleSelect(keys: string, e) {
+      function handleSelect(keys: string) {
         emit('select', keys[0]);
       }
 

@@ -42,6 +42,8 @@ export const useLockStore = defineStore({
           const res = await userStore.login({
             username,
             password: password!,
+            goHome: false,
+            mode: 'none',
             captcha: '',
             captchaKey: '',
           });
