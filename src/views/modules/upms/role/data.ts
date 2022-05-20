@@ -70,8 +70,8 @@ export const formSchema: FormSchema[] = [
     label: '上级角色',
     component: 'TreeSelect',
     componentProps: {
-      replaceFields: {
-        title: 'name',
+      fieldNames: {
+        label: 'name',
         key: 'id',
         value: 'id',
       },

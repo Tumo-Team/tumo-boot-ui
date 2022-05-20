@@ -43,6 +43,7 @@
         }
 
         const treeData = await getDeptTree();
+        console.log(treeData);
         updateSchema([
           {
             field: 'password',

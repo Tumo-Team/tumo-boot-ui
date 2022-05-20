@@ -148,8 +148,8 @@ export const userFormSchema: FormSchema[] = [
     label: '所属部门',
     component: 'TreeSelect',
     componentProps: {
-      replaceFields: {
-        title: 'name',
+      fieldNames: {
+        label: 'name',
         key: 'id',
         value: 'id',
       },

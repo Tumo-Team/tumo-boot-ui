@@ -195,7 +195,7 @@
             },
           );
           item.status = UploadResultStatus.SUCCESS;
-          item.responseData = data;
+          item.responseData = data.data;
           return {
             success: true,
             error: null,
