@@ -12,9 +12,9 @@
   import { useTitle } from '/@/hooks/web/useTitle';
   import { useLocale } from '/@/locales/useLocale';
   import { useWatermark } from '/@/hooks/web/useWatermark';
+  import { onMounted } from 'vue';
 
   import 'dayjs/locale/zh-cn';
-  import { onMounted } from 'vue';
   // support Multi-language
   const { getAntdLocale } = useLocale();
 

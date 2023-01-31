@@ -4,26 +4,26 @@ import { defineStore } from 'pinia';
 import { store } from '/@/store';
 import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
-import { PERMS_KEY, ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
-
+import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { LoginParams } from '/@/api/model/userModel';
-
-import { getUserInfo, loginApi, logoutApi } from '/@/api/auth';
-
+import { logoutApi, getUserInfo, loginApi } from '/@/api/auth';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
 import { usePermissionStore } from '/@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
+import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
+  // Permission code list
+  // 权限代码列表
+  permCodeList: string[] | number[];
   token?: string;
   roleList: RoleEnum[];
-  permList: string[];
   sessionTimeout?: boolean;
   lastUpdateTime: number;
 }
@@ -37,8 +37,8 @@ export const useUserStore = defineStore({
     token: undefined,
     // roleList
     roleList: [],
-    // 权限标识列表
-    permList: [],
+    // 权限代码列表
+    permCodeList: [],
     // Whether the login expired
     sessionTimeout: false,
     // Last fetch time
@@ -54,8 +54,8 @@ export const useUserStore = defineStore({
     getRoleList(): RoleEnum[] {
       return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
     },
-    getPermList(): string[] {
-      return this.permList.length > 0 ? this.permList : getAuthCache<string[]>(PERMS_KEY);
+    getPermCodeList(): string[] | number[] {
+      return this.permCodeList;
     },
     getSessionTimeout(): boolean {
       return !!this.sessionTimeout;
@@ -73,11 +73,10 @@ export const useUserStore = defineStore({
       this.roleList = roleList;
       setAuthCache(ROLES_KEY, roleList);
     },
-    setPermList(permList: string[]) {
-      this.permList = permList;
-      setAuthCache(PERMS_KEY, permList);
+    setPermCodeList(codeList: string[]) {
+      this.permCodeList = codeList;
     },
-    setUserInfo(info: UserInfo | any) {
+    setUserInfo(info: UserInfo | null) {
       this.userInfo = info;
       this.lastUpdateTime = new Date().getTime();
       setAuthCache(USER_INFO_KEY, info);
@@ -89,6 +88,7 @@ export const useUserStore = defineStore({
       this.userInfo = null;
       this.token = '';
       this.roleList = [];
+      this.permCodeList = [];
       this.sessionTimeout = false;
     },
     /**
@@ -137,12 +137,25 @@ export const useUserStore = defineStore({
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
       const userInfo = await getUserInfo();
-      const { user, roles, perms } = userInfo;
-      const roleList = roles.map((item) => item.value) as RoleEnum[];
+      const { user = {}, roles = [], perms = [] } = userInfo;
+      if (isArray(roles)) {
+        const roleList = roles.map((item) => item.value) as RoleEnum[];
+        this.setRoleList(roleList);
+      } else {
+        this.setRoleList([]);
+      }
+
+      // 设置权限码，不再使用单独的接口，同时设置到userStore和permStore对象中
+      const permissionStore = usePermissionStore();
+      if (isArray(perms)) {
+        this.setPermCodeList(perms);
+        permissionStore.setPermCodeList(perms);
+      } else {
+        this.setPermCodeList([]);
+        permissionStore.setPermCodeList([]);
+      }
       this.setUserInfo(user);
-      this.setRoleList(roleList);
-      this.setPermList(perms);
-      return userInfo;
+      return user;
     },
     /**
      * @description: logout

@@ -1,24 +1,26 @@
 <template>
   <div>
     <BasicTable @register="registerTable">
-      <template #action="{ record }">
-        <TableAction
-          :actions="[
-            {
-              icon: 'carbon-view-filled',
-              onClick: handleInfo.bind(null, record),
-            },
-            {
-              auth: Auth.system.log.delete,
-              icon: 'ant-design:delete-outlined',
-              color: 'error',
-              popConfirm: {
-                title: '是否确认删除',
-                confirm: handleDelete.bind(null, record.id),
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :actions="[
+              {
+                icon: 'carbon-view-filled',
+                onClick: handleInfo.bind(null, record),
               },
-            },
-          ]"
-        />
+              {
+                auth: Auth.system.log.delete,
+                icon: 'ant-design:delete-outlined',
+                color: 'error',
+                popConfirm: {
+                  title: '是否确认删除',
+                  confirm: handleDelete.bind(null, record.id),
+                },
+              },
+            ]"
+          />
+        </template>
       </template>
     </BasicTable>
     <InfoModal @register="registerDrawer" />
@@ -26,15 +28,15 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { getLogPage, deleteLog } from '/@/api/modules/system/log';
-  import Auth from '/@/settings/constants/auth';
 
+  import { useDrawer } from '/@/components/Drawer';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
   import InfoModal from './InfoModal.vue';
-
   import { columns, searchFormSchema } from './data';
-  import { useDrawer } from '/@/components/Drawer';
+  import { getLogPage, deleteLog } from '/@/api/modules/system/log';
+  import Auth from '/@/settings/constants/auth';
+
 
   export default defineComponent({
     name: 'Index',
@@ -57,7 +59,6 @@
           width: 80,
           title: '操作',
           dataIndex: 'action',
-          slots: { customRender: 'action' },
         },
       });
 

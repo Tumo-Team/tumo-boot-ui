@@ -6,31 +6,33 @@
           新增字典
         </a-button>
       </template>
-      <template #action="{ record }">
-        <TableAction
-          :actions="[
-            {
-              auth: Auth.system.dict.update,
-              icon: 'clarity:bullet-list-line',
-              onClick: handleInfo.bind(null, record.id),
-            },
-            {
-              auth: Auth.system.dict.update,
-              icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record.id),
-            },
-            {
-              auth: Auth.system.dict.delete,
-              disabled: record.isSystem,
-              icon: 'ant-design:delete-outlined',
-              color: 'error',
-              popConfirm: {
-                title: '是否确认删除',
-                confirm: handleDelete.bind(null, record.id),
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :actions="[
+              {
+                auth: Auth.system.dict.update,
+                icon: 'clarity:bullet-list-line',
+                onClick: handleInfo.bind(null, record.id),
               },
-            },
-          ]"
-        />
+              {
+                auth: Auth.system.dict.update,
+                icon: 'clarity:note-edit-line',
+                onClick: handleEdit.bind(null, record.id),
+              },
+              {
+                auth: Auth.system.dict.delete,
+                disabled: record.isSystem,
+                icon: 'ant-design:delete-outlined',
+                color: 'error',
+                popConfirm: {
+                  title: '是否确认删除',
+                  confirm: handleDelete.bind(null, record.id),
+                },
+              },
+            ]"
+          />
+        </template>
       </template>
     </BasicTable>
     <FormModal @register="registerModal" @success="handleSuccess" />
@@ -74,7 +76,6 @@
           width: 110,
           title: '操作',
           dataIndex: 'action',
-          slots: { customRender: 'action' },
         },
       });
 

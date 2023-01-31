@@ -1,7 +1,9 @@
 export default {
   api: {
+    operationSuccess: 'Operation Success',
     operationFailed: 'Operation failed',
     errorTip: 'Error Tip',
+    successTip: 'Success Tip',
     errorMessage: 'The operation failed, the system is abnormal!',
     timeoutMessage: 'Login timed out, please log in again!',
     apiTimeoutMessage: 'The interface request timed out, please refresh the page and try again!',
@@ -70,8 +72,6 @@ export default {
     signInFormTitle: 'Sign in',
     signUpFormTitle: 'Sign up',
     forgetFormTitle: 'Reset password',
-    formVerifyTitle: 'Login error',
-    formVerifyDes: 'Please input form',
 
     signInTitle: 'Backstage management system',
     signInDesc: 'Enter your personal details and get started!',
@@ -80,6 +80,7 @@ export default {
 
     loginButton: 'Sign in',
     registerButton: 'Sign up',
+    captcha: 'Captcha Code',
     rememberMe: 'Remember me',
     forgetPassword: 'Forget Password?',
     otherSignIn: 'Sign in with',
@@ -91,7 +92,6 @@ export default {
     // placeholder
     accountPlaceholder: 'Please input username',
     passwordPlaceholder: 'Please input password',
-    captchaPlaceholder: 'Please input captcha',
     smsPlaceholder: 'Please input sms code',
     mobilePlaceholder: 'Please input mobile',
     policyPlaceholder: 'Register after checking',
@@ -100,7 +100,6 @@ export default {
     userName: 'Username',
     password: 'Password',
     confirmPassword: 'Confirm Password',
-    captcha: 'Captcha',
     email: 'Email',
     smsCode: 'SMS code',
     mobile: 'Mobile',

@@ -23,7 +23,7 @@ export function getCaptcha() {
 /**
  * 登录认证接口
  */
-export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'message') {
+export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
   return defHttp.get<LoginResultModel>(
     {
       url: Api.Login,
@@ -41,12 +41,12 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'message'
     {
       isTransformResponse: false,
       errorMessageMode: mode,
-    }
+    },
   );
 }
 
 /**
- * 获取当前登录用户信息
+ * 获取当前登录用户信息，返回user对象要包含roles数据
  */
 export function getUserInfo() {
   return defHttp.get({

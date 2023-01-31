@@ -6,34 +6,36 @@
           v-auth="Auth.system.oss.add"
           :maxSize="200"
           :maxNumber="Infinity"
-          @change="handleCreate"
+          @saveFile="handleCreate"
           :emptyHidePreview="true"
           :api="uploadListApi"
           class="my-5"
         />
       </template>
-      <template #url="{ record }">
-        <a :href="record.url" target="_blank">{{ record.url }}</a>
-      </template>
-      <template #action="{ record }">
-        <TableAction
-          :actions="[
-            {
-              auth: Auth.system.oss.update,
-              icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record.id),
-            },
-            {
-              auth: Auth.system.oss.delete,
-              icon: 'ant-design:delete-outlined',
-              color: 'error',
-              popConfirm: {
-                title: '是否确认删除',
-                confirm: handleDelete.bind(null, record.id),
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'url'">
+          <a :href="record.url" target="_blank">{{ record.url }}</a>
+        </template>
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :actions="[
+              {
+                auth: Auth.system.oss.update,
+                icon: 'clarity:note-edit-line',
+                onClick: handleEdit.bind(null, record.id),
               },
-            },
-          ]"
-        />
+              {
+                auth: Auth.system.oss.delete,
+                icon: 'ant-design:delete-outlined',
+                color: 'error',
+                popConfirm: {
+                  title: '是否确认删除',
+                  confirm: handleDelete.bind(null, record.id),
+                },
+              },
+            ]"
+          />
+        </template>
       </template>
     </BasicTable>
     <FormModal @register="registerModal" @success="handleSuccess" />
@@ -41,10 +43,6 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { getOssPage, addOssList, deleteOss } from '/@/api/modules/system/oss';
-  import { uploadListApi } from '/@/api/modules/system/upload';
-  import Auth from '/@/settings/constants/auth';
-
   import { BasicUpload } from '/@/components/Upload';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
@@ -52,6 +50,9 @@
   import FormModal from './FormModal.vue';
 
   import { columns, searchFormSchema } from './data';
+  import { getOssPage, addOssList, deleteOss } from '/@/api/modules/system/oss';
+  import { uploadListApi } from '/@/api/modules/system/upload';
+  import Auth from '/@/settings/constants/auth';
 
   export default defineComponent({
     name: 'Index',
@@ -75,7 +76,6 @@
           width: 80,
           title: '操作',
           dataIndex: 'action',
-          slots: { customRender: 'action' },
         },
       });
 

@@ -20,9 +20,10 @@ export function getDeptList(params: any) {
 /**
  * 获取部门Tree
  */
-export function getDeptTree() {
+export function getDeptTree(params: any) {
   return defHttp.get({
     url: Api.DeptTreeApi,
+    params,
   });
 }
 

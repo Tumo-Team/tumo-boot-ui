@@ -8,11 +8,10 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { userFormSchema } from './data';
-  import { checkUserName, getUser, addUser, updateUser } from '/@/api/modules/upms/user';
   import { getDeptTree } from '/@/api/modules/upms/dept';
   import { isNullOrUnDef } from '/@/utils/is';
-
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { checkUserName, getUser, addUser, updateUser } from '/@/api/modules/upms/user';
 
   export default defineComponent({
     name: 'FormModal',
@@ -23,6 +22,7 @@
 
       const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
         labelWidth: 100,
+        baseColProps: { span: 24 },
         schemas: userFormSchema,
         showActionButtonGroup: false,
         actionColOptions: {
@@ -32,7 +32,7 @@
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
         resetFields();
-        setModalProps({ confirmLoading: false });
+        setModalProps({ confirmLoading: false, maskClosable: false });
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
@@ -42,22 +42,19 @@
           });
         }
 
-        const treeData = await getDeptTree();
-        console.log(treeData);
-        updateSchema([
-          {
-            field: 'password',
-            show: !unref(isUpdate),
-            required: !unref(isUpdate),
-          },
-          {
-            field: 'deptId',
-            componentProps: { treeData },
-          },
-        ]);
+        const treeData = await getDeptTree({});
+        updateSchema({
+          field: 'deptId',
+          componentProps: { treeData },
+        });
+        updateSchema({
+          field: 'password',
+          show: !unref(isUpdate),
+          required: !unref(isUpdate),
+        });
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增用户' : '编辑用户'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增账号' : '编辑账号'));
 
       async function handleSubmit() {
         try {

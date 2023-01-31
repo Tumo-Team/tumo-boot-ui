@@ -44,8 +44,6 @@ export const useLockStore = defineStore({
             password: password!,
             goHome: false,
             mode: 'none',
-            captcha: '',
-            captchaKey: '',
           });
           if (res) {
             this.resetLockInfo();

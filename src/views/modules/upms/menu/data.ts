@@ -60,26 +60,7 @@ const isMenu = (type: string) => type === 'menu';
 const isButton = (type: string) => type === 'button';
 const isExt = (type: string) => type === 'true';
 
-export const searchFormSchema: FormSchema[] = [
-  {
-    field: 'name',
-    label: '菜单名称',
-    component: 'Input',
-    colProps: { span: 8 },
-  },
-  {
-    field: 'isDisabled',
-    label: '状态',
-    component: 'Select',
-    componentProps: {
-      options: [
-        { label: '启用', value: 'false' },
-        { label: '停用', value: 'true' },
-      ],
-    },
-    colProps: { span: 8 },
-  },
-];
+export const searchFormSchema: FormSchema[] = [];
 
 export const formSchema: FormSchema[] = [
   {

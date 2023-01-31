@@ -25,18 +25,3 @@ export interface LoginResultModel {
   scope: string;
   token_type: string;
 }
-
-/**
- * @description: Get user information return value
- */
-export interface GetUserInfoByUserIdModel {
-  roles: RoleInfo[];
-  // 用户id
-  id: string | number;
-  // 用户名
-  username: string;
-  // 真实名字
-  realName: string;
-  // 介绍
-  desc?: string;
-}

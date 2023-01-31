@@ -46,8 +46,8 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'originName',
-    label: '文件名称',
+    field: 'operation',
+    label: '操作描述',
     component: 'Input',
     colProps: { span: 8 },
   },

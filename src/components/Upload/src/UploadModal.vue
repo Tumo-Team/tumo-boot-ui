@@ -71,7 +71,7 @@
         default: () => [],
       },
     },
-    emits: ['change', 'register', 'delete'],
+    emits: ['change', 'saveFile', 'register', 'delete'],
     setup(props, { emit }) {
       const state = reactive<{ fileList: FileItem[] }>({
         fileList: [],
@@ -195,7 +195,7 @@
             },
           );
           item.status = UploadResultStatus.SUCCESS;
-          item.responseData = data.data;
+          item.responseData = data;
           return {
             success: true,
             error: null,
@@ -246,12 +246,15 @@
         if (isUploadingRef.value) {
           return createMessage.warning(t('component.upload.saveWarn'));
         }
-        const fileList: string[] = [];
+        const fileUrlList: string[] = [];
+        const fileList: any[] = [];
 
         for (const item of fileListRef.value) {
           const { status, responseData } = item;
           if (status === UploadResultStatus.SUCCESS && responseData) {
-            fileList.push(responseData.url);
+            // 单独处理上传接口返回的数据，本项目上传接口返回的是文件上传信息的对象数据
+            fileList.push(responseData.data);
+            fileUrlList.push(responseData.data.url);
           }
         }
         // 存在一个上传成功的即可保存
@@ -260,7 +263,8 @@
         }
         fileListRef.value = [];
         closeModal();
-        emit('change', fileList);
+        emit('change', fileUrlList);
+        emit('saveFile', fileList);
       }
 
       // 点击关闭：则所有操作不保存，包括上传的

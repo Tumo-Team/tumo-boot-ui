@@ -1,4 +1,3 @@
-import type { ErrorMessageMode } from '/#/axios';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useI18n } from '/@/hooks/web/useI18n';
 // import router from '/@/router';
@@ -7,15 +6,11 @@ import { useUserStoreWithOut } from '/@/store/modules/user';
 import projectSetting from '/@/settings/projectSetting';
 import { SessionTimeoutProcessingEnum } from '/@/enums/appEnum';
 
-const { createMessage, createErrorModal } = useMessage();
+const { createMessage } = useMessage();
 const error = createMessage.error!;
 const stp = projectSetting.sessionTimeoutProcessing;
 
-export function checkStatus(
-  status: number,
-  msg: string,
-  errorMessageMode: ErrorMessageMode = 'message',
-): void {
+export function checkStatus(status: number, msg: string): void {
   const { t } = useI18n();
   const userStore = useUserStoreWithOut();
   let errMessage = '';
@@ -37,44 +32,40 @@ export function checkStatus(
       }
       break;
     case 403:
-      error(msg ? msg : t('sys.api.errMsg403'));
+      errMessage = msg ? msg : t('sys.api.errMsg403');
       break;
     // 404请求不存在
     case 404:
-      error(msg ? msg : t('sys.api.errMsg404'));
+      errMessage = msg ? msg : t('sys.api.errMsg404');
       break;
     case 405:
-      error(msg ? msg : t('sys.api.errMsg405'));
+      errMessage = msg ? msg : t('sys.api.errMsg405');
       break;
     case 408:
-      error(msg ? msg : t('sys.api.errMsg408'));
+      errMessage = msg ? msg : t('sys.api.errMsg408');
       break;
     case 500:
-      error(msg ? msg : t('sys.api.errMsg500'));
+      errMessage = msg ? msg : t('sys.api.errMsg500');
       break;
     case 501:
-      error(msg ? msg : t('sys.api.errMsg501'));
+      errMessage = msg ? msg : t('sys.api.errMsg501');
       break;
     case 502:
-      error(msg ? msg : t('sys.api.errMsg502'));
+      errMessage = msg ? msg : t('sys.api.errMsg502');
       break;
     case 503:
-      error(msg ? msg : t('sys.api.errMsg503'));
+      errMessage = msg ? msg : t('sys.api.errMsg503');
       break;
     case 504:
-      error(msg ? msg : t('sys.api.errMsg504'));
+      errMessage = msg ? msg : t('sys.api.errMsg504');
       break;
     case 505:
-      error(msg ? msg : t('sys.api.errMsg505'));
+      errMessage = msg ? msg : t('sys.api.errMsg505');
       break;
     default:
   }
 
   if (errMessage) {
-    if (errorMessageMode === 'modal') {
-      createErrorModal({ title: t('sys.api.errorTip'), content: errMessage });
-    } else if (errorMessageMode === 'message') {
-      error(errMessage);
-    }
+    error({ content: errMessage, key: `global_error_message_status_${status}` });
   }
 }

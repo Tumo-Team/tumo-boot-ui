@@ -1,50 +1,53 @@
 <template>
-  <div>
-    <BasicTable @register="registerTable">
-      <template #toolbar>
-        <a-button v-auth="Auth.upms.dept.add" type="primary" @click="handleCreate">
-          新增部门
-        </a-button>
-      </template>
-      <template #action="{ record }">
-        <TableAction
-          :actions="[
-            {
-              auth: Auth.upms.dept.update,
-              icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record.id),
-            },
-            {
-              auth: Auth.upms.dept.delete,
-              icon: 'ant-design:delete-outlined',
-              color: 'error',
-              popConfirm: {
-                title: '是否确认删除',
-                confirm: handleDelete.bind(null, record.id),
-              },
-            },
-          ]"
-        />
-      </template>
-    </BasicTable>
-    <FormModal @register="registerModal" @success="handleSuccess" />
-  </div>
+  <PageWrapper>
+    <div class="py-8 bg-white flex flex-col justify-center items-center">
+      <BasicTable @register="registerTable">
+        <template #toolbar>
+          <a-button type="primary" @click="handleCreate"> 新增部门 </a-button>
+        </template>
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'action'">
+            <TableAction
+              :actions="[
+                {
+                  auth: Auth.upms.dept.update,
+                  icon: 'clarity:note-edit-line',
+                  onClick: handleEdit.bind(null, record.id),
+                },
+                {
+                  auth: Auth.upms.dept.delete,
+                  icon: 'ant-design:delete-outlined',
+                  color: 'error',
+                  popConfirm: {
+                    title: '是否确认删除',
+                    confirm: handleDelete.bind(null, record.id),
+                  },
+                },
+              ]"
+            />
+          </template>
+        </template>
+      </BasicTable>
+      <DeptModal @register="registerModal" @success="handleSuccess" />
+    </div>
+  </PageWrapper>
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
 
+  import { PageWrapper } from '/@/components/Page';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getDeptTree, deleteDept } from '/@/api/modules/upms/dept';
-  import Auth from '/@/settings/constants/auth';
 
   import { useModal } from '/@/components/Modal';
-  import FormModal from './FormModal.vue';
+  import DeptModal from './FormModal.vue';
 
   import { columns, searchFormSchema } from './data';
+  import Auth from '/@/settings/constants/auth';
+  import { getDeptTree, deleteDept } from '/@/api/modules/upms/dept';
 
   export default defineComponent({
     name: 'Index',
-    components: { BasicTable, FormModal, TableAction },
+    components: { PageWrapper, BasicTable, DeptModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
@@ -57,17 +60,14 @@
         },
         pagination: false,
         striped: false,
-        useSearchForm: true,
+        useSearchForm: false,
         showTableSetting: true,
         bordered: true,
         showIndexColumn: false,
-        tableSetting: { fullScreen: true },
         actionColumn: {
           width: 80,
           title: '操作',
           dataIndex: 'action',
-          slots: { customRender: 'action' },
-          fixed: undefined,
         },
       });
 
@@ -86,6 +86,7 @@
 
       async function handleDelete(id: string | number) {
         await deleteDept(id);
+        reload();
       }
 
       function handleSuccess() {

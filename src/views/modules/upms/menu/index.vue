@@ -1,55 +1,58 @@
 <template>
-  <div>
-    <BasicTable @register="registerTable">
-      <template #toolbar>
-        <a-button v-auth="Auth.upms.menu.add" type="primary" @click="handleCreate">
-          新增菜单
-        </a-button>
-      </template>
-      <template #action="{ record }">
-        <TableAction
-          :actions="[
-            {
-              auth: Auth.upms.menu.add,
-              icon: 'ant-design:plus-outlined',
-              onClick: handleAddChild.bind(null, record.id),
-            },
-            {
-              auth: Auth.upms.menu.update,
-              icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record.id),
-            },
-            {
-              auth: Auth.upms.menu.delete,
-              icon: 'ant-design:delete-outlined',
-              color: 'error',
-              popConfirm: {
-                title: '是否确认删除',
-                confirm: handleDelete.bind(null, record.id),
-              },
-            },
-          ]"
-        />
-      </template>
-    </BasicTable>
-    <FormModal @register="registerDrawer" @success="handleSuccess" />
-  </div>
+  <PageWrapper>
+    <div class="py-8 bg-white flex flex-col justify-center items-center">
+      <BasicTable @register="registerTable">
+        <template #toolbar>
+          <a-button type="primary" @click="handleCreate"> 新增菜单 </a-button>
+        </template>
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.key === 'action'">
+            <TableAction
+              :actions="[
+                {
+                  auth: Auth.upms.menu.add,
+                  icon: 'ant-design:plus-outlined',
+                  onClick: handleAddChild.bind(null, record.id),
+                },
+                {
+                  auth: Auth.upms.menu.update,
+                  icon: 'clarity:note-edit-line',
+                  onClick: handleEdit.bind(null, record.id),
+                },
+                {
+                  auth: Auth.upms.menu.delete,
+                  icon: 'ant-design:delete-outlined',
+                  color: 'error',
+                  popConfirm: {
+                    title: '是否确认删除',
+                    confirm: handleDelete.bind(null, record.id),
+                  },
+                },
+              ]"
+            />
+          </template>
+        </template>
+      </BasicTable>
+      <MenuDrawer @register="registerDrawer" @success="handleSuccess" />
+    </div>
+  </PageWrapper>
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
 
+  import { PageWrapper } from '/@/components/Page';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getMenuTree, deleteMenu } from '/@/api/modules/upms/menu';
-  import Auth from '/@/settings/constants/auth';
 
   import { useDrawer } from '/@/components/Drawer';
-  import FormModal from './FormModal.vue';
+  import MenuDrawer from './FormDrawer.vue';
 
   import { columns, searchFormSchema } from './data';
+  import Auth from '/@/settings/constants/auth';
+  import { getMenuTree, deleteMenu } from '/@/api/modules/upms/menu';
 
   export default defineComponent({
     name: 'Index',
-    components: { BasicTable, FormModal, TableAction },
+    components: { PageWrapper, BasicTable, MenuDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
@@ -60,19 +63,17 @@
           labelWidth: 120,
           schemas: searchFormSchema,
         },
+        isTreeTable: true,
         pagination: false,
         striped: false,
-        useSearchForm: true,
+        useSearchForm: false,
         showTableSetting: true,
         bordered: true,
         showIndexColumn: false,
-        tableSetting: { fullScreen: true },
         actionColumn: {
           width: 120,
           title: '操作',
           dataIndex: 'action',
-          slots: { customRender: 'action' },
-          fixed: undefined,
         },
       });
 

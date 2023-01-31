@@ -128,20 +128,8 @@ export const userFormSchema: FormSchema[] = [
       labelField: 'name',
       valueField: 'id',
     },
-    rules: [
-      {
-        required: true,
-        // @ts-ignore
-        validator: async (rule, value) => {
-          if (!(isArray(value) && value.length > 0)) {
-            /* eslint-disable-next-line */
-            return Promise.reject('至少选择一个角色');
-          }
-          return Promise.resolve();
-        },
-        trigger: 'change',
-      },
-    ],
+    required: true,
+    itemProps: { validateTrigger: 'blur' },
   },
   {
     field: 'deptId',
@@ -156,6 +144,7 @@ export const userFormSchema: FormSchema[] = [
       getPopupContainer: () => document.body,
     },
     required: true,
+    itemProps: { validateTrigger: 'blur' },
   },
   {
     label: '邮箱',
@@ -168,11 +157,11 @@ export const userFormSchema: FormSchema[] = [
         validator: async (rule, value) => {
           if (!value) {
             /* eslint-disable-next-line */
-            return Promise.reject('邮箱不能为空');
+            return Promise.reject("邮箱不能为空");
           }
           if (!isEmail(value)) {
             /* eslint-disable-next-line */
-            return Promise.reject('邮箱格式不正确');
+            return Promise.reject("邮箱格式不正确");
           }
           return Promise.resolve();
         },
@@ -195,7 +184,7 @@ export const userFormSchema: FormSchema[] = [
           }
           if (!isPhone(value)) {
             /* eslint-disable-next-line */
-            return Promise.reject('电话格式不正确');
+            return Promise.reject("电话格式不正确");
           }
           return Promise.resolve();
         },

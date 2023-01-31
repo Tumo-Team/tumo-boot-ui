@@ -1,9 +1,10 @@
 <template>
-  <div class="bg-white m-4 mr-0 overflow-hidden">
+  <div class="m-4 mr-0 overflow-hidden bg-white">
     <BasicTree
       title="部门列表"
       toolbar
       search
+      treeWrapperClassName="h-[calc(100%-35px)] overflow-auto"
       :clickRowToExpand="false"
       :treeData="treeData"
       :fieldNames="{ key: 'id', title: 'name' }"
@@ -26,10 +27,10 @@
       const treeData = ref<TreeItem[]>([]);
 
       async function fetch() {
-        treeData.value = (await getDeptTree()) as unknown as TreeItem[];
+        treeData.value = (await getDeptTree({})) as unknown as TreeItem[];
       }
 
-      function handleSelect(keys: string) {
+      function handleSelect(keys) {
         emit('select', keys[0]);
       }
 

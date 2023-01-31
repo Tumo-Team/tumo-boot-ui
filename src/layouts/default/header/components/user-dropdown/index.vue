@@ -43,13 +43,14 @@
 <script lang="ts">
   // components
   import { Dropdown, Menu } from 'ant-design-vue';
+  import type { MenuInfo } from 'ant-design-vue/lib/menu/src/interface';
 
   import { defineComponent, computed } from 'vue';
-  import { router } from '/@/router';
 
   import { DOC_URL } from '/@/settings/siteSetting';
 
   import { useUserStore } from '/@/store/modules/user';
+  import { router } from '/@/router';
   import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useDesign } from '/@/hooks/web/useDesign';
@@ -93,14 +94,14 @@
         openModal(true);
       }
 
-      // 个人设置页面
-      function handleProfile() {
-        router.push(PageEnum.PROFILE_SETTING_PAGE);
-      }
-
       //  login out
       function handleLoginOut() {
         userStore.confirmLoginOut();
+      }
+
+      // 个人设置页面
+      function handleProfile() {
+        router.push(PageEnum.PROFILE_SETTING_PAGE);
       }
 
       // open doc
@@ -108,8 +109,8 @@
         openWindow(DOC_URL);
       }
 
-      function handleMenuClick(e: { key: MenuEvent }) {
-        switch (e.key) {
+      function handleMenuClick(e: MenuInfo) {
+        switch (e.key as MenuEvent) {
           case 'logout':
             handleLoginOut();
             break;

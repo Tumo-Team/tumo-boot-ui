@@ -3,5 +3,4 @@
  */
 export const GLOB_CONFIG_FILE_NAME = '_app.config.js';
 
-// build 后dist文件夹所在目录
-export const OUTPUT_DIR = './docker/dist';
+export const OUTPUT_DIR = 'dist';

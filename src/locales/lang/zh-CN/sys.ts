@@ -1,7 +1,9 @@
 export default {
   api: {
+    operationSuccess: '操作成功',
     operationFailed: '操作失败',
     errorTip: '错误提示',
+    successTip: '成功提示',
     errorMessage: '操作失败,系统异常!',
     timeoutMessage: '登录超时,请重新登录!',
     apiTimeoutMessage: '接口请求超时,请刷新页面重试!',
@@ -64,8 +66,6 @@ export default {
     qrSignInFormTitle: '二维码登录',
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
-    formVerifyTitle: '登录失败',
-    formVerifyDes: '请填写表单信息',
 
     signInTitle: '开箱即用的中后台管理系统',
     signInDesc: '输入您的个人详细信息开始使用！',
@@ -74,6 +74,7 @@ export default {
 
     loginButton: '登录',
     registerButton: '注册',
+    captcha: '验证码',
     rememberMe: '记住我',
     forgetPassword: '忘记密码?',
     otherSignIn: '其他登录方式',
@@ -85,7 +86,6 @@ export default {
     // placeholder
     accountPlaceholder: '请输入账号',
     passwordPlaceholder: '请输入密码',
-    captchaPlaceholder: '请输入验证码',
     smsPlaceholder: '请输入验证码',
     mobilePlaceholder: '请输入手机号码',
     policyPlaceholder: '勾选后才能注册',
@@ -94,7 +94,6 @@ export default {
     userName: '账号',
     password: '密码',
     confirmPassword: '确认密码',
-    captcha: '验证码',
     email: '邮箱',
     smsCode: '短信验证码',
     mobile: '手机号码',

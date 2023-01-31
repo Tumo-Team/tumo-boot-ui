@@ -9,8 +9,8 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './data';
 
-  import { getDeptTree, getDept, addDept, updateDept } from '/@/api/modules/upms/dept';
   import { isNullOrUnDef } from '/@/utils/is';
+  import { getDeptTree, getDept, addDept, updateDept } from '/@/api/modules/upms/dept';
 
   export default defineComponent({
     name: 'FormModal',
@@ -21,13 +21,14 @@
 
       const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
         labelWidth: 100,
+        baseColProps: { span: 24 },
         schemas: formSchema,
         showActionButtonGroup: false,
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
         resetFields();
-        setModalProps({ confirmLoading: false });
+        setModalProps({ confirmLoading: false, maskClosable: false });
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
@@ -43,7 +44,7 @@
           parentId: data.parentId == 0 ? null : data.parentId,
         });
 
-        const treeData = await getDeptTree();
+        const treeData = await getDeptTree({ id: data.id });
         updateSchema({
           field: 'parentId',
           componentProps: { treeData },
