@@ -7,7 +7,7 @@ const dashboard: AppRouteModule = {
   path: '/dashboard',
   name: 'Dashboard',
   component: LAYOUT,
-  redirect: '/dashboard/analysis',
+  redirect: '/dashboard/workbench',
   meta: {
     orderNo: 10,
     icon: 'ion:grid-outline',
@@ -15,20 +15,19 @@ const dashboard: AppRouteModule = {
   },
   children: [
     {
-      path: 'analysis',
-      name: 'Analysis',
-      component: () => import('/@/views/dashboard/analysis/index.vue'),
-      meta: {
-        // affix: true,
-        title: t('routes.dashboard.analysis'),
-      },
-    },
-    {
       path: 'workbench',
       name: 'Workbench',
       component: () => import('/@/views/dashboard/workbench/index.vue'),
       meta: {
         title: t('routes.dashboard.workbench'),
+      },
+    },
+    {
+      path: 'perms',
+      name: 'Permission',
+      component: () => import('/@/views/dashboard/perms/index.vue'),
+      meta: {
+        title: t('routes.dashboard.permission'),
       },
     },
   ],

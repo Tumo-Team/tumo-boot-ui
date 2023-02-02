@@ -23,11 +23,26 @@
               src="../../../assets/svg/login-box-bg.svg"
               class="w-1/2 -mt-16 -enter-x"
             />
+            <!--            <div class="mt-10 font-medium text-white -enter-x">
+                          <span class="inline-block mt-4 text-3xl"> {{ t('sys.login.signInTitle') }}</span>
+                        </div>
+                        <div class="mt-5 font-normal text-white dark:text-gray-500 -enter-x">
+                          {{ t('sys.login.signInDesc') }}
+                        </div>-->
             <div class="mt-10 font-medium text-white -enter-x">
-              <span class="inline-block mt-4 text-3xl"> {{ t('sys.login.signInTitle') }}</span>
+              <span class="inline-block mt-4 text-3xl">开箱即用的RBAC单体项目脚手架</span>
             </div>
-            <div class="mt-5 font-normal text-white dark:text-gray-500 -enter-x">
-              {{ t('sys.login.signInDesc') }}
+            <div class="mt-5 font-normal text-white text-md dark:text-gray-500 -enter-x">
+              <div class="text-white"
+                >1. 基于SpringBoot2.x & SpringSecurityOAuth2 & MybatisPlus
+              </div>
+              <div class="text-white"
+                >2. 前后端分离架构，前端基于Vue3、TypeScript、Vite、AntDesignVue
+              </div>
+              <div class="text-white">3. 使用SpringSecurity OAuth2 认证授权</div>
+              <div class="text-white">4. RBAC权限设计，完善的权限管理体系</div>
+              <div class="text-white">5. 基础且完善的开发文档，手把手教你入门开发</div>
+              <div class="text-white">6. 提供代码生成插件，自定义代码生成模板</div>
             </div>
           </div>
         </div>
@@ -49,7 +64,6 @@
   import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
   import LoginForm from './LoginForm.vue';
   import { useGlobSetting } from '/@/hooks/setting';
-  import { useI18n } from '/@/hooks/web/useI18n';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useLocaleStore } from '/@/store/modules/locale';
 
@@ -61,7 +75,6 @@
 
   const globSetting = useGlobSetting();
   const { prefixCls } = useDesign('login');
-  const { t } = useI18n();
   const localeStore = useLocaleStore();
   const showLocale = localeStore.getShowPicker;
   const title = computed(() => globSetting?.title ?? '');
